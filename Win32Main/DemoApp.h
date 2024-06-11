@@ -15,5 +15,7 @@ public:
 	virtual void Finalize() override;
 
 private:
+	ID2D1SolidColorBrush* _blackBrush = { 0 };
+	ID2D1SolidColorBrush* _grayBrush = { 0 };
 };
 
