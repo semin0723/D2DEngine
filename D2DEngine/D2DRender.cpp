@@ -30,8 +30,8 @@ bool D2DRender::Initialize(HWND _hWnd)
 
 void D2DRender::Finalize()
 {
-	if (_d2dFactory) _d2dFactory->Release();
 	if (_d2dRenderTarget) _d2dRenderTarget->Release();
+	if (_d2dFactory) _d2dFactory->Release();
 
 	CoUninitialize();
 }
