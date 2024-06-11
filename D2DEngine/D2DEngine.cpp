@@ -59,6 +59,13 @@ void WinApp::Finalize()
     delete _d2dRender;
 }
 
+void WinApp::SetWindowSize(int _width, int _height)
+{
+    RECT windowPos = {};
+    GetWindowRect(_hWnd, &windowPos);
+    SetWindowPos(_hWnd, nullptr, windowPos.left, windowPos.top, _width, _height, 0);
+}
+
 LRESULT CALLBACK WinApp::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
     switch (message)
     {

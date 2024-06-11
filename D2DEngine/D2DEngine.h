@@ -14,7 +14,9 @@ public:
 	virtual void Render(ID2D1HwndRenderTarget* _target) {}
 	virtual void Finalize();
 
-	const HWND GetWindow() const { return _hWnd; }
+	void SetWindowSize(int _width, int _height);
+
+	ID2D1HwndRenderTarget* GetRenderTarget() const { return _d2dRender->GetRenderTarget(); }
 
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 

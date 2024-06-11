@@ -4,8 +4,9 @@ void DemoApp::Initialize(HINSTANCE _hInstance)
 {
 	__super::Initialize(_hInstance);
 
+	SetWindowSize(1024, 768);
 	//TODO: 여기서 코어에 관한 모든 요소를 초기화 합니다.
-
+	// RenderComponent->Initialize(GetRenderTarget());
 }
 
 void DemoApp::Update()
@@ -14,6 +15,7 @@ void DemoApp::Update()
 
 void DemoApp::Render(ID2D1HwndRenderTarget* _target)
 {
+	//TODO: 지금은 임시로 넣어뒀지만, brush를 생성하는 과정을 initialize 때 랜더링하는 기능을 따로 분리해서 추가해야합니다.
 	if (_blackBrush == nullptr) {
 		_target->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Black), &_blackBrush);
 	}
