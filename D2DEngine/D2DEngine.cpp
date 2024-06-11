@@ -64,6 +64,8 @@ void WinApp::SetWindowSize(int _width, int _height)
     RECT windowPos = {};
     GetWindowRect(_hWnd, &windowPos);
     SetWindowPos(_hWnd, nullptr, windowPos.left, windowPos.top, _width, _height, 0);
+    D2D_SIZE_U newSize = { _width, _height };
+    _d2dRender->GetRenderTarget()->Resize(newSize);
 }
 
 LRESULT CALLBACK WinApp::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
