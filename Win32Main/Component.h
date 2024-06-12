@@ -4,7 +4,7 @@ class Component
 {
 public:
 	Component() {}
-	~Component() {}
+	virtual ~Component() {}
 
 	void SetEnable(const bool _state) { enable = _state; }
 	const bool GetEnable() const { return enable; }
