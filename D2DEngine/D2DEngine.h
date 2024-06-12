@@ -11,10 +11,11 @@ public:
 	virtual void Initialize(HINSTANCE _hInstance);
 	void Run();
 	virtual void Update() {}
-	virtual void Render(ID2D1HwndRenderTarget* _target) {}
+	virtual void Render() {}
 	virtual void Finalize();
 
 	void SetWindowSize(int _width, int _height);
+	const D2D1_SIZE_F GetTargetSize() const { return _d2dRender->GetRenderTarget()->GetSize(); }
 
 	ID2D1HwndRenderTarget* GetRenderTarget() const { return _d2dRender->GetRenderTarget(); }
 
