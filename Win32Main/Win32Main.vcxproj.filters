@@ -31,6 +31,15 @@
     <Filter Include="소스 파일\Util">
       <UniqueIdentifier>{565eb04d-0db5-47cc-8094-d382acee2e5c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Component\Event">
+      <UniqueIdentifier>{69e26e22-afb0-4b4c-862c-063188bbaedb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Input">
+      <UniqueIdentifier>{857863fd-b5e3-49c9-8d24-073c5f3a494e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Entity">
+      <UniqueIdentifier>{6f5b7062-bd9d-419d-a975-6b6654552825}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -60,6 +69,27 @@
     <ClInclude Include="Vector3.h">
       <Filter>소스 파일\Util</Filter>
     </ClInclude>
+    <ClInclude Include="EventComponent.h">
+      <Filter>소스 파일\Component\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="InputComponent.h">
+      <Filter>소스 파일\Component\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="IEntity.h">
+      <Filter>소스 파일\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Handle.h">
+      <Filter>헤더 파일\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="utilheader.h">
+      <Filter>헤더 파일\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="IComponent.h">
+      <Filter>소스 파일\Component\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="FamilyTypeId.h">
+      <Filter>소스 파일\Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Win32Main.cpp">
@@ -75,6 +105,21 @@
       <Filter>소스 파일\Component\Base</Filter>
     </ClCompile>
     <ClCompile Include="Vector3.cpp">
+      <Filter>소스 파일\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="EventComponent.cpp">
+      <Filter>소스 파일\Component\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="InputComponent.cpp">
+      <Filter>소스 파일\Component\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="IEntity.cpp">
+      <Filter>소스 파일\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="IComponent.cpp">
+      <Filter>소스 파일\Component\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="FamilyTypeId.cpp">
       <Filter>소스 파일\Util</Filter>
     </ClCompile>
   </ItemGroup>

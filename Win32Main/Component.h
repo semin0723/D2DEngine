@@ -1,14 +1,18 @@
 #pragma once
+#include "IComponent.h"
 
-class Component
+template<class T>
+class Component : public IComponent
 {
 public:
+	static const ComponentTypeId COMPONENT_TYPE_ID;
+
 	Component() {}
 	virtual ~Component() {}
-
-	void SetEnable(const bool _state) { enable = _state; }
-	const bool GetEnable() const { return enable; }
-private:
-	bool enable = true;
+	
+	ComponentTypeId GetComponentTypeId() const { return COMPONENT_TYPE_ID; }
 };
+
+template<class T>
+const ComponentTypeId Component<T>::COMPONENT_TYPE_ID = FamilyTypeId<IComponent>::Get<T>();
 
