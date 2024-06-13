@@ -28,6 +28,8 @@ void WinApp::Initialize(HINSTANCE _hInstance) {
 
     _d2dRender = new D2DRender;
     _d2dRender->Initialize(_hWnd);
+
+    _time.Initialize();
 }
 
 void WinApp::Run()
@@ -45,6 +47,13 @@ void WinApp::Run()
             _d2dRender->GetRenderTarget()->BeginDraw();
             _d2dRender->GetRenderTarget()->Clear(D2D1::ColorF(D2D1::ColorF::White));
 
+            _time.Update();
+            _timer += _time.GetDeltaTime();
+
+            if (_timer >= 0.2f) {
+                _timer = 0;
+                FixedUpdate();
+            }
             Update();
             Render();
 

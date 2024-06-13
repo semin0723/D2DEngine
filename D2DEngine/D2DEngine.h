@@ -2,6 +2,7 @@
 #include "resource.h"
 #include "framework.h"
 #include "D2DRender.h"
+#include "TimeSystem.h"
 
 class WinApp {
 public:
@@ -10,6 +11,7 @@ public:
 
 	virtual void Initialize(HINSTANCE _hInstance);
 	void Run();
+	virtual void FixedUpdate() {}
 	virtual void Update() {}
 	virtual void Render() {}
 	virtual void Finalize();
@@ -26,6 +28,8 @@ private:
 	HINSTANCE _hInstance = { 0 };
 
 	D2DRender* _d2dRender = nullptr;
+	TimeSystem _time;
+	float _timer = 0;
 
 	int _width = 800;
 	int _height = 600;
