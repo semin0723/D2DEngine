@@ -46,7 +46,7 @@ void WinApp::Run()
             _d2dRender->GetRenderTarget()->Clear(D2D1::ColorF(D2D1::ColorF::White));
 
             Update();
-            Render(_d2dRender->GetRenderTarget());
+            Render();
 
             _d2dRender->GetRenderTarget()->EndDraw();
         }
@@ -64,7 +64,7 @@ void WinApp::SetWindowSize(int _width, int _height)
     RECT windowPos = {};
     GetWindowRect(_hWnd, &windowPos);
     SetWindowPos(_hWnd, nullptr, windowPos.left, windowPos.top, _width, _height, 0);
-    D2D_SIZE_U newSize = { _width, _height };
+    D2D_SIZE_U newSize = { (UINT)_width, (UINT)_height };
     _d2dRender->GetRenderTarget()->Resize(newSize);
 }
 
