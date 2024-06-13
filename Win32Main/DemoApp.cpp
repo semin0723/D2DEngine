@@ -4,7 +4,7 @@ void DemoApp::Initialize(HINSTANCE _hInstance)
 {
 	__super::Initialize(_hInstance);
 
-	SetWindowSize(1024, 768);
+	//SetWindowSize(1024, 768);  화면을 변경하는 기능 추가. 추후 해상도 변경할 때 사용할 수 있을 것.
 	//TODO: 여기서 코어에 관한 모든 요소를 초기화 합니다.
 	// RenderComponent->Initialize(GetRenderTarget());
 }
