@@ -40,6 +40,9 @@
     <Filter Include="소스 파일\Entity">
       <UniqueIdentifier>{6f5b7062-bd9d-419d-a975-6b6654552825}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Manager">
+      <UniqueIdentifier>{df6762e8-1b61-4da9-9ec3-ddee789333bc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -90,6 +93,9 @@
     <ClInclude Include="FamilyTypeId.h">
       <Filter>소스 파일\Util</Filter>
     </ClInclude>
+    <ClInclude Include="ComponentManager.h">
+      <Filter>소스 파일\Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Win32Main.cpp">
@@ -121,6 +127,9 @@
     </ClCompile>
     <ClCompile Include="FamilyTypeId.cpp">
       <Filter>소스 파일\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentManager.cpp">
+      <Filter>소스 파일\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

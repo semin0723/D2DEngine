@@ -129,6 +129,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Component.h" />
+    <ClInclude Include="ComponentManager.h" />
     <ClInclude Include="DemoApp.h" />
     <ClInclude Include="EventComponent.h" />
     <ClInclude Include="FamilyTypeId.h" />
@@ -147,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="ComponentManager.cpp" />
     <ClCompile Include="DemoApp.cpp" />
     <ClCompile Include="EventComponent.cpp" />
     <ClCompile Include="FamilyTypeId.cpp" />
