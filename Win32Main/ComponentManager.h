@@ -36,6 +36,8 @@ class ComponentManager
 
 			//Component를 삭제해야함.
 		}
+
+		// 여기에 타입별 컨테이너를 모아서 관리하게 한다.
 	};
 
 	ComponentManager(const ComponentManager&) = delete;
