@@ -2,6 +2,7 @@
 
 #include <cassert>
 #include "STL.h"
+#include "DataContainer.h"
 
 using TypeId = size_t;
 using ObjectId = size_t;
