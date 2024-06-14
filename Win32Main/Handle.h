@@ -51,7 +51,7 @@ public:
 	HandleTable() { ExpandTable(); }
 	~HandleTable() {}
 
-	Handle MappingHandle(T* newObject) {
+	Handle GiveHandle(T* newObject) {
 /*
 		---- HandleTable ----					    ------ Handle ------
 		 < unsigned long long, class >   ->   return ( index,   version )
