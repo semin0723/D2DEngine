@@ -43,6 +43,12 @@
     <Filter Include="소스 파일\Manager">
       <UniqueIdentifier>{df6762e8-1b61-4da9-9ec3-ddee789333bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Component\Event\Base">
+      <UniqueIdentifier>{27931658-8acf-45eb-b996-ff4f14944250}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Event\Handler">
+      <UniqueIdentifier>{ec515ed0-76d2-44ab-911a-23d820836358}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -72,9 +78,6 @@
     <ClInclude Include="Vector3.h">
       <Filter>소스 파일\Util</Filter>
     </ClInclude>
-    <ClInclude Include="EventComponent.h">
-      <Filter>소스 파일\Component\Event</Filter>
-    </ClInclude>
     <ClInclude Include="InputComponent.h">
       <Filter>소스 파일\Component\Input</Filter>
     </ClInclude>
@@ -99,6 +102,21 @@
     <ClInclude Include="DataContainer.h">
       <Filter>소스 파일\Util</Filter>
     </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>소스 파일\Component\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="EventDelegate.h">
+      <Filter>소스 파일\Component\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="EventDispatcher.h">
+      <Filter>소스 파일\Component\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="IEvent.h">
+      <Filter>소스 파일\Component\Event\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="EventHandler.h">
+      <Filter>소스 파일\Component\Event\Handler</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Win32Main.cpp">
@@ -115,9 +133,6 @@
     </ClCompile>
     <ClCompile Include="Vector3.cpp">
       <Filter>소스 파일\Util</Filter>
-    </ClCompile>
-    <ClCompile Include="EventComponent.cpp">
-      <Filter>소스 파일\Component\Event</Filter>
     </ClCompile>
     <ClCompile Include="InputComponent.cpp">
       <Filter>소스 파일\Component\Input</Filter>
@@ -136,6 +151,21 @@
     </ClCompile>
     <ClCompile Include="DataContainer.cpp">
       <Filter>소스 파일\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Event.cpp">
+      <Filter>소스 파일\Component\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="EventDelegate.cpp">
+      <Filter>소스 파일\Component\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="EventDispatcher.cpp">
+      <Filter>소스 파일\Component\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="IEvent.cpp">
+      <Filter>소스 파일\Component\Event\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="EventHandler.cpp">
+      <Filter>소스 파일\Component\Event\Handler</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
