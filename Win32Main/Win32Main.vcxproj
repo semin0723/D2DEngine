@@ -136,6 +136,7 @@
     <ClInclude Include="EventDelegate.h" />
     <ClInclude Include="EventDispatcher.h" />
     <ClInclude Include="EventHandler.h" />
+    <ClInclude Include="EventListener.h" />
     <ClInclude Include="FamilyTypeId.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Handle.h" />
@@ -160,6 +161,7 @@
     <ClCompile Include="EventDelegate.cpp" />
     <ClCompile Include="EventDispatcher.cpp" />
     <ClCompile Include="EventHandler.cpp" />
+    <ClCompile Include="EventListener.cpp" />
     <ClCompile Include="FamilyTypeId.cpp" />
     <ClCompile Include="IComponent.cpp" />
     <ClCompile Include="IEntity.cpp" />

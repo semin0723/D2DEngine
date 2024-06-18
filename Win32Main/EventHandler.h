@@ -62,6 +62,6 @@ private:
 		}
 	}
 	
-
+	friend class EventListener;
 };
 
