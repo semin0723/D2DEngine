@@ -21,7 +21,7 @@ class EventDelegate : public IEventDelegate
 	Callback _callback;
 
 public:
-	EventDelegate(Class* receiver, Callback& callbackFunction) : _receiver(receiver), _callback(CallbackFunction) {}
+	EventDelegate(Class* receiver, Callback& callbackFunction) : _receiver(receiver), _callback(callbackFunction) {}
 
 	virtual IEventDelegate* clone() override {
 		return new EventDelegate(_receiver, _callback);

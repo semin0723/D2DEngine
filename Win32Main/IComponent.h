@@ -26,7 +26,7 @@ public:
 	bool Active() const { return _enabled; }
 
 protected:
-	ComponentId		_hashValue		{ -1 };
+	ComponentId		_hashValue;
 	ComponentId		_componentId	{ INVALID_COMPONENT_ID };
 	EntityId		_owner			{ INVALID_ENTITY_ID };
 	bool			_enabled		{ true };

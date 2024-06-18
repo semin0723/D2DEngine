@@ -18,7 +18,7 @@ class ComponentManager
 	// 메모리청크 대신 리스트나 벡터를 활용하여 관리를 시도할 예정. // vector.resize() -> 이미 채워져 있는 데이터는 상관없이 늘린 공간에만 새로 데이터가 채워진다.
 	// 컴포넌트들을 관리하는 리스트를 클래스 형태로 제작하여 상속 받아야함.
 	template<class T>
-	class ComponentContainer : public DataContainer<T>, public IComponentContainer {
+	class ComponentContainer : public IComponentContainer {
 		ComponentContainer(const ComponentContainer&) = delete;
 		ComponentContainer& operator=(ComponentContainer&) = delete;
 	public:

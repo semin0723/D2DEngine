@@ -21,8 +21,7 @@ union Handle {
 	static constexpr value_type		MAX_INDEX		{ (1U << NUM_INDEX_BITS) - 2U };
 	
 	// 핸들의 최대값을 invalid로 지정합니다.
-	static constexpr value_type		INVALID_HANDLE	{ std::numeric_limits<value_type>::max() };
-
+	static constexpr value_type		INVALID_HANDLE	{ (std::numeric_limits<value_type>::max)() };
 private:
 	value_type	_value;
 
@@ -38,7 +37,7 @@ public:
 	Handle(value_type value) : _value(value) {}
 	Handle(value_type index, value_type version) : _index(index), _version(version) {}
 
-	inline operator value_type() const { return value; }
+	inline operator value_type() const { return _value; }
 };
 
 using Handle64 = Handle<unsigned long long, 24, 40>;
@@ -120,7 +119,7 @@ private:
 	void ExpandTable() {
 		size_t oldSize = _table.size();
 
-		size_t newSize = std::min(oldsize + grow, Handle::MAX_INDEX);
+		size_t newSize = (std::min)(oldSize + grow, Handle::MAX_INDEX);
 
 		_table.resize(newSize);
 		for (typename Handle::value_type i = oldSize; i < newSize; i++) {

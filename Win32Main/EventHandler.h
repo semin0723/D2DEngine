@@ -54,14 +54,22 @@ private:
 		EventDispatcherMap::const_iterator it = _eventMap.find(eventId);
 		if (it == _eventMap.end()) {
 			std::pair<EventTypeId, IEventDispatcher*> dispatcher(eventId, new EventDispatcher<E>());
-			dispatcher.second->AddEventCallBack(eventDelegate);
+			dispatcher.second->AddEventCallback(eventDelegate);
 			_eventMap.insert(dispatcher);
 		}
 		else {
-			_eventMap[eventId]->AddEventCallBack(eventDelegate);
+			_eventMap[eventId]->AddEventCallback(eventDelegate);
+		}
+	}
+
+	inline void RemoveEventCallback(IEventDelegate* eventDelegate) {
+		auto typeId = eventDelegate->GetStaticEventTypeId();
+		EventDispatcherMap::const_iterator iterator = _eventMap.find(typeId);
+		if (iterator != _eventMap.end()) {
+			_eventMap[typeId]->RemoveEventCallback(eventDelegate);
 		}
 	}
 	
-	friend class EventListener;
+	friend class ECSBase;
 };
 

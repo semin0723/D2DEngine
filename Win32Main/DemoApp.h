@@ -1,6 +1,10 @@
 #pragma once
 #include "../D2DEngine/D2DEngine.h"
 #include "RenderComponent.h"
+#include "ECSCall.h"
+#include "Test.h"
+
+class EventHandler;
 
 class DemoApp : public WinApp
 {
@@ -15,8 +19,10 @@ public:
 
 	virtual void Finalize() override;
 
+
+
 private:
 	RenderComponent _renderComponent;
-
+	Test* _gameTest;
 };
-
+	

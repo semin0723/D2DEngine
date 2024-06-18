@@ -1,5 +1,6 @@
 #pragma once
 #include "IComponent.h"
+#include "FamilyTypeId.h"
 
 template<class T>
 class Component : public IComponent

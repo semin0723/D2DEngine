@@ -10,7 +10,7 @@ public:
 	virtual ~IEventDispatcher() {}
 
 	virtual void Dispatch(IEvent* event) = 0;
-	virtual void AddEventCallBack(IEventDelegate* const eventDelegate) = 0;
+	virtual void AddEventCallback(IEventDelegate* const eventDelegate) = 0;
 	virtual void RemoveEventCallback(IEventDelegate* eventDelegate) = 0;
 	virtual size_t GetEventCallbackCount() const = 0;
 };
@@ -22,8 +22,8 @@ class EventDispatcher : public IEventDispatcher
 	using RemoveDelegates = std::list<IEventDelegate*>;
 
 public:
-	EventDispacher() : _locked(false) {}
-	virtual ~EventDispacher() {
+	EventDispatcher() : _locked(false) {}
+	virtual ~EventDispatcher() {
 		_eventCallbacks.clear();
 		_pendingRemoveDelegates.clear();
 	}
@@ -36,7 +36,7 @@ public:
 			for (auto eventCallback : _pendingRemoveDelegates) {
 
 				// iterator 반환 하는듯.
-				auto result = std::find_if(_eventCallbacks.begin(), eventCallbacks.end(), [&](const IEventDelegate* other) {
+				auto result = std::find_if(_eventCallbacks.begin(), _eventCallbacks.end(), [&](const IEventDelegate* other) {
 					return other == eventCallback;
 					});
 
@@ -92,7 +92,7 @@ public:
 		}
 	}
 
-	virtual size_t GetEventCallbackCount() {
+	virtual size_t GetEventCallbackCount() const override {
 		return _eventCallbacks.size();
 	}
 

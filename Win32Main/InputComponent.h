@@ -2,7 +2,7 @@
 #include "Component.h"
 
 class InputComponent :
-    public Component
+    public Component<InputComponent>
 {
 public:
 
