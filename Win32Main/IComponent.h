@@ -28,7 +28,7 @@ public:
 protected:
 	ComponentId		_hashValue;
 	ComponentId		_componentId	{ INVALID_COMPONENT_ID };
-	EntityId		_owner			{ INVALID_ENTITY_ID };
+	EntityId		_owner;
 	bool			_enabled		{ true };
 
 private:

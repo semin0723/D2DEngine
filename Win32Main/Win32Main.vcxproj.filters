@@ -64,6 +64,12 @@
     <Filter Include="소스 파일\ECSBase">
       <UniqueIdentifier>{62d099d3-0ce7-45b4-8349-a3d9220c8b44}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Entity\Base">
+      <UniqueIdentifier>{c899fb95-bb90-42ab-abf4-1e46e66a7702}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Entity\HandleTable">
+      <UniqueIdentifier>{66104085-9fb9-4250-8418-31f7beb25166}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -95,9 +101,6 @@
     </ClInclude>
     <ClInclude Include="InputComponent.h">
       <Filter>소스 파일\Component\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="IEntity.h">
-      <Filter>소스 파일\Entity</Filter>
     </ClInclude>
     <ClInclude Include="Handle.h">
       <Filter>헤더 파일\Util</Filter>
@@ -141,6 +144,18 @@
     <ClInclude Include="ECSCall.h">
       <Filter>소스 파일\ECSBase</Filter>
     </ClInclude>
+    <ClInclude Include="EntityManager.h">
+      <Filter>소스 파일\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="IEntity.h">
+      <Filter>소스 파일\Entity\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityHandleTable.h">
+      <Filter>소스 파일\Entity\HandleTable</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>소스 파일\Entity</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Win32Main.cpp">
@@ -160,9 +175,6 @@
     </ClCompile>
     <ClCompile Include="InputComponent.cpp">
       <Filter>소스 파일\Component\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="IEntity.cpp">
-      <Filter>소스 파일\Entity</Filter>
     </ClCompile>
     <ClCompile Include="IComponent.cpp">
       <Filter>소스 파일\Component\Base</Filter>
@@ -199,6 +211,18 @@
     </ClCompile>
     <ClCompile Include="ECSCall.cpp">
       <Filter>소스 파일\ECSBase</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityManager.cpp">
+      <Filter>소스 파일\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="IEntity.cpp">
+      <Filter>소스 파일\Entity\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityHandleTable.cpp">
+      <Filter>소스 파일\Entity\HandleTable</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>소스 파일\Entity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

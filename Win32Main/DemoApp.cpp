@@ -14,7 +14,7 @@ void DemoApp::Initialize(HINSTANCE _hInstance)
 
 void DemoApp::Update()
 {
-	ECS::_ecs->SendEvent<DrawRectangle>(300.0f, 300.0f, 500.0f, 600.0f);
+	ECS::_ecs->SendEvent<DrawRectangle>(200.0f, 200.0f, 500.0f, 600.0f);
 	ECS::_ecs->Update();
 }
 

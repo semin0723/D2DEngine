@@ -1,11 +1,12 @@
 #pragma once
-#include "Handle.h"
+#include "EntityHandleTable.h"
+#include "FamilyTypeId.h"
+#include "ComponentManager.h"
 
 using EntityTypeId	= TypeId;
-using EntityId		= Handle64;
 
 // 엔티티의 id의 invalid값도 handle의 invalid값과 같은 값으로 설정합니다.
-static const EntityId INVALID_ENTITY_ID = Handle64::INVALID_HANDLE;
+static const ULL INVALID_ENTITY_ID = (std::numeric_limits<ULL>::max)();
 
 class IEntity
 {
@@ -45,7 +46,7 @@ protected:
 	bool		_active;
 
 private:
-	// ComponentManager* _componentManagerInstance;
+	ComponentManager* _componentManagerInstance;
 
 	friend class EntityManager;
 };

@@ -134,6 +134,9 @@
     <ClInclude Include="DemoApp.h" />
     <ClInclude Include="ECSBase.h" />
     <ClInclude Include="ECSCall.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="EntityHandleTable.h" />
+    <ClInclude Include="EntityManager.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="EventDelegate.h" />
     <ClInclude Include="EventDispatcher.h" />
@@ -161,6 +164,9 @@
     <ClCompile Include="DemoApp.cpp" />
     <ClCompile Include="ECSBase.cpp" />
     <ClCompile Include="ECSCall.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="EntityHandleTable.cpp" />
+    <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="EventDelegate.cpp" />
     <ClCompile Include="EventDispatcher.cpp" />
