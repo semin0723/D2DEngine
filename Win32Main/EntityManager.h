@@ -11,6 +11,7 @@ class EntityManager
 	public:
 		virtual ~IEntityContainer() {}
 		virtual const std::string GetEntityContainerType() const = 0;
+		virtual void CreateObject(IEntity* entity) = 0;
 		virtual void DestroyEntity(IEntity* entity) = 0;
 	};
 
@@ -30,11 +31,11 @@ class EntityManager
 			return ENTITY_TYPE;
 		}
 
-		void CreateObject(IEntity* entity) {
+		virtual void CreateObject(IEntity* entity) {
 			_entities.push_back(entity);
 		}
 
-		void DestroyObject(IEntity* entity) {
+		virtual void DestroyObject(IEntity* entity) {
 			EntityList::iterator it = nullptr;
 			for (EntityList::iterator i; i != _entities.end(); i++) {
 				if (entity->GetEntityId() == (*it)->GetEntityId()) {
@@ -42,7 +43,7 @@ class EntityManager
 					break;
 				}
 			}
-			if (it != nullptr) {
+			if (it != _entities.end()) {
 				_entities.erase(it);
 				delete entity;
 			}

@@ -26,7 +26,7 @@ void EntityManager::RemoveDestroyEntities()
 
 		auto iterator = _entityRegistry.find(tid);
 		if (iterator != _entityRegistry.end()) {
-			//_componentManagerInstance->RemoveAllComponents(id);
+			_componentManagerInstance->RemoveAllComponents(id);
 			iterator->second->DestroyEntity(entity);
 		}
 		ReleaseEntityId(id);

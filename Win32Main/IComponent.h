@@ -1,5 +1,5 @@
 #pragma once
-#include "IEntity.h"
+#include "EntityHandleTable.h"
 
 using ComponentId		= ObjectId;
 using ComponentTypeId	= TypeId;

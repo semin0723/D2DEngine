@@ -9,8 +9,6 @@ public:
 	ULL _index = 0;
 	ULL _version = 0;
 
-	ULL _MAX_VERSION = (1U << 40) - 2U;
-
 	const bool operator==(const EntityId& other) const {
 		return ((_index == other._index) && (_version == other._version));
 	}
@@ -29,7 +27,7 @@ template<class E, class EID>
 class EntityHandleTable
 {
 	// { handle version, Entity Class }
-	using EntityTable = std::pair<ULL, E>; 
+	using EntityTable = std::pair<ULL, E*>; 
 
 public:
 	EntityHandleTable() { ExpandTable(); }
@@ -40,7 +38,7 @@ public:
 		for (; i < _handleTable.size(); i++) {
 			if (_handleTable[i].second == nullptr) {
 				_handleTable[i].second = newObj;
-				_handleTable[i].first = (_handleTable[i].first + 1) % EntityId::MAX_VERSION;
+				_handleTable[i].first = (_handleTable[i].first + 1) % (std::numeric_limits<ULL>::max)();
 				return EntityId(i, _handleTable[i].first);
 			}
 		}
@@ -57,7 +55,7 @@ public:
 	}
 
 	EntityId operator[](ULL idx) {
-		return EntityId(idx, _handleTable[idx]);
+		return EntityId(idx, _handleTable[idx].first);
 	}
 
 	E* operator[](EntityId& id) {
@@ -74,7 +72,7 @@ private:
 
 	void ExpandTable() {
 		size_t oldSize = _handleTable.size();
-		size_t newSize = oldSize + newSize;
+		size_t newSize = oldSize + _expandSize;
 
 		_handleTable.resize(newSize);
 		for (int i = oldSize; i < newSize; i++) {

@@ -1,6 +1,7 @@
 #pragma once
 #include "utilheader.h"
 #include "IComponent.h"
+#include "FamilyTypeId.h"
 
 
 
@@ -11,16 +12,17 @@ class ComponentManager
 		virtual ~IComponentContainer() {}
 
 		virtual const char* GetComponentContainerTypeName() const = 0;
+		virtual void CreateComponent(IComponent* component) = 0;
 		virtual void DestroyComponent(IComponent* component) = 0;
 	};
 
-	// 컴포넌트 컨테이너를 메모리청크를 활용하여 관리를 해야 하는데 메모리청크에 대해서는 제대로 아는 것이 없기 때문에
-	// 메모리청크 대신 리스트나 벡터를 활용하여 관리를 시도할 예정. // vector.resize() -> 이미 채워져 있는 데이터는 상관없이 늘린 공간에만 새로 데이터가 채워진다.
-	// 컴포넌트들을 관리하는 리스트를 클래스 형태로 제작하여 상속 받아야함.
 	template<class T>
 	class ComponentContainer : public IComponentContainer {
 		ComponentContainer(const ComponentContainer&) = delete;
 		ComponentContainer& operator=(ComponentContainer&) = delete;
+
+		using ComponentList = std::list<IComponent*>;
+
 	public:
 		ComponentContainer() {}
 		virtual ~ComponentContainer() {}
@@ -31,13 +33,24 @@ class ComponentManager
 			return ComponentTypeName;
 		}
 
-		virtual void DestroyComponent(IComponent* component) override {
-			component->~IComponent();
-
-			//Component를 삭제해야함.
+		virtual void CreateComponent(IComponent* component) override {
+			_components.push_back(component);
 		}
 
-		// 여기에 타입별 컨테이너를 모아서 관리하게 한다.
+		virtual void DestroyComponent(IComponent* component) override {
+			ComponentList::iterator it = nullptr;
+			for (ComponentList::iterator i = _components.begin(); i != _components.end(); i++) {
+				if (component->_hashValue == (*i)->_hashValue) {
+					it = i;
+					break;
+				}
+			}
+			_components.erase(it);
+			delete component;
+		}
+
+	private:
+		ComponentList _components;
 	};
 
 	ComponentManager(const ComponentManager&) = delete;
@@ -69,18 +82,8 @@ class ComponentManager
 
 	
 	using ComponentTable = std::vector<IComponent*>;
-	// 컴포넌트들을 모아두는 테이블.
-	ComponentTable _componentTable;
-	
 	using EntityComponentMap = std::vector<std::vector<ComponentId>>;
-	// 하나의 엔티티 안에 들어있는 컴포넌트의 Id들의 테이블.
-	EntityComponentMap _entityComponentMap;
 
-	ComponentId MappingComponentId(IComponent* component);
-	void		ReleaseComponentId(ComponentId id);
-
-	void		MapEntityComponent(EntityId entityId, ComponentId componentId, ComponentTypeId componentTypeId);
-	void		UnMapEntityComponent(EntityId entityId, ComponentId componentId, ComponentTypeId componentTypeId);
 
 public:
 	// ComponentContainer 내부 구조 설정할 때 iterator도 같이 설정해줘야함.
@@ -93,17 +96,79 @@ public:
 	template<class T, class ...ARGS>
 	T* AddComponent(const EntityId entityId, ARGS&&... args) {
 		static constexpr std::hash<ComponentId> ENTITY_COMPONENT_ID_HASHER	{ std::hash<ComponentId> };
-
-		const ComponentTypeId typeId = T::COMPONENT_TYPE_ID;
-
 		IComponent* newComponent = new T(std::forward<ARGS>(args)...);
 
+		const ComponentTypeId typeId = T::COMPONENT_TYPE_ID;
+		
+		ComponentId cid = MappingComponentId(newComponent);
+		newComponent->_componentId = cid;
+
 		newComponent->_owner = entityId;
-		return newComponent;
+		newComponent->_hashValue = ENTITY_COMPONENT_ID_HASHER(entityId) ^ (ENTITY_COMPONENT_ID_HASHER(cid) << 1);
+
+		GetComponentContainer<T>()->CreateComponent(component);
+
+		MapEntityComponent(entityId, cid, typeId);
+
+		return static_cast<T*>(newComponent);
+	}
+
+	template<class T>
+	void RemoveComponent(const EntityId id) {
+		const ComponentTypeId tid = T::COMPONENT_TYPE_ID;
+		const ComponentId cid = _entityComponentMap[id._index][tid];
+		IComponent* component = _componentTable[cid];
+
+		GetComponentContainer<T>->DestroyComponent(component);
+		UnMapEntityComponent(id, cid, tid);
+	}
+
+	void RemoveAllComponents(const EntityId id) {
+		static const size_t NUM_COMPONENTS = _entityComponentMap[0].size();
+		for (ComponentTypeId tid = 0; tid < NUM_COMPONENTS; tid++) {
+			const ComponentId cid = _entityComponentMap[id._index][tid];
+			if (cid == INVALID_COMPONENT_ID) continue;
+
+			IComponent* component = _componentTable[cid];
+			if (component != nullptr) {
+				auto iterator = _componentContainerRegistry.find(tid);
+				if (iterator != _componentContainerRegistry.end()) {
+					iterator->second->DestroyComponent(component);
+				}
+				UnMapEntityComponent(id, cid, tid);
+			}
+		}
+	}
+
+	template<class T>
+	T* Getcomponent(const EntityId id) {
+		const ComponentTypeId tid = T::COMPONENT_TYPE_ID;
+		const ComponentId cid = _entityComponentMap[id._index][tid];
+
+		if (cid == INVALID_COMPONENT_ID) return nullptr;
+		return static_cast<T*>(_componentTable[cid]);
+	}
+
+	template<class T>
+	TComponentIterator<T> begin() {
+		return GetComponentContainer<T>()->_components.begin();
+	}
+
+	template<class T>
+	TComponentIterator<T> end() {
+		return GetComponentContainer<T>()->_components.end();
 	}
 
 private:
+	ULL _expandSize = 16;
+	ComponentTable _componentTable;
+	EntityComponentMap _entityComponentMap;
 
+	ComponentId MappingComponentId(IComponent* component);
+	void		ReleaseComponentId(ComponentId id);
+
+	void		MapEntityComponent(EntityId entityId, ComponentId componentId, ComponentTypeId componentTypeId);
+	void		UnMapEntityComponent(EntityId entityId, ComponentId componentId, ComponentTypeId componentTypeId);
 
 	friend class IComponent;
 };
