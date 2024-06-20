@@ -3,6 +3,10 @@
 #include <cassert>
 #include "STL.h"
 
+class EntityManager;
+class ComponentManager;
+class SystemManager;
+
 using TypeId = size_t;
 using ObjectId = size_t;
 
