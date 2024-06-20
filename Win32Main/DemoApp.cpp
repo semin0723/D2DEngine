@@ -12,10 +12,10 @@ void DemoApp::Initialize(HINSTANCE _hInstance)
 	_gameTest->_render = &_renderComponent;
 }
 
-void DemoApp::Update()
+void DemoApp::Update(float dt)
 {
 	ECS::_ecs->SendEvent<DrawRectangle>(200.0f, 200.0f, 500.0f, 600.0f);
-	ECS::_ecs->Update();
+	ECS::_ecs->Update(dt);
 }
 
 void DemoApp::Render()

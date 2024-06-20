@@ -12,7 +12,7 @@ public:
 	virtual void Initialize(HINSTANCE _hInstance);
 	void Run();
 	virtual void FixedUpdate() {}
-	virtual void Update() {}
+	virtual void Update(float dt) {}
 	virtual void Render() {}
 	virtual void Finalize();
 

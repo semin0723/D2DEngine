@@ -31,14 +31,8 @@
     <Filter Include="소스 파일\ECS\Component">
       <UniqueIdentifier>{415b328d-6516-40d8-bed4-fae31fab49bd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\ECS\Component\Render">
-      <UniqueIdentifier>{54324fd4-538a-43f5-bb1c-2bf109b714ca}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\ECS\Component\Base">
       <UniqueIdentifier>{9937f41b-f313-4b2d-8924-bcc25e89ccd0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\ECS\Component\Input">
-      <UniqueIdentifier>{857863fd-b5e3-49c9-8d24-073c5f3a494e}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\ECS\ECSBase">
       <UniqueIdentifier>{62d099d3-0ce7-45b4-8349-a3d9220c8b44}</UniqueIdentifier>
@@ -79,6 +73,12 @@
     <Filter Include="소스 파일\ECS\System\Base">
       <UniqueIdentifier>{7944c6bf-e6b3-4495-9078-7fc4ce804a3f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Input">
+      <UniqueIdentifier>{857863fd-b5e3-49c9-8d24-073c5f3a494e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Render">
+      <UniqueIdentifier>{54324fd4-538a-43f5-bb1c-2bf109b714ca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -103,13 +103,13 @@
       <Filter>헤더 파일\Util</Filter>
     </ClInclude>
     <ClInclude Include="RenderComponent.h">
-      <Filter>소스 파일\ECS\Component\Render</Filter>
+      <Filter>소스 파일\Render</Filter>
     </ClInclude>
     <ClInclude Include="Vector3.h">
       <Filter>소스 파일\Util</Filter>
     </ClInclude>
     <ClInclude Include="InputComponent.h">
-      <Filter>소스 파일\ECS\Component\Input</Filter>
+      <Filter>소스 파일\Input</Filter>
     </ClInclude>
     <ClInclude Include="Handle.h">
       <Filter>헤더 파일\Util</Filter>
@@ -183,7 +183,7 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="RenderComponent.cpp">
-      <Filter>소스 파일\ECS\Component\Render</Filter>
+      <Filter>소스 파일\Render</Filter>
     </ClCompile>
     <ClCompile Include="Component.cpp">
       <Filter>소스 파일\ECS\Component\Base</Filter>
@@ -192,7 +192,7 @@
       <Filter>소스 파일\Util</Filter>
     </ClCompile>
     <ClCompile Include="InputComponent.cpp">
-      <Filter>소스 파일\ECS\Component\Input</Filter>
+      <Filter>소스 파일\Input</Filter>
     </ClCompile>
     <ClCompile Include="IComponent.cpp">
       <Filter>소스 파일\ECS\Component\Base</Filter>

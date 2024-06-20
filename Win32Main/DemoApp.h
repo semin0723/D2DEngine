@@ -14,7 +14,7 @@ public:
 
 	virtual void Initialize(HINSTANCE _hInstance) override;
 
-	virtual void Update() override;
+	virtual void Update(float dt) override;
 	virtual void Render() override;
 
 	virtual void Finalize() override;

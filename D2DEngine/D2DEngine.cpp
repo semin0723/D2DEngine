@@ -54,7 +54,7 @@ void WinApp::Run()
                 _timer = 0;
                 FixedUpdate();
             }
-            Update();
+            Update(_time.GetDeltaTime());
             Render();
 
             _d2dRender->GetRenderTarget()->EndDraw();

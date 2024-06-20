@@ -6,6 +6,10 @@ class EventListener;
 class IEvent;
 class EventHandler;
 
+class EntityManager;
+class SystemManager;
+class ComponentManager;
+
 class ECSBase
 {
 public:
@@ -20,10 +24,17 @@ public:
 		_eventHandler->Send<E>(std::forward<ARGS>(eventArgs)...);
 	}
 
-	void Update();
+	void Update(float dt);
+
+	EntityManager* GetEntityManager() { return _entityManager; }
+	SystemManager* GetSystemManager() { return _systemManager; }
+	ComponentManager* GetComponentManager() { return _componentManager; }
 
 private:
 	EventHandler* _eventHandler;
+	EntityManager* _entityManager;
+	SystemManager* _systemManager;
+	ComponentManager* _componentManager;
 
 	ECSBase(const ECSBase&) = delete;
 	ECSBase& operator=(ECSBase&) = delete;
@@ -39,5 +50,6 @@ private:
 
 	friend class IEvent;
 	friend class EventListener;
+	friend class EntityManager;
 };
 
