@@ -1,5 +1,5 @@
 #include "ECSCall.h"
-#include "ECSBase.h"
+
 namespace ECS {
 	ECSBase* _ecs = nullptr;
 

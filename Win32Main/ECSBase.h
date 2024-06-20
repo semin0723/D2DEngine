@@ -1,6 +1,7 @@
 #pragma once
-#include "EventHandler.h"
+#include "ECSElements.h"
 #include "EventDelegate.h"
+
 
 class EventListener;
 class IEvent;
@@ -9,6 +10,7 @@ class EventHandler;
 class EntityManager;
 class SystemManager;
 class ComponentManager;
+
 
 class ECSBase
 {
@@ -51,5 +53,8 @@ private:
 	friend class IEvent;
 	friend class EventListener;
 	friend class EntityManager;
+	friend class IEntity;
+	friend class IComponent;
+	friend class ISystem;
 };
 

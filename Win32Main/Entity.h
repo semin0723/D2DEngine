@@ -10,7 +10,7 @@ public:
     virtual ~Entity() {}
     static const EntityTypeId ENTITY_TYPE_ID;
 
-    virtual const EntityTypeId GetEntityTypeID() const override {
+    virtual const EntityTypeId GetEntityTypeId() const override {
         return ENTITY_TYPE_ID;
     }
 };

@@ -48,7 +48,7 @@ public:
 
 		auto iterator = _systems.find(tid);
 		if (iterator != _systems.end()) {
-			iterator->second->_updateInterval = intervalTime);
+			iterator->second->_updateInterval = intervalTime;
 		}
 	}
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "utilheader.h"
 
+template<class T>
 class System;
 
 using SystemTypeId = TypeId;
@@ -25,8 +26,8 @@ private:
 	float _lastUpdateTime;
 	float _updateInterval;
 
-	bool _enabled	: true;	
-	bool _canUpdate	: true;
+	bool _enabled	= true;	
+	bool _canUpdate	= true;
 
 	friend class SystemManager;
 };

@@ -144,9 +144,6 @@
     <ClInclude Include="EventListener.h">
       <Filter>소스 파일\ECS\Event\Listener</Filter>
     </ClInclude>
-    <ClInclude Include="Test.h">
-      <Filter>소스 파일\Test</Filter>
-    </ClInclude>
     <ClInclude Include="ECSBase.h">
       <Filter>소스 파일\ECS\ECSBase</Filter>
     </ClInclude>
@@ -173,6 +170,21 @@
     </ClInclude>
     <ClInclude Include="SystemManager.h">
       <Filter>소스 파일\ECS\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderSystem.h">
+      <Filter>소스 파일\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="Events.h">
+      <Filter>소스 파일\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="ECSElements.h">
+      <Filter>소스 파일\ECS\ECSBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Rectangle.h">
+      <Filter>소스 파일\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxComponent.h">
+      <Filter>소스 파일\Test</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -221,9 +233,6 @@
     <ClCompile Include="EventListener.cpp">
       <Filter>소스 파일\ECS\Event\Listener</Filter>
     </ClCompile>
-    <ClCompile Include="Test.cpp">
-      <Filter>소스 파일\Test</Filter>
-    </ClCompile>
     <ClCompile Include="ECSBase.cpp">
       <Filter>소스 파일\ECS\ECSBase</Filter>
     </ClCompile>
@@ -250,6 +259,15 @@
     </ClCompile>
     <ClCompile Include="SystemManager.cpp">
       <Filter>소스 파일\ECS\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderSystem.cpp">
+      <Filter>소스 파일\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Rectangle.cpp">
+      <Filter>소스 파일\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxComponent.cpp">
+      <Filter>소스 파일\Test</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

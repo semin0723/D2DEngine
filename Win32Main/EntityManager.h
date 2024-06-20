@@ -35,8 +35,8 @@ class EntityManager
 			_entities.push_back(entity);
 		}
 
-		virtual void DestroyObject(IEntity* entity) {
-			EntityList::iterator it = nullptr;
+		virtual void DestroyEntity(IEntity* entity) {
+			EntityList::iterator it;
 			for (EntityList::iterator i; i != _entities.end(); i++) {
 				if (entity->GetEntityId() == (*it)->GetEntityId()) {
 					it = i;

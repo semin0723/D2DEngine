@@ -2,7 +2,7 @@
 #include "../D2DEngine/D2DEngine.h"
 #include "RenderComponent.h"
 #include "ECSCall.h"
-#include "Test.h"
+#include "Rectangle.h"
 
 class EventHandler;
 
@@ -23,6 +23,6 @@ public:
 
 private:
 	RenderComponent _renderComponent;
-	Test* _gameTest;
+	
 };
 	

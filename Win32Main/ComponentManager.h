@@ -38,7 +38,7 @@ class ComponentManager
 		}
 
 		virtual void DestroyComponent(IComponent* component) override {
-			ComponentList::iterator it = nullptr;
+			ComponentList::iterator it;
 			for (ComponentList::iterator i = _components.begin(); i != _components.end(); i++) {
 				if (component->_hashValue == (*i)->_hashValue) {
 					it = i;
@@ -95,7 +95,7 @@ public:
 
 	template<class T, class ...ARGS>
 	T* AddComponent(const EntityId entityId, ARGS&&... args) {
-		static constexpr std::hash<ComponentId> ENTITY_COMPONENT_ID_HASHER	{ std::hash<ComponentId> };
+		static constexpr std::hash<ComponentId> ENTITY_COMPONENT_ID_HASHER;
 		IComponent* newComponent = new T(std::forward<ARGS>(args)...);
 
 		const ComponentTypeId typeId = T::COMPONENT_TYPE_ID;
@@ -104,7 +104,7 @@ public:
 		newComponent->_componentId = cid;
 
 		newComponent->_owner = entityId;
-		newComponent->_hashValue = ENTITY_COMPONENT_ID_HASHER(entityId) ^ (ENTITY_COMPONENT_ID_HASHER(cid) << 1);
+		newComponent->_hashValue = ENTITY_COMPONENT_ID_HASHER(entityId._index) ^ (ENTITY_COMPONENT_ID_HASHER(cid) << 1);
 
 		GetComponentContainer<T>()->CreateComponent(newComponent);
 

@@ -6,8 +6,8 @@ class EntityId {
 public:
 	EntityId() {}
 	EntityId(ULL idx, ULL version) : _index(idx), _version(version) {}
-	ULL _index = 0;
-	ULL _version = 0;
+	ULL _index = -1;
+	ULL _version = -1;
 
 	const bool operator==(const EntityId& other) const {
 		return ((_index == other._index) && (_version == other._version));
