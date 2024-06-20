@@ -106,7 +106,7 @@ public:
 		newComponent->_owner = entityId;
 		newComponent->_hashValue = ENTITY_COMPONENT_ID_HASHER(entityId) ^ (ENTITY_COMPONENT_ID_HASHER(cid) << 1);
 
-		GetComponentContainer<T>()->CreateComponent(component);
+		GetComponentContainer<T>()->CreateComponent(newComponent);
 
 		MapEntityComponent(entityId, cid, typeId);
 
