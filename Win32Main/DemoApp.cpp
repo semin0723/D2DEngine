@@ -39,6 +39,6 @@ void DemoApp::Finalize()
 	//TODO:: 여기서 코어에 연결돼있는 모든 요소를 해제해야 합니다.
 	_renderComponent.Finalize();
 
-	ECS::Initialize();
+	ECS::Finalize();
 	__super::Finalize();
 }
