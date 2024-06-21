@@ -1,10 +1,11 @@
 #pragma once
+#include <d2d1_1helper.h>
 
-class Vector3 {
+class Vector3 : public D2D1_VECTOR_3F{
 public:
-	float _x;
-	float _y;
-	float _z;
+	//float _x;
+	//float _y;
+	//float _z;
 	Vector3();
 	Vector3(float x, float y, float z);
 

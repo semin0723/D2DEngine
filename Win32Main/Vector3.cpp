@@ -1,17 +1,17 @@
 #include "Vector3.h"
 #include <cmath>
 
-Vector3::Vector3() : _x(0), _y(0), _z(0) {}
+Vector3::Vector3() : D2D1_VECTOR_3F{ 0.0f, 0.0f, 0.0f } {}
 
-Vector3::Vector3(float x, float y, float z) {
-	_x = x;
-	_y = y;
-	_z = z;
+Vector3::Vector3(float _x, float _y, float _z) {
+	x = _x;
+	y = _y;
+	z = _z;
 }
 
 const float Vector3::Magnitude() const
 {
-	return sqrt(_x * _x + _y * _y + _z * _z);
+	return sqrt(x * x + y * y + z * z);
 }
 
 Vector3 Vector3::Normalized() const
@@ -21,49 +21,49 @@ Vector3 Vector3::Normalized() const
 }
 
 const float Vector3::dot(Vector3& a, Vector3& b) const {
-	return a._x * b._x + a._y * b._y + a._z * b._z;
+	return a.x * b.x + a.y * b.y + a.z * b.z;
 }
 
 Vector3 Vector3::Cross(Vector3& a, Vector3& b) const
 {
 	return Vector3(
-		a._y * b._z - a._z * b._y,
-		a._z * b._x - a._x * b._z,
-		a._x * b._y - a._y * b._x
+		a.y * b.z - a.z * b.y,
+		a.z * b.x - a.x * b.z,
+		a.x * b.y - a.y * b.x
 	);
 }
 
 void Vector3::operator=		(const Vector3& v) {
-	_x = v._x;
-	_y = v._y;
-	_z = v._z;
+	x = v.x;
+	y = v.y;
+	z = v.z;
 }
 
 Vector3 Vector3::operator+=	(const Vector3& v) {
-	_x += v._x;
-	_y += v._y;
-	_z += v._z;
+	x += v.x;
+	y += v.y;
+	z += v.z;
 	return *this;
 }
 
 Vector3 Vector3::operator-=	(const Vector3& v) {
-	_x -= v._x;
-	_y -= v._y;
-	_z -= v._z;
+	x -= v.x;
+	y -= v.y;
+	z -= v.z;
 	return *this;
 }
 
 Vector3 Vector3::operator*=	(const float& scalar) {
-	_x *= scalar;
-	_y *= scalar;
-	_z *= scalar;
+	x *= scalar;
+	y *= scalar;
+	z *= scalar;
 	return *this;
 }
 
 Vector3 Vector3::operator/=	(const float& scalar) {
-	_x /= scalar;
-	_y /= scalar;
-	_z /= scalar;
+	x /= scalar;
+	y /= scalar;
+	z /= scalar;
 	return *this;
 }
 
