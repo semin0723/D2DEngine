@@ -1,6 +1,5 @@
 #pragma once
 #include "../D2DEngine/D2DEngine.h"
-#include "RenderComponent.h"
 #include "ECSCall.h"
 #include "Rectangle.h"
 
@@ -22,7 +21,6 @@ public:
 
 
 private:
-	RenderComponent _renderComponent;
 	
 };
 	
