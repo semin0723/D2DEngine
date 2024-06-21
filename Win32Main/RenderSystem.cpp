@@ -1,5 +1,5 @@
 #include "RenderSystem.h"
-
+#include "BoxComponent.h"
 
 RenderSystem::RenderSystem(ID2D1HwndRenderTarget* target) : _target(target)
 {

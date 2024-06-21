@@ -76,8 +76,14 @@
     <Filter Include="소스 파일\Input">
       <UniqueIdentifier>{857863fd-b5e3-49c9-8d24-073c5f3a494e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Render">
-      <UniqueIdentifier>{54324fd4-538a-43f5-bb1c-2bf109b714ca}</UniqueIdentifier>
+    <Filter Include="소스 파일\Component">
+      <UniqueIdentifier>{65b56e5e-194e-4931-bd8d-d27042282394}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\System">
+      <UniqueIdentifier>{e9d90584-358a-4c1d-86a3-573dcfa403ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\GameObjects">
+      <UniqueIdentifier>{fb57b59c-f1c0-4750-ab8c-ec5ca818b4f4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -102,20 +108,11 @@
     <ClInclude Include="STL.h">
       <Filter>헤더 파일\Util</Filter>
     </ClInclude>
-    <ClInclude Include="RenderComponent.h">
-      <Filter>소스 파일\Render</Filter>
-    </ClInclude>
     <ClInclude Include="Vector3.h">
       <Filter>소스 파일\Util</Filter>
     </ClInclude>
     <ClInclude Include="InputComponent.h">
       <Filter>소스 파일\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="Handle.h">
-      <Filter>헤더 파일\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="utilheader.h">
-      <Filter>헤더 파일\Util</Filter>
     </ClInclude>
     <ClInclude Include="IComponent.h">
       <Filter>소스 파일\ECS\Component\Base</Filter>
@@ -186,6 +183,21 @@
     <ClInclude Include="BoxComponent.h">
       <Filter>소스 파일\Test</Filter>
     </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>소스 파일\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="utilheader.h">
+      <Filter>소스 파일\ECS\ECSBase</Filter>
+    </ClInclude>
+    <ClInclude Include="World.h">
+      <Filter>소스 파일\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Square.h">
+      <Filter>소스 파일\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>소스 파일\Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Win32Main.cpp">
@@ -193,9 +205,6 @@
     </ClCompile>
     <ClCompile Include="DemoApp.cpp">
       <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderComponent.cpp">
-      <Filter>소스 파일\Render</Filter>
     </ClCompile>
     <ClCompile Include="Component.cpp">
       <Filter>소스 파일\ECS\Component\Base</Filter>
@@ -268,6 +277,21 @@
     </ClCompile>
     <ClCompile Include="BoxComponent.cpp">
       <Filter>소스 파일\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>소스 파일\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="globalheader.h">
+      <Filter>헤더 파일\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="World.cpp">
+      <Filter>소스 파일\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Square.cpp">
+      <Filter>소스 파일\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>소스 파일\Component</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

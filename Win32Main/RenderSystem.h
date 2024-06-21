@@ -1,10 +1,10 @@
 #pragma once
 #include "../D2DEngine/D2DRender.h"
-#include "ECSCall.h"
-#include "utilheader.h"	
+#include "ECSElements.h"
+#include "globalheader.h"	
 #include "EventListener.h"
 #include "Events.h"
-#include "BoxComponent.h"
+
 
 struct DrawRectangle : public Event<DrawRectangle> {
 	float left;

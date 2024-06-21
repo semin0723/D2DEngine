@@ -147,23 +147,25 @@
     <ClInclude Include="Events.h" />
     <ClInclude Include="FamilyTypeId.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="Handle.h" />
     <ClInclude Include="IComponent.h" />
     <ClInclude Include="IEntity.h" />
     <ClInclude Include="IEvent.h" />
     <ClInclude Include="InputComponent.h" />
     <ClInclude Include="ISystem.h" />
     <ClInclude Include="Rectangle.h" />
-    <ClInclude Include="RenderComponent.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Sprite.h" />
+    <ClInclude Include="Square.h" />
     <ClInclude Include="STL.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="SystemManager.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Transform.h" />
     <ClInclude Include="utilheader.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="Win32Main.h" />
+    <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BoxComponent.cpp" />
@@ -181,18 +183,22 @@
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="EventListener.cpp" />
     <ClCompile Include="FamilyTypeId.cpp" />
+    <ClCompile Include="globalheader.h" />
     <ClCompile Include="IComponent.cpp" />
     <ClCompile Include="IEntity.cpp" />
     <ClCompile Include="IEvent.cpp" />
     <ClCompile Include="InputComponent.cpp" />
     <ClCompile Include="ISystem.cpp" />
     <ClCompile Include="Rectangle.cpp" />
-    <ClCompile Include="RenderComponent.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
+    <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="Square.cpp" />
     <ClCompile Include="System.cpp" />
     <ClCompile Include="SystemManager.cpp" />
+    <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Vector3.cpp" />
     <ClCompile Include="Win32Main.cpp" />
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Win32Main.rc" />
