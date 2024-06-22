@@ -15,13 +15,13 @@ public:
 	virtual ~IEntity() {}
 
 	template<class T>
-	T* GetComponent() const {}
+	T* GetComponent() const { return _componentManagerInstance->Getcomponent<T>(_entityId); }
 
 	template<class T, class ...P>
-	T* AddComponent(P&&... param) {}
+	T* AddComponent(P&&... param) { return _componentManagerInstance->AddComponent<T>(_entityId, std::forward<P>(param)...); }
 
 	template<class T>
-	void RemoveComponent() {}
+	void RemoveComponent() { _componentManagerInstance->RemoveComponent<T>(_entityId); }
 
 	// 엔티티 끼리의 비교, 언젠간 사용할듯?  포인터로 받아서 비교와 참조로 받아서 비교 두개를 만든다.
 	bool operator==(const IEntity& other) const { return _entityId == other._entityId; }

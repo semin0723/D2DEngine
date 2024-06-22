@@ -1,5 +1,6 @@
 #include "RenderSystem.h"
 #include "BoxComponent.h"
+#include "Transform.h"
 
 RenderSystem::RenderSystem(ID2D1HwndRenderTarget* target) : _target(target)
 {
@@ -16,8 +17,9 @@ RenderSystem::~RenderSystem()
 void RenderSystem::Update(float dt)
 {
 	for (auto entity : _renderObject) {
-		BoxComponent* bc = ECS::_ecs->GetComponentManager()->Getcomponent<BoxComponent>(entity._eid);
-		_target->FillRectangle(D2D1::RectF(bc->_left, bc->_top, bc->_right, bc->_bottom), _blackBrush);
+		Transform* transform = entity._obj->GetComponent<Transform>();
+		BoxComponent* bc = entity._obj->GetComponent<BoxComponent>();
+		_target->FillRectangle(D2D1::RectF(transform->_position.x, transform->_position.y, bc->_width, bc->_height), _blackBrush);
 	}
 }
 
