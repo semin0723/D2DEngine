@@ -5,12 +5,10 @@ class BoxComponent : public Component<BoxComponent>
 {
 public:
     BoxComponent();
-    BoxComponent(float l, float t, float r, float b);
+    BoxComponent(float width, float height);
     ~BoxComponent();
 
-	float _left;
-    float _top;
-    float _right;
-    float _bottom;
+	float _width;
+    float _height;
 };
 
