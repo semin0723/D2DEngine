@@ -3,6 +3,11 @@
 
 struct GameObjectCreated : public Event<GameObjectCreated> {
 	EntityId _entityId;
-	EntityTypeId _entityTypeId;
-	GameObjectCreated(EntityId eid, EntityTypeId etid) : _entityId(eid), _entityTypeId(etid) {}
+	GameObjectCreated(EntityId eid) : _entityId(eid) {}
+};
+
+struct CreateSprite : public Event<CreateSprite> {
+	EntityId _entityId;
+	std::wstring _spriteKey;
+	CreateSprite(EntityId eid, std::wstring spkey) : _entityId(eid), _spriteKey(spkey) {}
 };

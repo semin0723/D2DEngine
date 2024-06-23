@@ -23,10 +23,7 @@ private:
 	template<class E>
 	EntityId CreateGameObject() {
 		EntityId eid = ECS::_ecs->GetEntityManager()->CreateEntity<E>();
-		ECS::_ecs->SendEvent<GameObjectCreated>(
-			eid, 
-			ECS::_ecs->GetEntityManager()->GetEntity(eid)->GetEntityTypeId()
-		);
+		ECS::_ecs->SendEvent<GameObjectCreated>(eid);
 		return eid;
 	}
 };

@@ -1,5 +1,6 @@
 #include "RenderSystem.h"
 #include "BoxComponent.h"
+#include "Sprite.h"
 #include "Transform.h"
 
 RenderSystem::RenderSystem(ID2D1HwndRenderTarget* target) : _target(target)
@@ -18,8 +19,10 @@ void RenderSystem::Update(float dt)
 {
 	for (auto entity : _renderObject) {
 		Transform* transform = entity._obj->GetComponent<Transform>();
-		BoxComponent* bc = entity._obj->GetComponent<BoxComponent>();
-		_target->FillRectangle(D2D1::RectF(transform->_position.x, transform->_position.y, bc->_width, bc->_height), _blackBrush);
+		Sprite* sprite = entity._obj->GetComponent<Sprite>();
+		D2D1_MATRIX_3X2_F tf = D2D1::Matrix3x2F::Translation(transform->_position.x, transform->_position.y);
+		_target->SetTransform(tf);
+		_target->DrawBitmap(sprite->_sprite->_bitmap);
 	}
 }
 

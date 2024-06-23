@@ -198,6 +198,12 @@
     <ClInclude Include="Sprite.h">
       <Filter>소스 파일\Component</Filter>
     </ClInclude>
+    <ClInclude Include="ResourceSystem.h">
+      <Filter>소스 파일\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>소스 파일\System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Win32Main.cpp">
@@ -292,6 +298,9 @@
     </ClCompile>
     <ClCompile Include="Sprite.cpp">
       <Filter>소스 파일\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceSystem.cpp">
+      <Filter>소스 파일\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

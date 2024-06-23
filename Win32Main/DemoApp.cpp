@@ -1,5 +1,6 @@
 #include "DemoApp.h"
 #include "RenderSystem.h"
+#include "ResourceSystem.h"
 #include "World.h"
 
 void DemoApp::Initialize(HINSTANCE _hInstance)
@@ -11,6 +12,7 @@ void DemoApp::Initialize(HINSTANCE _hInstance)
 	ECS::Initialize();
 
 	RenderSystem* render = ECS::_ecs->GetSystemManager()->AddSystem<RenderSystem>(GetRenderTarget());
+	ResourceSystem* resource = ECS::_ecs->GetSystemManager()->AddSystem<ResourceSystem>(GetRenderTarget());
 	World* world = ECS::_ecs->GetSystemManager()->AddSystem<World>();
 
 }

@@ -150,11 +150,13 @@
     <ClInclude Include="IComponent.h" />
     <ClInclude Include="IEntity.h" />
     <ClInclude Include="IEvent.h" />
+    <ClInclude Include="Image.h" />
     <ClInclude Include="InputComponent.h" />
     <ClInclude Include="ISystem.h" />
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="ResourceSystem.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Square.h" />
     <ClInclude Include="STL.h" />
@@ -191,6 +193,7 @@
     <ClCompile Include="ISystem.cpp" />
     <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
+    <ClCompile Include="ResourceSystem.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Square.cpp" />
     <ClCompile Include="System.cpp" />
