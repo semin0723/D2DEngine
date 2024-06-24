@@ -4,7 +4,7 @@
 class Image {
 public:
 	Image() {}
-	~Image() { _bitmap->Release(); }
+	~Image() { if(_bitmap) _bitmap->Release(); }
 
 	ID2D1Bitmap* _bitmap{ 0 };
 };

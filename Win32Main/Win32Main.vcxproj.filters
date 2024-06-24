@@ -25,6 +25,18 @@
     <Filter Include="소스 파일\Test">
       <UniqueIdentifier>{3e311b7c-96e1-40cc-951c-ea97d496cf55}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Input">
+      <UniqueIdentifier>{857863fd-b5e3-49c9-8d24-073c5f3a494e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component">
+      <UniqueIdentifier>{65b56e5e-194e-4931-bd8d-d27042282394}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\System">
+      <UniqueIdentifier>{e9d90584-358a-4c1d-86a3-573dcfa403ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\GameObjects">
+      <UniqueIdentifier>{fb57b59c-f1c0-4750-ab8c-ec5ca818b4f4}</UniqueIdentifier>
+    </Filter>
     <Filter Include="소스 파일\ECS">
       <UniqueIdentifier>{c86dda01-90d9-4122-a98c-0bfbbf6cf537}</UniqueIdentifier>
     </Filter>
@@ -67,23 +79,14 @@
     <Filter Include="소스 파일\ECS\System">
       <UniqueIdentifier>{b567ebc7-e18e-498c-8f3d-c952c751e9f0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\ECS\Manager">
-      <UniqueIdentifier>{df6762e8-1b61-4da9-9ec3-ddee789333bc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\ECS\System\Base">
       <UniqueIdentifier>{7944c6bf-e6b3-4495-9078-7fc4ce804a3f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Input">
-      <UniqueIdentifier>{857863fd-b5e3-49c9-8d24-073c5f3a494e}</UniqueIdentifier>
+    <Filter Include="소스 파일\ECS\Manager">
+      <UniqueIdentifier>{df6762e8-1b61-4da9-9ec3-ddee789333bc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Component">
-      <UniqueIdentifier>{65b56e5e-194e-4931-bd8d-d27042282394}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\System">
-      <UniqueIdentifier>{e9d90584-358a-4c1d-86a3-573dcfa403ea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\GameObjects">
-      <UniqueIdentifier>{fb57b59c-f1c0-4750-ab8c-ec5ca818b4f4}</UniqueIdentifier>
+    <Filter Include="소스 파일\GameEvents">
+      <UniqueIdentifier>{932a216b-c9fa-459f-8a3a-9d9d2600b545}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -168,12 +171,6 @@
     <ClInclude Include="SystemManager.h">
       <Filter>소스 파일\ECS\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="RenderSystem.h">
-      <Filter>소스 파일\Test</Filter>
-    </ClInclude>
-    <ClInclude Include="Events.h">
-      <Filter>소스 파일\Test</Filter>
-    </ClInclude>
     <ClInclude Include="ECSElements.h">
       <Filter>소스 파일\ECS\ECSBase</Filter>
     </ClInclude>
@@ -202,6 +199,18 @@
       <Filter>소스 파일\System</Filter>
     </ClInclude>
     <ClInclude Include="Image.h">
+      <Filter>소스 파일\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Events.h">
+      <Filter>소스 파일\GameEvents</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderSystem.h">
+      <Filter>소스 파일\System</Filter>
+    </ClInclude>
+    <ClInclude Include="InputSystem.h">
+      <Filter>소스 파일\System</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerControllSystem.h">
       <Filter>소스 파일\System</Filter>
     </ClInclude>
   </ItemGroup>
@@ -275,9 +284,6 @@
     <ClCompile Include="SystemManager.cpp">
       <Filter>소스 파일\ECS\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="RenderSystem.cpp">
-      <Filter>소스 파일\Test</Filter>
-    </ClCompile>
     <ClCompile Include="Rectangle.cpp">
       <Filter>소스 파일\Test</Filter>
     </ClCompile>
@@ -300,6 +306,15 @@
       <Filter>소스 파일\Component</Filter>
     </ClCompile>
     <ClCompile Include="ResourceSystem.cpp">
+      <Filter>소스 파일\System</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderSystem.cpp">
+      <Filter>소스 파일\System</Filter>
+    </ClCompile>
+    <ClCompile Include="InputSystem.cpp">
+      <Filter>소스 파일\System</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerControllSystem.cpp">
       <Filter>소스 파일\System</Filter>
     </ClCompile>
   </ItemGroup>

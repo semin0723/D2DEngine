@@ -1,6 +1,8 @@
 #include "DemoApp.h"
 #include "RenderSystem.h"
 #include "ResourceSystem.h"
+#include "InputSystem.h"
+#include "PlayerControllSystem.h"
 #include "World.h"
 
 void DemoApp::Initialize(HINSTANCE _hInstance)
@@ -11,6 +13,8 @@ void DemoApp::Initialize(HINSTANCE _hInstance)
 	//TODO: 여기서 코어에 관한 모든 요소를 초기화 합니다.
 	ECS::Initialize();
 
+	InputSystem* input = ECS::_ecs->GetSystemManager()->AddSystem<InputSystem>();
+	PlayerControllSystem* pControll = ECS::_ecs->GetSystemManager()->AddSystem<PlayerControllSystem>();
 	RenderSystem* render = ECS::_ecs->GetSystemManager()->AddSystem<RenderSystem>(GetRenderTarget());
 	ResourceSystem* resource = ECS::_ecs->GetSystemManager()->AddSystem<ResourceSystem>(GetRenderTarget());
 	World* world = ECS::_ecs->GetSystemManager()->AddSystem<World>();

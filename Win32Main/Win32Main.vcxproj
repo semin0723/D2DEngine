@@ -152,7 +152,9 @@
     <ClInclude Include="IEvent.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="InputComponent.h" />
+    <ClInclude Include="InputSystem.h" />
     <ClInclude Include="ISystem.h" />
+    <ClInclude Include="PlayerControllSystem.h" />
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="Resource.h" />
@@ -190,7 +192,9 @@
     <ClCompile Include="IEntity.cpp" />
     <ClCompile Include="IEvent.cpp" />
     <ClCompile Include="InputComponent.cpp" />
+    <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="ISystem.cpp" />
+    <ClCompile Include="PlayerControllSystem.cpp" />
     <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="ResourceSystem.cpp" />
