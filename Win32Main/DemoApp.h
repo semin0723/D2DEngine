@@ -1,7 +1,6 @@
 #pragma once
 #include "../D2DEngine/D2DEngine.h"
 #include "ECSCall.h"
-#include "Rectangle.h"
 
 class EventHandler;
 

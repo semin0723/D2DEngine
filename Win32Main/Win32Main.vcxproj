@@ -129,7 +129,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="BoxComponent.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentManager.h" />
     <ClInclude Include="DemoApp.h" />
@@ -154,7 +153,6 @@
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="ISystem.h" />
     <ClInclude Include="PlayerControllSystem.h" />
-    <ClInclude Include="Rectangle.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceSystem.h" />
@@ -171,7 +169,6 @@
     <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BoxComponent.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComponentManager.cpp" />
     <ClCompile Include="DemoApp.cpp" />
@@ -193,7 +190,6 @@
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="ISystem.cpp" />
     <ClCompile Include="PlayerControllSystem.cpp" />
-    <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="ResourceSystem.cpp" />
     <ClCompile Include="Sprite.cpp" />

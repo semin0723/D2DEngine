@@ -22,9 +22,6 @@
     <Filter Include="소스 파일\Util">
       <UniqueIdentifier>{565eb04d-0db5-47cc-8094-d382acee2e5c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Test">
-      <UniqueIdentifier>{3e311b7c-96e1-40cc-951c-ea97d496cf55}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Component">
       <UniqueIdentifier>{65b56e5e-194e-4931-bd8d-d27042282394}</UniqueIdentifier>
     </Filter>
@@ -84,6 +81,21 @@
     </Filter>
     <Filter Include="소스 파일\GameEvents">
       <UniqueIdentifier>{932a216b-c9fa-459f-8a3a-9d9d2600b545}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\System\Input">
+      <UniqueIdentifier>{d9dc6596-fedf-4c96-88b6-34d8daae60d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\System\Resource">
+      <UniqueIdentifier>{372143fa-65b1-4851-80cc-6c71e1ee0ff5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\System\Render">
+      <UniqueIdentifier>{b84eb1f4-b540-4869-bfe3-1bf7276ae2cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\System\World">
+      <UniqueIdentifier>{46a2b1c9-4ad0-4b92-95b5-3a1a24fe8ba9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\System\PlayerControll">
+      <UniqueIdentifier>{71856950-c2ef-43f0-9aa4-f1989cc14159}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -168,20 +180,11 @@
     <ClInclude Include="ECSElements.h">
       <Filter>소스 파일\ECS\ECSBase</Filter>
     </ClInclude>
-    <ClInclude Include="Rectangle.h">
-      <Filter>소스 파일\Test</Filter>
-    </ClInclude>
-    <ClInclude Include="BoxComponent.h">
-      <Filter>소스 파일\Test</Filter>
-    </ClInclude>
     <ClInclude Include="Transform.h">
       <Filter>소스 파일\Component</Filter>
     </ClInclude>
     <ClInclude Include="utilheader.h">
       <Filter>소스 파일\ECS\ECSBase</Filter>
-    </ClInclude>
-    <ClInclude Include="World.h">
-      <Filter>소스 파일\System</Filter>
     </ClInclude>
     <ClInclude Include="Square.h">
       <Filter>소스 파일\GameObjects</Filter>
@@ -189,23 +192,26 @@
     <ClInclude Include="Sprite.h">
       <Filter>소스 파일\Component</Filter>
     </ClInclude>
-    <ClInclude Include="ResourceSystem.h">
-      <Filter>소스 파일\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Image.h">
-      <Filter>소스 파일\System</Filter>
-    </ClInclude>
     <ClInclude Include="Events.h">
       <Filter>소스 파일\GameEvents</Filter>
     </ClInclude>
-    <ClInclude Include="RenderSystem.h">
-      <Filter>소스 파일\System</Filter>
-    </ClInclude>
     <ClInclude Include="InputSystem.h">
-      <Filter>소스 파일\System</Filter>
+      <Filter>소스 파일\System\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceSystem.h">
+      <Filter>소스 파일\System\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderSystem.h">
+      <Filter>소스 파일\System\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="World.h">
+      <Filter>소스 파일\System\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>소스 파일\System\Resource</Filter>
     </ClInclude>
     <ClInclude Include="PlayerControllSystem.h">
-      <Filter>소스 파일\System</Filter>
+      <Filter>소스 파일\System\PlayerControll</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -275,20 +281,11 @@
     <ClCompile Include="SystemManager.cpp">
       <Filter>소스 파일\ECS\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Rectangle.cpp">
-      <Filter>소스 파일\Test</Filter>
-    </ClCompile>
-    <ClCompile Include="BoxComponent.cpp">
-      <Filter>소스 파일\Test</Filter>
-    </ClCompile>
     <ClCompile Include="Transform.cpp">
       <Filter>소스 파일\Component</Filter>
     </ClCompile>
     <ClCompile Include="globalheader.h">
       <Filter>헤더 파일\Util</Filter>
-    </ClCompile>
-    <ClCompile Include="World.cpp">
-      <Filter>소스 파일\System</Filter>
     </ClCompile>
     <ClCompile Include="Square.cpp">
       <Filter>소스 파일\GameObjects</Filter>
@@ -296,17 +293,20 @@
     <ClCompile Include="Sprite.cpp">
       <Filter>소스 파일\Component</Filter>
     </ClCompile>
+    <ClCompile Include="InputSystem.cpp">
+      <Filter>소스 파일\System\Input</Filter>
+    </ClCompile>
     <ClCompile Include="ResourceSystem.cpp">
-      <Filter>소스 파일\System</Filter>
+      <Filter>소스 파일\System\Resource</Filter>
     </ClCompile>
     <ClCompile Include="RenderSystem.cpp">
-      <Filter>소스 파일\System</Filter>
+      <Filter>소스 파일\System\Render</Filter>
     </ClCompile>
-    <ClCompile Include="InputSystem.cpp">
-      <Filter>소스 파일\System</Filter>
+    <ClCompile Include="World.cpp">
+      <Filter>소스 파일\System\World</Filter>
     </ClCompile>
     <ClCompile Include="PlayerControllSystem.cpp">
-      <Filter>소스 파일\System</Filter>
+      <Filter>소스 파일\System\PlayerControll</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

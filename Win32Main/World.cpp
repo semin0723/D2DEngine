@@ -2,7 +2,6 @@
 #include "ECSCall.h"
 #include "Square.h"
 #include "Transform.h"
-#include "BoxComponent.h"
 
 World::World()
 {
