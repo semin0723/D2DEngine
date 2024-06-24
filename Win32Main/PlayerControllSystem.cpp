@@ -34,26 +34,34 @@ void PlayerControllSystem::OnPlayerCreated(const RegistPlayer* event)
 
 void PlayerControllSystem::OnKeyDown(const KeyDown* event)
 {
-
+	Transform* tf = ECS::_ecs->GetComponentManager()->Getcomponent<Transform>(_playerId);
+	if (event->_keyCode == 0x25) {
+		tf->_position += Vector3(-50, 0, 0) * event->_delta;
+	}
+	if (event->_keyCode == 0x26) {
+		tf->_position += Vector3(0, -50, 0) * event->_delta;
+	}
+	if (event->_keyCode == 0x27) {
+		tf->_position += Vector3(50, 0, 0) * event->_delta;
+	}
+	if (event->_keyCode == 0x28) {
+		tf->_position += Vector3(0, 50, 0) * event->_delta;
+	}
+	if (event->_keyCode == VK_SPACE) {
+		tf->_rotate += Vector3(0, 0, 40) * event->_delta;
+	}
 }
 
 void PlayerControllSystem::OnKey(const Key* event)
 {
-	Transform* tf = ECS::_ecs->GetComponentManager()->Getcomponent<Transform>(_playerId);
-	if (event->_keyCode == 0x25) {
-		tf->_position += Vector3(-1, 0, 0);
-	}
-	if (event->_keyCode == 0x26) {
-		tf->_position += Vector3(0, -1, 0);
-	}
-	if (event->_keyCode == 0x27) {
-		tf->_position += Vector3(1, 0, 0);
-	}
-	if (event->_keyCode == 0x28) {
-		tf->_position += Vector3(1, 0, 0);
-	}
+
 }
 
 void PlayerControllSystem::OnKeyUp(const KeyUp* event)
 {
+	Transform* tf = ECS::_ecs->GetComponentManager()->Getcomponent<Transform>(_playerId);
+	if (event->_keyCode == VK_SPACE) {
+		tf->_rotate += Vector3(0, 0, 180) * event->_delta;
+	}
+
 }

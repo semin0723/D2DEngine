@@ -3,15 +3,18 @@
 
 struct KeyDown : public Event<KeyDown> {
 	const int _keyCode;
-	KeyDown(const int keyCode) : _keyCode(keyCode) {}
+	const float _delta;
+	KeyDown(const int keyCode, const float delta) : _keyCode(keyCode), _delta(delta) {}
 };
 struct KeyUp : public Event<KeyUp> {
 	const int _keyCode;
-	KeyUp(const int keyCode) : _keyCode(keyCode) {}
+	const float _delta;
+	KeyUp(const int keyCode, const float delta) : _keyCode(keyCode), _delta(delta) {}
 };
 struct Key : public Event<Key> {
 	const int _keyCode;
-	Key(const int keyCode) : _keyCode(keyCode) {}
+	const float _delta;
+	Key(const int keyCode, const float delta) : _keyCode(keyCode), _delta(delta) {}
 };
 
 struct GameObjectCreated : public Event<GameObjectCreated> {

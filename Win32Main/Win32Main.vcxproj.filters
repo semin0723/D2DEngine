@@ -25,9 +25,6 @@
     <Filter Include="소스 파일\Test">
       <UniqueIdentifier>{3e311b7c-96e1-40cc-951c-ea97d496cf55}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Input">
-      <UniqueIdentifier>{857863fd-b5e3-49c9-8d24-073c5f3a494e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Component">
       <UniqueIdentifier>{65b56e5e-194e-4931-bd8d-d27042282394}</UniqueIdentifier>
     </Filter>
@@ -113,9 +110,6 @@
     </ClInclude>
     <ClInclude Include="Vector3.h">
       <Filter>소스 파일\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="InputComponent.h">
-      <Filter>소스 파일\Input</Filter>
     </ClInclude>
     <ClInclude Include="IComponent.h">
       <Filter>소스 파일\ECS\Component\Base</Filter>
@@ -226,9 +220,6 @@
     </ClCompile>
     <ClCompile Include="Vector3.cpp">
       <Filter>소스 파일\Util</Filter>
-    </ClCompile>
-    <ClCompile Include="InputComponent.cpp">
-      <Filter>소스 파일\Input</Filter>
     </ClCompile>
     <ClCompile Include="IComponent.cpp">
       <Filter>소스 파일\ECS\Component\Base</Filter>
