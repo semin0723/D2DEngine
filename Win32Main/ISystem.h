@@ -13,7 +13,7 @@ public:
 	virtual ~ISystem() {}
 
 	virtual const SystemTypeId GetTypeId() const = 0;
-	virtual const std::string& GetSystemTypeName() const = 0;
+	virtual const std::string GetSystemTypeName() const = 0;
 
 	virtual void PreUpdate(float dt) = 0;
 	virtual void Update(float dt) = 0;

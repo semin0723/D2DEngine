@@ -13,7 +13,7 @@ public:
     virtual ~System() {}
 
     virtual const SystemTypeId GetTypeId() const { return SYSTEM_TYPE_ID; }
-    virtual const std::string& GetSystemTypeName() const override {
+    virtual const std::string GetSystemTypeName() const override {
         std::string TYPE_NAME   { typeid(T).name() };
         return TYPE_NAME;
     }
@@ -27,7 +27,7 @@ protected:
     
 
 private:
-    SystemManager* _systemManager;
+    SystemManager* _systemManager = { 0 };
 
     friend class SystemManager;
 };

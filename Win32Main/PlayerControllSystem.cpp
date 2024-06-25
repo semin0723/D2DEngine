@@ -36,19 +36,19 @@ void PlayerControllSystem::OnKeyDown(const KeyDown* event)
 {
 	Transform* tf = ECS::_ecs->GetComponentManager()->Getcomponent<Transform>(_playerId);
 	if (event->_keyCode == 0x25) {
-		tf->_position += Vector3(-50, 0, 0) * event->_delta;
+		tf->_position += Vector3(-200, 0, 0) * event->_delta;
 	}
 	if (event->_keyCode == 0x26) {
-		tf->_position += Vector3(0, -50, 0) * event->_delta;
+		tf->_position += Vector3(0, -200, 0) * event->_delta;
 	}
 	if (event->_keyCode == 0x27) {
-		tf->_position += Vector3(50, 0, 0) * event->_delta;
+		tf->_position += Vector3(200, 0, 0) * event->_delta;
 	}
 	if (event->_keyCode == 0x28) {
-		tf->_position += Vector3(0, 50, 0) * event->_delta;
+		tf->_position += Vector3(0, 200, 0) * event->_delta;
 	}
 	if (event->_keyCode == VK_SPACE) {
-		tf->_rotate += Vector3(0, 0, 180) * event->_delta;
+		tf->_rotate += Vector3(0, 0, 360) * event->_delta;
 	}
 }
 
