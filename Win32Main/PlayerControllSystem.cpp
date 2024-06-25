@@ -48,7 +48,7 @@ void PlayerControllSystem::OnKeyDown(const KeyDown* event)
 		tf->_position += Vector3(0, 50, 0) * event->_delta;
 	}
 	if (event->_keyCode == VK_SPACE) {
-		tf->_rotate += Vector3(0, 0, 40) * event->_delta;
+		tf->_rotate += Vector3(0, 0, 180) * event->_delta;
 	}
 }
 

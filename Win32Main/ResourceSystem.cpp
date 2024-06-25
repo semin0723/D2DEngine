@@ -1,18 +1,44 @@
 #include "ResourceSystem.h"
 
-ResourceSystem::ResourceSystem(ID2D1HwndRenderTarget* target) : _target(target)
+ResourceSystem* ResourceSystem::_instance = nullptr;
+
+ResourceSystem* ResourceSystem::GetInstance()
 {
+	if (_instance == nullptr) {
+		_instance = new ResourceSystem;
+	}
+	return _instance;
+}
+
+void ResourceSystem::DestroyInstance()
+{
+	if (_instance) delete _instance;
+}
+
+void ResourceSystem::Initialize(ID2D1HwndRenderTarget* target)
+{
+	_target = target;
+
 	HRESULT res = CoCreateInstance(
 		CLSID_WICImagingFactory,
 		NULL,
 		CLSCTX_INPROC_SERVER,
 		IID_PPV_ARGS(&_wicFactory)
 	);
-
-	RegistEvent();
 }
 
-void ResourceSystem::GetImage(std::wstring spriteKey, Image* image)
+Image* ResourceSystem::GetImage(std::wstring& spriteKey)
+{
+	if (_resources.find(spriteKey) == _resources.end()) {
+		Image* newImage = new Image;
+		GetImageFromFile(spriteKey, newImage);
+		_resources.insert({ spriteKey, newImage });
+	}
+	
+	return _resources[spriteKey];
+}
+
+void ResourceSystem::GetImageFromFile(std::wstring& spriteKey, Image* image)
 {
 	IWICBitmapDecoder* decoder = nullptr;
 	IWICFormatConverter* converter = nullptr;
@@ -49,24 +75,4 @@ void ResourceSystem::GetImage(std::wstring spriteKey, Image* image)
 
 	if (frame)
 		frame->Release();
-}
-
-void ResourceSystem::RegistEvent()
-{
-	RegisterCallback(&ResourceSystem::OnCreateSprite);
-}
-
-void ResourceSystem::UnRegistEvent()
-{
-	UnRegisterCallback(&ResourceSystem::OnCreateSprite);
-}
-
-void ResourceSystem::OnCreateSprite(const CreateSprite* event)
-{
-	if (_resources.find(event->_spriteKey) == _resources.end()) {
-		Image* img = new Image;
-		GetImage(event->_spriteKey, img);
-		_resources.insert({ event->_spriteKey, img });
-	}
-	ECS::_ecs->GetComponentManager()->AddComponent<Sprite>(event->_entityId, _resources[event->_spriteKey]);
 }

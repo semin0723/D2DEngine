@@ -14,9 +14,10 @@ void DemoApp::Initialize(HINSTANCE _hInstance)
 	ECS::Initialize();
 
 	InputSystem* input = ECS::_ecs->GetSystemManager()->AddSystem<InputSystem>();
-	PlayerControllSystem* pControll = ECS::_ecs->GetSystemManager()->AddSystem<PlayerControllSystem>();
+	ResourceSystem::GetInstance()->Initialize(GetRenderTarget());
 	RenderSystem* render = ECS::_ecs->GetSystemManager()->AddSystem<RenderSystem>(GetRenderTarget());
-	ResourceSystem* resource = ECS::_ecs->GetSystemManager()->AddSystem<ResourceSystem>(GetRenderTarget());
+
+	PlayerControllSystem* pControll = ECS::_ecs->GetSystemManager()->AddSystem<PlayerControllSystem>();
 	World* world = ECS::_ecs->GetSystemManager()->AddSystem<World>();
 
 }
@@ -34,6 +35,7 @@ void DemoApp::Render()
 void DemoApp::Finalize()
 {
 	//TODO:: 여기서 코어에 연결돼있는 모든 요소를 해제해야 합니다.
+	ResourceSystem::GetInstance()->DestroyInstance();
 
 	ECS::Finalize();
 	__super::Finalize();

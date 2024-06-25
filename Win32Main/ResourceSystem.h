@@ -1,36 +1,33 @@
 #pragma once
-#include "ECSElements.h"
-#include "EventListener.h"
 #include "globalheader.h"
-#include "Events.h"
 #include "Image.h"
-#include "Sprite.h"
 #include "wincodec.h"
 #pragma comment(lib, "windowscodecs.lib")
 
-class ResourceSystem : public System<ResourceSystem>, public EventListener
+class ResourceSystem
 {
 public:
-	ResourceSystem(ID2D1HwndRenderTarget* target);
+	ResourceSystem() {}
 	~ResourceSystem() {
 		for (auto res : _resources) {
 			res.second->~Image();
 		}
 		_wicFactory->Release();
-		UnRegistEvent();
 	}
 
-	void GetImage(std::wstring spriteKey, Image* image);
+	static ResourceSystem* GetInstance();
+	static void DestroyInstance();
 
-	void RegistEvent();
-	void UnRegistEvent();
+	void Initialize(ID2D1HwndRenderTarget* target);
+	void GetImageFromFile(std::wstring& spriteKey, Image* image);
+	Image* GetImage(std::wstring& spriteKey);
 
 private:
-	ID2D1HwndRenderTarget* _target;
+	static ResourceSystem* _instance;
+
+	ID2D1HwndRenderTarget* _target = { 0 };
 	IWICImagingFactory* _wicFactory = { 0 };
 
 	std::unordered_map<std::wstring, Image*> _resources;
-
-	void OnCreateSprite(const CreateSprite* event);
 };
 
