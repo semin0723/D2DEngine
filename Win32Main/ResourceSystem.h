@@ -1,6 +1,7 @@
 #pragma once
 #include "globalheader.h"
 #include "Image.h"
+#include "Animation.h"
 #include "wincodec.h"
 #pragma comment(lib, "windowscodecs.lib")
 
@@ -19,8 +20,12 @@ public:
 	static void DestroyInstance();
 
 	void Initialize(ID2D1HwndRenderTarget* target);
-	void GetImageFromFile(std::wstring& spriteKey, Image* image);
+
+	void GetImageFromFile(std::wstring& spriteKey, ID2D1Bitmap** image);
 	Image* GetImage(std::wstring& spriteKey);
+
+	void GetFrameInfoFromFile(std::wstring& animationKey, Animation* animation);
+	Animation* GetAnimation(std::wstring& animationKey);
 
 private:
 	static ResourceSystem* _instance;
@@ -29,5 +34,6 @@ private:
 	IWICImagingFactory* _wicFactory = { 0 };
 
 	std::unordered_map<std::wstring, Image*> _resources;
+	std::unordered_map<std::wstring, Animation*> _animations;
 };
 

@@ -1,4 +1,6 @@
 #include "ResourceSystem.h"
+#include <fstream>
+#include <sstream>
 
 ResourceSystem* ResourceSystem::_instance = nullptr;
 
@@ -31,14 +33,58 @@ Image* ResourceSystem::GetImage(std::wstring& spriteKey)
 {
 	if (_resources.find(spriteKey) == _resources.end()) {
 		Image* newImage = new Image;
-		GetImageFromFile(spriteKey, newImage);
+		GetImageFromFile(spriteKey, &newImage->_bitmap);
 		_resources.insert({ spriteKey, newImage });
 	}
 	
 	return _resources[spriteKey];
 }
 
-void ResourceSystem::GetImageFromFile(std::wstring& spriteKey, Image* image)
+Animation* ResourceSystem::GetAnimation(std::wstring& animationKey)
+{
+	if (_animations.find(animationKey) == _animations.end()) {
+		Animation* animation = new Animation;
+		GetImageFromFile(animationKey, &animation->_animationBitmapSource);
+		GetFrameInfoFromFile(animationKey, animation);
+	}
+
+	return _animations[animationKey];
+}
+
+void ResourceSystem::GetFrameInfoFromFile(std::wstring& animationKey, Animation* animation)
+{
+	std::wstring filename = L"data\\Animation\\FrameInfo\\" + animationKey + L".CSV";
+	std::wifstream file(filename);
+	if (!file.is_open()) {
+		return;
+	}
+	std::wstring line;
+
+	int frameCount = 0;
+	std::getline(file, line);
+	std::wstringstream wss(line);
+	wss >> frameCount;
+
+	for (int i = 0; i < frameCount; i++) {
+		FrameInfo frame;
+		getline(file, line);
+		std::wstringstream wss(line);
+		std::wstring tmp;
+		std::getline(wss, tmp, L',');
+		frame._left = (float)_wtoi(tmp.c_str());
+		std::getline(wss, tmp, L',');
+		frame._top = (float)_wtoi(tmp.c_str());
+		std::getline(wss, tmp, L',');
+		frame._right = (float)_wtoi(tmp.c_str());
+		std::getline(wss, tmp, L',');
+		frame._bottom = (float)_wtoi(tmp.c_str());
+		std::getline(wss, tmp, L',');
+		frame._playTime = (float)_wtoi(tmp.c_str());
+		animation->_frames.push_back(frame);
+	}
+}
+
+void ResourceSystem::GetImageFromFile(std::wstring& spriteKey, ID2D1Bitmap** image)
 {
 	IWICBitmapDecoder* decoder = nullptr;
 	IWICFormatConverter* converter = nullptr;
@@ -65,7 +111,7 @@ void ResourceSystem::GetImageFromFile(std::wstring& spriteKey, Image* image)
 		WICBitmapPaletteTypeCustom
 	);
 
-	_target->CreateBitmapFromWicBitmap(converter, nullptr, &image->_bitmap);
+	_target->CreateBitmapFromWicBitmap(converter, nullptr, image);
 
 	if (converter)
 		converter->Release();
