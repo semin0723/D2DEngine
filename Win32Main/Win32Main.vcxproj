@@ -129,6 +129,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
+    <ClInclude Include="BoxCollider.h" />
+    <ClInclude Include="ColliderSystem.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentManager.h" />
     <ClInclude Include="DemoApp.h" />
@@ -138,6 +141,7 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityHandleTable.h" />
     <ClInclude Include="EntityManager.h" />
+    <ClInclude Include="EnumClass.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="EventDelegate.h" />
     <ClInclude Include="EventDispatcher.h" />
@@ -158,6 +162,7 @@
     <ClInclude Include="ResourceSystem.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Square.h" />
+    <ClInclude Include="StatComponent.h" />
     <ClInclude Include="STL.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="SystemManager.h" />
@@ -169,6 +174,8 @@
     <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BoxCollider.cpp" />
+    <ClCompile Include="ColliderSystem.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComponentManager.cpp" />
     <ClCompile Include="DemoApp.cpp" />
@@ -194,6 +201,7 @@
     <ClCompile Include="ResourceSystem.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Square.cpp" />
+    <ClCompile Include="StatComponent.cpp" />
     <ClCompile Include="System.cpp" />
     <ClCompile Include="SystemManager.cpp" />
     <ClCompile Include="Transform.cpp" />

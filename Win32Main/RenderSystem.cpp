@@ -16,12 +16,14 @@ RenderSystem::~RenderSystem()
 
 void RenderSystem::Update(float dt)
 {
-	for (auto& entity : _renderObject) {
-		Transform* transform = entity._obj->GetComponent<Transform>();
-		Sprite* sprite = entity._obj->GetComponent<Sprite>();
-		Vector3 spriteMidPos(sprite->_spriteSize.x / 2.0f, sprite->_spriteSize.y / 2.0f, 0);
-		_target->SetTransform(CalcTransform(transform->_position, transform->_scale, transform->_rotate, spriteMidPos));
-		_target->DrawBitmap(sprite->_sprite->_bitmap);
+	for (int i = 0; i < (UINT)Object_Layer::End; i++) {
+		for (auto& entity : _renderObject[i]) {
+			Transform* transform = entity._obj->GetComponent<Transform>();
+			Sprite* sprite = entity._obj->GetComponent<Sprite>();
+			Vector3 spriteMidPos(sprite->_spriteSize.x / 2.0f, sprite->_spriteSize.y / 2.0f, 0);
+			_target->SetTransform(CalcTransform(transform->_position, transform->_scale, transform->_rotate, spriteMidPos));
+			_target->DrawBitmap(sprite->_sprite->_bitmap);
+		}
 	}
 }
 
@@ -38,7 +40,7 @@ void RenderSystem::UnRegistEvent()
 void RenderSystem::eventTest(const GameObjectCreated* event)
 {
 	IEntity* entity = ECS::_ecs->GetEntityManager()->GetEntity(event->_entityId);
-	_renderObject.push_back(RenderObject(event->_entityId, entity));
+	_renderObject[(UINT)event->_layer].push_back(RenderObject(event->_entityId, entity));
 }
 
 D2D1_MATRIX_3X2_F RenderSystem::CalcTransform(Vector3& pos, Vector3& scale, Vector3& rot, Vector3& spriteMid)

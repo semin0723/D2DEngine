@@ -85,9 +85,6 @@
     <Filter Include="소스 파일\System\Input">
       <UniqueIdentifier>{d9dc6596-fedf-4c96-88b6-34d8daae60d7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\System\Resource">
-      <UniqueIdentifier>{372143fa-65b1-4851-80cc-6c71e1ee0ff5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\System\Render">
       <UniqueIdentifier>{b84eb1f4-b540-4869-bfe3-1bf7276ae2cf}</UniqueIdentifier>
     </Filter>
@@ -96,6 +93,18 @@
     </Filter>
     <Filter Include="소스 파일\System\PlayerControll">
       <UniqueIdentifier>{71856950-c2ef-43f0-9aa4-f1989cc14159}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Resource">
+      <UniqueIdentifier>{372143fa-65b1-4851-80cc-6c71e1ee0ff5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Resource\Image">
+      <UniqueIdentifier>{31b6f101-770b-458c-9735-58ffe32df967}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Resource\Animation">
+      <UniqueIdentifier>{a191f548-2a2c-4100-b43c-9e53503fb565}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\System\Collider">
+      <UniqueIdentifier>{29201d98-4425-46c4-b1f6-8f5f3fbacce6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -199,7 +208,7 @@
       <Filter>소스 파일\System\Input</Filter>
     </ClInclude>
     <ClInclude Include="ResourceSystem.h">
-      <Filter>소스 파일\System\Resource</Filter>
+      <Filter>소스 파일\Resource</Filter>
     </ClInclude>
     <ClInclude Include="RenderSystem.h">
       <Filter>소스 파일\System\Render</Filter>
@@ -207,11 +216,26 @@
     <ClInclude Include="World.h">
       <Filter>소스 파일\System\World</Filter>
     </ClInclude>
-    <ClInclude Include="Image.h">
-      <Filter>소스 파일\System\Resource</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerControllSystem.h">
       <Filter>소스 파일\System\PlayerControll</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>소스 파일\Resource\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>소스 파일\Resource\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="StatComponent.h">
+      <Filter>소스 파일\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxCollider.h">
+      <Filter>소스 파일\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="ColliderSystem.h">
+      <Filter>소스 파일\System\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="EnumClass.h">
+      <Filter>헤더 파일\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -297,7 +321,7 @@
       <Filter>소스 파일\System\Input</Filter>
     </ClCompile>
     <ClCompile Include="ResourceSystem.cpp">
-      <Filter>소스 파일\System\Resource</Filter>
+      <Filter>소스 파일\Resource</Filter>
     </ClCompile>
     <ClCompile Include="RenderSystem.cpp">
       <Filter>소스 파일\System\Render</Filter>
@@ -307,6 +331,15 @@
     </ClCompile>
     <ClCompile Include="PlayerControllSystem.cpp">
       <Filter>소스 파일\System\PlayerControll</Filter>
+    </ClCompile>
+    <ClCompile Include="StatComponent.cpp">
+      <Filter>소스 파일\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxCollider.cpp">
+      <Filter>소스 파일\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="ColliderSystem.cpp">
+      <Filter>소스 파일\System\Collider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

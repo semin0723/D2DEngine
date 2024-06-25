@@ -21,9 +21,9 @@ private:
 	void UnRegistEvent();
 
 	template<class E>
-	EntityId CreateGameObject() {
+	EntityId CreateGameObject(Object_Layer layer) {
 		EntityId eid = ECS::_ecs->GetEntityManager()->CreateEntity<E>();
-		ECS::_ecs->SendEvent<GameObjectCreated>(eid);
+		ECS::_ecs->SendEvent<GameObjectCreated>(eid, layer);
 		return eid;
 	}
 };

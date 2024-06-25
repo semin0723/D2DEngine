@@ -1,5 +1,6 @@
 #pragma once
 #include "ECSElements.h"
+#include "EnumClass.h"
 
 struct KeyDown : public Event<KeyDown> {
 	const int _keyCode;
@@ -19,7 +20,8 @@ struct Key : public Event<Key> {
 
 struct GameObjectCreated : public Event<GameObjectCreated> {
 	EntityId _entityId;
-	GameObjectCreated(EntityId eid) : _entityId(eid) {}
+	Object_Layer _layer;
+	GameObjectCreated(EntityId eid, Object_Layer layer) : _entityId(eid), _layer(layer) {}
 };
 
 struct CreateSprite : public Event<CreateSprite> {
@@ -31,4 +33,14 @@ struct CreateSprite : public Event<CreateSprite> {
 struct RegistPlayer : public Event<RegistPlayer> {
 	EntityId _entityId;
 	RegistPlayer(EntityId eid) : _entityId(eid) {}
+};
+
+struct DetectCollision : public Event<DetectCollision> {
+	EntityId _entityId;
+	DetectCollision(EntityId eid) : _entityId(eid) {}
+};
+
+struct DetectTrigger : public Event<DetectTrigger> {
+	EntityId _entityId;
+	DetectTrigger(EntityId eid) : _entityId(eid) {}
 };

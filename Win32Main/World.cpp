@@ -6,12 +6,12 @@
 
 World::World()
 {
-	EntityId square = CreateGameObject<Square>();
+	EntityId square = CreateGameObject<Square>(Object_Layer::Player);
 	ECS::_ecs->GetComponentManager()->AddComponent<Transform>(square, Vector3(100.0f, 100.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
 	ECS::_ecs->GetComponentManager()->AddComponent<Sprite>(square, L"TestImage");
 	ECS::_ecs->SendEvent<RegistPlayer>(square);
 
-	EntityId square2 = CreateGameObject<Square>();
+	EntityId square2 = CreateGameObject<Square>(Object_Layer::Monster);
 	ECS::_ecs->GetComponentManager()->AddComponent<Transform>(square2, Vector3(300.0f, 300.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
 	ECS::_ecs->GetComponentManager()->AddComponent<Sprite>(square2, L"TestImage");
 }
