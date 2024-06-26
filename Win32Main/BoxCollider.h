@@ -2,16 +2,17 @@
 #include "ECSElements.h"
 #include "globalheader.h"
 
-class BoxCollider : Component<BoxCollider>
+class BoxCollider : public Component<BoxCollider>
 {
 public:
-	BoxCollider() {}
+	BoxCollider(Vector3 size);
 	~BoxCollider() {}
 
+	void SetTrigger(const bool state) { _isTrigger = state; }
+	void SetBorderLocation(D2D1::Matrix3x2F transform);
+
 	bool _isTrigger = false;
-	float _left = 0;
-	float _top = 0;
-	float _right = 0;
-	float _bottom = 0;
+	std::vector<D2D1_POINT_2F> _borderPos;
+	std::vector<D2D1_POINT_2F> _calculatedBorderPos;
 };
 

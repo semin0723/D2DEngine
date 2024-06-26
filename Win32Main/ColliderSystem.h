@@ -17,6 +17,8 @@ public:
 	void RegistEvent();
 	void UnRegistEvent();
 
+	void checkCollision(UINT layer1Idx, UINT layer2Idx);
+
 	void OnGameObjectCreated(const GameObjectCreated* event);
 
 private:

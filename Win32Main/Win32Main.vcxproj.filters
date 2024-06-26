@@ -237,6 +237,9 @@
     <ClInclude Include="EnumClass.h">
       <Filter>헤더 파일\Util</Filter>
     </ClInclude>
+    <ClInclude Include="Util.h">
+      <Filter>소스 파일\Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Win32Main.cpp">
@@ -340,6 +343,9 @@
     </ClCompile>
     <ClCompile Include="ColliderSystem.cpp">
       <Filter>소스 파일\System\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Util.cpp">
+      <Filter>소스 파일\Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

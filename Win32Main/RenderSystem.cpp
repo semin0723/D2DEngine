@@ -1,16 +1,17 @@
 #include "RenderSystem.h"
 #include "Sprite.h"
 #include "Transform.h"
+#include "BoxCollider.h"
 
 RenderSystem::RenderSystem(ID2D1HwndRenderTarget* target) : _target(target)
 {
-	_target->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Black), &_blackBrush);
+	_target->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Green), &_greenBrush);
 	RegistEvent();
 }
 
 RenderSystem::~RenderSystem()
 {
-	_blackBrush->Release();
+	_greenBrush->Release();
 	UnRegistEvent();
 }
 
@@ -20,9 +21,20 @@ void RenderSystem::Update(float dt)
 		for (auto& entity : _renderObject[i]) {
 			Transform* transform = entity._obj->GetComponent<Transform>();
 			Sprite* sprite = entity._obj->GetComponent<Sprite>();
-			Vector3 spriteMidPos(sprite->_spriteSize.x / 2.0f, sprite->_spriteSize.y / 2.0f, 0);
-			_target->SetTransform(CalcTransform(transform->_position, transform->_scale, transform->_rotate, spriteMidPos));
+			//Vector3 spriteMidPos(sprite->_spriteSize.x / 2.0f, sprite->_spriteSize.y / 2.0f, 0);
+			//_target->SetTransform(CalcTransform(transform->_position, transform->_scale, transform->_rotate, spriteMidPos));
+			_target->SetTransform(transform->GetTransform());
 			_target->DrawBitmap(sprite->_sprite->_bitmap);
+
+			BoxCollider* bc = entity._obj->GetComponent<BoxCollider>();
+			if (bc == nullptr) continue;
+			_target->DrawRectangle(
+				D2D1::RectF(
+					bc->_borderPos[0].x, bc->_borderPos[0].y,
+					bc->_borderPos[2].x, bc->_borderPos[2].y
+				),
+				_greenBrush
+			);
 		}
 	}
 }

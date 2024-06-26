@@ -1,5 +1,6 @@
 #include "PlayerControllSystem.h"
 #include "Transform.h"
+#include "BoxCollider.h"
 
 PlayerControllSystem::PlayerControllSystem()
 {
@@ -35,6 +36,7 @@ void PlayerControllSystem::OnPlayerCreated(const RegistPlayer* event)
 void PlayerControllSystem::OnKeyDown(const KeyDown* event)
 {
 	Transform* tf = ECS::_ecs->GetComponentManager()->Getcomponent<Transform>(_playerId);
+	BoxCollider* bc = ECS::_ecs->GetComponentManager()->Getcomponent<BoxCollider>(_playerId);
 	if (event->_keyCode == 0x25) {
 		tf->_position += Vector3(-200, 0, 0) * event->_delta;
 	}
@@ -50,6 +52,7 @@ void PlayerControllSystem::OnKeyDown(const KeyDown* event)
 	if (event->_keyCode == VK_SPACE) {
 		tf->_rotate += Vector3(0, 0, 360) * event->_delta;
 	}
+	bc->SetBorderLocation(tf->GetTransform());
 }
 
 void PlayerControllSystem::OnKey(const Key* event)
