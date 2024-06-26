@@ -21,8 +21,8 @@ void RenderSystem::Update(float dt)
 		for (auto& entity : _renderObject[i]) {
 			Transform* transform = entity._obj->GetComponent<Transform>();
 			Sprite* sprite = entity._obj->GetComponent<Sprite>();
-			//Vector3 spriteMidPos(sprite->_spriteSize.x / 2.0f, sprite->_spriteSize.y / 2.0f, 0);
-			//_target->SetTransform(CalcTransform(transform->_position, transform->_scale, transform->_rotate, spriteMidPos));
+			if (transform == nullptr || sprite == nullptr) continue;
+
 			_target->SetTransform(transform->GetTransform());
 			_target->DrawBitmap(sprite->_sprite->_bitmap);
 
