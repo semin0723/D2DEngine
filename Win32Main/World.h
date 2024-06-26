@@ -26,5 +26,7 @@ private:
 		ECS::_ecs->SendEvent<GameObjectCreated>(eid, layer);
 		return eid;
 	}
+
+	EntityId _monsterId; // 테스트용
 };
 

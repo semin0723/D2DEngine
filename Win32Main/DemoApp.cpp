@@ -3,6 +3,7 @@
 #include "ResourceSystem.h"
 #include "InputSystem.h"
 #include "PlayerControllSystem.h"
+#include "ColliderSystem.h"
 #include "World.h"
 
 void DemoApp::Initialize(HINSTANCE _hInstance)
@@ -19,6 +20,10 @@ void DemoApp::Initialize(HINSTANCE _hInstance)
 
 	PlayerControllSystem* pControll = ECS::_ecs->GetSystemManager()->AddSystem<PlayerControllSystem>();
 	World* world = ECS::_ecs->GetSystemManager()->AddSystem<World>();
+
+	ColliderSystem* cs = ECS::_ecs->GetSystemManager()->AddSystem<ColliderSystem>();
+	cs->SetCollisionMatrix(Object_Layer::Player, Object_Layer::Monster);
+
 
 }
 

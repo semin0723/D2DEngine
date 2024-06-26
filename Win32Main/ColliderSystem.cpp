@@ -48,8 +48,69 @@ void ColliderSystem::checkCollision(UINT layer1Idx, UINT layer2Idx)
 		for (auto& j : right) {
 			BoxCollider* bcRight = ECS::_ecs->GetComponentManager()->Getcomponent<BoxCollider>(j);
 			if (bcRight == nullptr) continue;
+
+			bool isCollision = IsPointInSquare(bcLeft->_calculatedBorderPos, bcRight->_calculatedBorderPos);
+			std::pair<UINT, UINT> collisionKey = { (std::min)(i._index, j._index), (std::max)(i._index, j._index) };
+
+			if (bcLeft->_isTrigger == true || bcRight->_isTrigger == true) {
+				if (_collisionHistory[collisionKey] == false) {
+					if (isCollision == true) {
+						//ECS::_ecs->SendEvent<TriggerEnter>(i, j);
+						_collisionHistory[collisionKey] = true;
+					}
+				}
+				else {
+					if (isCollision == true) {
+						//ECS::_ecs->SendEvent<TriggerStay>(i, j);
+					}
+					else {
+						//ECS::_ecs->SendEvent<TriggerExit>(i, j);
+						_collisionHistory[collisionKey] = false;
+					}
+				}
+			}
+			else {
+				if (_collisionHistory[collisionKey] == false) {
+					if (isCollision == true) {
+						//ECS::_ecs->SendEvent<CollisionEnter>(i, j);
+						_collisionHistory[collisionKey] = true;
+					}
+				}
+				else {
+					if (isCollision == true) {
+						//ECS::_ecs->SendEvent<CollisionStay>(i, j);
+					}
+					else {
+						//ECS::_ecs->SendEvent<CollisionExit>(i, j);
+						_collisionHistory[collisionKey] = false;
+					}
+				}
+			}
 		}
 	}
+}
+
+bool ColliderSystem::IsPointInSquare(std::vector<D2D1_POINT_2F>& left, std::vector<D2D1_POINT_2F>& right)
+{
+	for (int i = 0; i < left.size(); i++) {
+		bool isPointInShape = true;
+		for (int j = 0; j < right.size(); j++) {
+			int pointIdx = (j + 1) % right.size();
+			if (CCW(right[j], left[i], right[pointIdx]) < 0) {
+				isPointInShape = false;
+				break;
+			}
+		}
+		if (isPointInShape == false) {
+			return false;
+		}
+	}
+	return true;
+}
+
+float ColliderSystem::CCW(D2D1_POINT_2F p1, D2D1_POINT_2F p2, D2D1_POINT_2F p3)
+{
+	return (p2.x - p1.x) * (p3.y - p1.y) - (p3.x - p1.x) * (p2.y - p1.y);
 }
 
 void ColliderSystem::RegistEvent()
