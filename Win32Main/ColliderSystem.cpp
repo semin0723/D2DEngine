@@ -55,16 +55,16 @@ void ColliderSystem::CheckCollision(UINT layer1Idx, UINT layer2Idx)
 			if (bcLeft->_isTrigger == true || bcRight->_isTrigger == true) {
 				if (_collisionHistory[collisionKey] == false) {
 					if (isCollision == true) {
-						//ECS::_ecs->SendEvent<TriggerEnter>(i, j);
+						ECS::_ecs->SendEvent<TriggerEnter>(i, j);
 						_collisionHistory[collisionKey] = true;
 					}
 				}
 				else {
 					if (isCollision == true) {
-						//ECS::_ecs->SendEvent<TriggerStay>(i, j);
+						ECS::_ecs->SendEvent<TriggerStay>(i, j);
 					}
 					else {
-						//ECS::_ecs->SendEvent<TriggerExit>(i, j);
+						ECS::_ecs->SendEvent<TriggerExit>(i, j);
 						_collisionHistory[collisionKey] = false;
 					}
 				}
@@ -72,16 +72,16 @@ void ColliderSystem::CheckCollision(UINT layer1Idx, UINT layer2Idx)
 			else {
 				if (_collisionHistory[collisionKey] == false) {
 					if (isCollision == true) {
-						//ECS::_ecs->SendEvent<CollisionEnter>(i, j);
+						ECS::_ecs->SendEvent<CollisionEnter>(i, j);
 						_collisionHistory[collisionKey] = true;
 					}
 				}
 				else {
 					if (isCollision == true) {
-						//ECS::_ecs->SendEvent<CollisionStay>(i, j);
+						ECS::_ecs->SendEvent<CollisionStay>(i, j);
 					}
 					else {
-						//ECS::_ecs->SendEvent<CollisionExit>(i, j);
+						ECS::_ecs->SendEvent<CollisionExit>(i, j);
 						_collisionHistory[collisionKey] = false;
 					}
 				}

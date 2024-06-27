@@ -240,6 +240,9 @@
     <ClInclude Include="Util.h">
       <Filter>소스 파일\Util</Filter>
     </ClInclude>
+    <ClInclude Include="CollisionEvents.h">
+      <Filter>소스 파일\GameEvents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Win32Main.cpp">

@@ -2,6 +2,8 @@
 #include "ECSElements.h"
 #include "EnumClass.h"
 
+#include "CollisionEvents.h"
+
 struct KeyDown : public Event<KeyDown> {
 	const int _keyCode;
 	const float _delta;
@@ -33,14 +35,4 @@ struct CreateSprite : public Event<CreateSprite> {
 struct RegistPlayer : public Event<RegistPlayer> {
 	EntityId _entityId;
 	RegistPlayer(EntityId eid) : _entityId(eid) {}
-};
-
-struct DetectCollision : public Event<DetectCollision> {
-	EntityId _entityId;
-	DetectCollision(EntityId eid) : _entityId(eid) {}
-};
-
-struct DetectTrigger : public Event<DetectTrigger> {
-	EntityId _entityId;
-	DetectTrigger(EntityId eid) : _entityId(eid) {}
 };

@@ -132,6 +132,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="ColliderSystem.h" />
+    <ClInclude Include="CollisionEvents.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentManager.h" />
     <ClInclude Include="DemoApp.h" />
