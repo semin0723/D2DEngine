@@ -20,11 +20,11 @@ Vector3 Vector3::Normalized() const
 	return *this / Magnitude();
 }
 
-const float Vector3::dot(Vector3& a, Vector3& b) const {
+const float dot(Vector3& a, Vector3& b) {
 	return a.x * b.x + a.y * b.y + a.z * b.z;
 }
 
-Vector3 Vector3::Cross(Vector3& a, Vector3& b) const
+Vector3 Cross(Vector3& a, Vector3& b)
 {
 	return Vector3(
 		a.y * b.z - a.z * b.y,

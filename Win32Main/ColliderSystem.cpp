@@ -17,7 +17,7 @@ void ColliderSystem::PostUpdate(float dt)
 	for (UINT l1 = 0; l1 < (UINT)Object_Layer::End; l1++) {
 		for (UINT l2 = 0; l2 < (UINT)Object_Layer::End; l2++) {
 			if (_collisionMatrix[l1] & (1 << l2)) {
-				checkCollision(l1, l2);
+				CheckCollision(l1, l2);
 			}
 		}
 	}
@@ -37,7 +37,7 @@ void ColliderSystem::SetCollisionMatrix(Object_Layer layer1, Object_Layer layer2
 */
 }
 
-void ColliderSystem::checkCollision(UINT layer1Idx, UINT layer2Idx)
+void ColliderSystem::CheckCollision(UINT layer1Idx, UINT layer2Idx)
 {
 	std::vector<EntityId>& left		= _registeredEntity[layer1Idx];
 	std::vector<EntityId>& right	= _registeredEntity[layer2Idx];
@@ -49,7 +49,7 @@ void ColliderSystem::checkCollision(UINT layer1Idx, UINT layer2Idx)
 			BoxCollider* bcRight = ECS::_ecs->GetComponentManager()->Getcomponent<BoxCollider>(j);
 			if (bcRight == nullptr) continue;
 
-			bool isCollision = IsPointInSquare(bcLeft->_calculatedBorderPos, bcRight->_calculatedBorderPos);
+			bool isCollision = ChackOverLap(bcLeft->_calculatedBorderPos, bcRight->_calculatedBorderPos);
 			std::pair<UINT, UINT> collisionKey = { (std::min)(i._index, j._index), (std::max)(i._index, j._index) };
 
 			if (bcLeft->_isTrigger == true || bcRight->_isTrigger == true) {
@@ -90,27 +90,51 @@ void ColliderSystem::checkCollision(UINT layer1Idx, UINT layer2Idx)
 	}
 }
 
-bool ColliderSystem::IsPointInSquare(std::vector<D2D1_POINT_2F>& left, std::vector<D2D1_POINT_2F>& right)
+bool ColliderSystem::ChackOverLap(std::vector<D2D1_POINT_2F>& left, std::vector<D2D1_POINT_2F>& right)
 {
 	for (int i = 0; i < left.size(); i++) {
-		bool isPointInShape = true;
-		for (int j = 0; j < right.size(); j++) {
-			int pointIdx = (j + 1) % right.size();
-			if (CCW(right[j], left[i], right[pointIdx]) < 0) {
-				isPointInShape = false;
-				break;
-			}
+		int nextIdx = (i + 1) % left.size();
+		D2D1_POINT_2F v = { left[nextIdx].x - left[i].x, left[nextIdx].y - left[i].y };
+		std::pair<float, float> leftminmax = GetMinMax(v, left);
+		std::pair<float, float> rightminmax = GetMinMax(v, right);
+		if (CheckPointLoc(leftminmax, rightminmax) == false) {
+			return false;
 		}
-		if (isPointInShape == false) {
+	}
+
+	for (int i = 0; i < right.size(); i++) {
+		int nextIdx = (i + 1) % right.size();
+		D2D1_POINT_2F v = { right[nextIdx].x - right[i].x, right[nextIdx].y - right[i].y };
+		std::pair<float, float> leftminmax = GetMinMax(v, left);
+		std::pair<float, float> rightminmax = GetMinMax(v, right);
+		if (CheckPointLoc(leftminmax, rightminmax) == false) {
 			return false;
 		}
 	}
 	return true;
 }
 
-float ColliderSystem::CCW(D2D1_POINT_2F p1, D2D1_POINT_2F p2, D2D1_POINT_2F p3)
+std::pair<float, float> ColliderSystem::GetMinMax(D2D1_POINT_2F axis, std::vector<D2D1_POINT_2F>& points)
 {
-	return (p2.x - p1.x) * (p3.y - p1.y) - (p3.x - p1.x) * (p2.y - p1.y);
+	float minValue = FLT_MAX, maxValue = FLT_MIN;
+	Vector3 normal(axis.x, axis.y, 0);
+	normal.Normalized();
+	for (int i = 0; i < points.size(); i++) {
+		Vector3 point(points[i].x, points[i].y, 0);
+		float result = dot(point, normal);
+		minValue = (std::min)(result, minValue);
+		maxValue = (std::max)(result, maxValue);
+	}
+	return { minValue, maxValue };
+}
+
+bool ColliderSystem::CheckPointLoc(std::pair<float, float>& left, std::pair<float, float>& right)
+{
+	// { min, max }     ||| left.min   right.min  left.max  right.max  |||    right.min   left.min   right.max  left.max |||
+	if ((left.first <= right.first && right.first <= left.second) || (left.first <= right.second && right.second <= left.second)) {
+		return true;
+	}
+	return false;
 }
 
 void ColliderSystem::RegistEvent()

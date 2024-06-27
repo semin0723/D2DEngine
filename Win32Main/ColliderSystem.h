@@ -17,9 +17,10 @@ public:
 	void RegistEvent();
 	void UnRegistEvent();
 
-	void checkCollision(UINT layer1Idx, UINT layer2Idx);
-	bool IsPointInSquare(std::vector<D2D1_POINT_2F>& left, std::vector<D2D1_POINT_2F>& right);
-	float CCW(D2D1_POINT_2F p1, D2D1_POINT_2F p2, D2D1_POINT_2F p3);
+	void CheckCollision(UINT layer1Idx, UINT layer2Idx);
+	bool ChackOverLap(std::vector<D2D1_POINT_2F>& left, std::vector<D2D1_POINT_2F>& right);
+	std::pair<float, float> GetMinMax(D2D1_POINT_2F axis, std::vector<D2D1_POINT_2F>& points);
+	bool CheckPointLoc(std::pair<float, float>& left, std::pair<float, float>& right);
 
 	void OnGameObjectCreated(const GameObjectCreated* event);
 

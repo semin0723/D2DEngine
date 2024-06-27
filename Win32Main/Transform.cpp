@@ -11,7 +11,7 @@ Transform::Transform(Vector3 pos, Vector3 scale, Vector3 rot) : _position(pos), 
 
 D2D1::Matrix3x2F Transform::GetTransform()
 {
-	return D2D1::Matrix3x2F::Scale(D2D1::SizeF(_scale.x, _scale.y)) *
+	return D2D1::Matrix3x2F::Scale(D2D1::SizeF(_scale.x, _scale.y), D2D1::Point2F(_rectSize.x / 2.0f, _rectSize.y / 2.0f)) *
 		D2D1::Matrix3x2F::Rotation(_rotate.z, D2D1::Point2F(_rectSize.x / 2.0f, _rectSize.y / 2.0f)) * 
 		D2D1::Matrix3x2F::Translation(_position.x, _position.y)
 		;  
