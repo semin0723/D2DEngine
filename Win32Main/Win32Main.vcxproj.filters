@@ -106,6 +106,21 @@
     <Filter Include="소스 파일\System\Collider">
       <UniqueIdentifier>{29201d98-4425-46c4-b1f6-8f5f3fbacce6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Component\Box">
+      <UniqueIdentifier>{831fb69a-5bc1-48da-8452-2ec74bce2ac8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Sprite">
+      <UniqueIdentifier>{d048ecc1-a3ca-49f9-9c2d-c5efb91b42ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\AbilityStat">
+      <UniqueIdentifier>{4581c21a-bc94-4d72-902b-4924a45f506d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\Transform">
+      <UniqueIdentifier>{7f0b97aa-9cdc-4565-8ba8-d2816b88d22f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\State">
+      <UniqueIdentifier>{d6253496-75a2-4a3a-9213-72e9e63ae979}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -189,17 +204,11 @@
     <ClInclude Include="ECSElements.h">
       <Filter>소스 파일\ECS\ECSBase</Filter>
     </ClInclude>
-    <ClInclude Include="Transform.h">
-      <Filter>소스 파일\Component</Filter>
-    </ClInclude>
     <ClInclude Include="utilheader.h">
       <Filter>소스 파일\ECS\ECSBase</Filter>
     </ClInclude>
     <ClInclude Include="Square.h">
       <Filter>소스 파일\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprite.h">
-      <Filter>소스 파일\Component</Filter>
     </ClInclude>
     <ClInclude Include="Events.h">
       <Filter>소스 파일\GameEvents</Filter>
@@ -225,12 +234,6 @@
     <ClInclude Include="Animation.h">
       <Filter>소스 파일\Resource\Animation</Filter>
     </ClInclude>
-    <ClInclude Include="StatComponent.h">
-      <Filter>소스 파일\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="BoxCollider.h">
-      <Filter>소스 파일\Component</Filter>
-    </ClInclude>
     <ClInclude Include="ColliderSystem.h">
       <Filter>소스 파일\System\Collider</Filter>
     </ClInclude>
@@ -242,6 +245,24 @@
     </ClInclude>
     <ClInclude Include="CollisionEvents.h">
       <Filter>소스 파일\GameEvents</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxCollider.h">
+      <Filter>소스 파일\Component\Box</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>소스 파일\Component\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="StatComponent.h">
+      <Filter>소스 파일\Component\AbilityStat</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>소스 파일\Component\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="StateComponent.h">
+      <Filter>소스 파일\Component\State</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>소스 파일\Component\State</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -311,17 +332,11 @@
     <ClCompile Include="SystemManager.cpp">
       <Filter>소스 파일\ECS\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Transform.cpp">
-      <Filter>소스 파일\Component</Filter>
-    </ClCompile>
     <ClCompile Include="globalheader.h">
       <Filter>헤더 파일\Util</Filter>
     </ClCompile>
     <ClCompile Include="Square.cpp">
       <Filter>소스 파일\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Sprite.cpp">
-      <Filter>소스 파일\Component</Filter>
     </ClCompile>
     <ClCompile Include="InputSystem.cpp">
       <Filter>소스 파일\System\Input</Filter>
@@ -338,17 +353,26 @@
     <ClCompile Include="PlayerControllSystem.cpp">
       <Filter>소스 파일\System\PlayerControll</Filter>
     </ClCompile>
-    <ClCompile Include="StatComponent.cpp">
-      <Filter>소스 파일\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="BoxCollider.cpp">
-      <Filter>소스 파일\Component</Filter>
-    </ClCompile>
     <ClCompile Include="ColliderSystem.cpp">
       <Filter>소스 파일\System\Collider</Filter>
     </ClCompile>
     <ClCompile Include="Util.cpp">
       <Filter>소스 파일\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxCollider.cpp">
+      <Filter>소스 파일\Component\Box</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>소스 파일\Component\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="StatComponent.cpp">
+      <Filter>소스 파일\Component\AbilityStat</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>소스 파일\Component\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="StateComponent.cpp">
+      <Filter>소스 파일\Component\State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
