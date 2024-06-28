@@ -264,6 +264,9 @@
     <ClInclude Include="State.h">
       <Filter>소스 파일\Component\State</Filter>
     </ClInclude>
+    <ClInclude Include="StateEvents.h">
+      <Filter>소스 파일\GameEvents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Win32Main.cpp">

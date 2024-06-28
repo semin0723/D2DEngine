@@ -3,6 +3,7 @@
 #include "EnumClass.h"
 
 #include "CollisionEvents.h"
+#include "StateEvents.h"
 
 struct KeyDown : public Event<KeyDown> {
 	const int _keyCode;

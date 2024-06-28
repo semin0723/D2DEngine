@@ -166,6 +166,7 @@
     <ClInclude Include="StatComponent.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateComponent.h" />
+    <ClInclude Include="StateEvents.h" />
     <ClInclude Include="STL.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="SystemManager.h" />
