@@ -130,6 +130,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="AnimationComponent.h" />
     <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="ColliderSystem.h" />
     <ClInclude Include="CollisionEvents.h" />
@@ -179,6 +180,7 @@
     <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AnimationComponent.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="ColliderSystem.cpp" />
     <ClCompile Include="Component.cpp" />

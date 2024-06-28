@@ -121,6 +121,9 @@
     <Filter Include="소스 파일\Component\State">
       <UniqueIdentifier>{d6253496-75a2-4a3a-9213-72e9e63ae979}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Component\Animation">
+      <UniqueIdentifier>{b89296f7-1724-439c-86f1-b50ee74a8b36}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -267,6 +270,9 @@
     <ClInclude Include="StateEvents.h">
       <Filter>소스 파일\GameEvents</Filter>
     </ClInclude>
+    <ClInclude Include="AnimationComponent.h">
+      <Filter>소스 파일\Component\Animation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Win32Main.cpp">
@@ -376,6 +382,9 @@
     </ClCompile>
     <ClCompile Include="StateComponent.cpp">
       <Filter>소스 파일\Component\State</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationComponent.cpp">
+      <Filter>소스 파일\Component\Animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
