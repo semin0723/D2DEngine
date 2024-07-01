@@ -132,6 +132,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="AnimationComponent.h" />
     <ClInclude Include="BoxCollider.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="ColliderSystem.h" />
     <ClInclude Include="CollisionEvents.h" />
     <ClInclude Include="Component.h" />
@@ -182,6 +183,7 @@
   <ItemGroup>
     <ClCompile Include="AnimationComponent.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ColliderSystem.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComponentManager.cpp" />

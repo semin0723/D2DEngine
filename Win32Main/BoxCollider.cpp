@@ -10,7 +10,16 @@ BoxCollider::BoxCollider(Vector3 size) : _calculatedBorderPos(4)
 
 void BoxCollider::SetBorderLocation(D2D1::Matrix3x2F transform)
 {
+	float minX = FLT_MIN;
+	float maxX = FLT_MIN;
+	float minY = FLT_MAX;
+	float maxY = FLT_MAX;
 	for (int i = 0; i < _borderPos.size(); i++) {
 		_calculatedBorderPos[i] = _borderPos[i] * transform;
+		minX = (std::min)(_calculatedBorderPos[i].x, minX);
+		minY = (std::min)(_calculatedBorderPos[i].y, minX);
+		maxX = (std::max)(_calculatedBorderPos[i].x, maxX);
+		maxY = (std::max)(_calculatedBorderPos[i].y, maxY);
 	}
+	_bounds = { minX, minY, maxX, maxY };
 }

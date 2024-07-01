@@ -31,6 +31,6 @@ private:
 	TimeSystem _time;
 	float _timer = 0;
 
-	int _width = 800;
-	int _height = 600;
+	int _width = 1600;
+	int _height = 900;
 };

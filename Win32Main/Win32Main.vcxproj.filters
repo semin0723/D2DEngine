@@ -124,6 +124,15 @@
     <Filter Include="소스 파일\Component\Animation">
       <UniqueIdentifier>{b89296f7-1724-439c-86f1-b50ee74a8b36}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Component\Camera">
+      <UniqueIdentifier>{73656cef-b33a-4f6d-b706-a9f49b890036}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Util\ECSTypeId">
+      <UniqueIdentifier>{ca4f16cb-acbf-4367-b245-aa8fa1ede7b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Util\Vector3">
+      <UniqueIdentifier>{3ab0bcd1-87d3-4e16-a63e-617b297ce2ba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -147,14 +156,8 @@
     <ClInclude Include="STL.h">
       <Filter>헤더 파일\Util</Filter>
     </ClInclude>
-    <ClInclude Include="Vector3.h">
-      <Filter>소스 파일\Util</Filter>
-    </ClInclude>
     <ClInclude Include="IComponent.h">
       <Filter>소스 파일\ECS\Component\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="FamilyTypeId.h">
-      <Filter>소스 파일\Util</Filter>
     </ClInclude>
     <ClInclude Include="ComponentManager.h">
       <Filter>소스 파일\ECS\Manager</Filter>
@@ -273,6 +276,15 @@
     <ClInclude Include="AnimationComponent.h">
       <Filter>소스 파일\Component\Animation</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>소스 파일\Component\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="FamilyTypeId.h">
+      <Filter>소스 파일\Util\ECSTypeId</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3.h">
+      <Filter>소스 파일\Util\Vector3</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Win32Main.cpp">
@@ -284,14 +296,8 @@
     <ClCompile Include="Component.cpp">
       <Filter>소스 파일\ECS\Component\Base</Filter>
     </ClCompile>
-    <ClCompile Include="Vector3.cpp">
-      <Filter>소스 파일\Util</Filter>
-    </ClCompile>
     <ClCompile Include="IComponent.cpp">
       <Filter>소스 파일\ECS\Component\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="FamilyTypeId.cpp">
-      <Filter>소스 파일\Util</Filter>
     </ClCompile>
     <ClCompile Include="ComponentManager.cpp">
       <Filter>소스 파일\ECS\Manager</Filter>
@@ -385,6 +391,15 @@
     </ClCompile>
     <ClCompile Include="AnimationComponent.cpp">
       <Filter>소스 파일\Component\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>소스 파일\Component\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="FamilyTypeId.cpp">
+      <Filter>소스 파일\Util\ECSTypeId</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector3.cpp">
+      <Filter>소스 파일\Util\Vector3</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -12,6 +12,7 @@ public:
 	void SetBorderLocation(D2D1::Matrix3x2F transform);
 
 	bool _isTrigger = false;
+	D2D1_RECT_F _bounds;
 	std::vector<D2D1_POINT_2F> _borderPos;
 	std::vector<D2D1_POINT_2F> _calculatedBorderPos;
 };
