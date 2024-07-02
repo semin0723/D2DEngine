@@ -16,12 +16,6 @@ World::World()
 	BoxCollider* bc = ECS::_ecs->GetComponentManager()->AddComponent<BoxCollider>(square, sp->_spriteSize);
 	ECS::_ecs->SendEvent<RegistPlayer>(square);
 
-	EntityId square2 = CreateGameObject<Square>(Object_Layer::Monster);
-	Transform* tf2 = ECS::_ecs->GetComponentManager()->AddComponent<Transform>(square2, Vector3(300.0f, 300.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
-	Sprite* sp2 = ECS::_ecs->GetComponentManager()->AddComponent<Sprite>(square2, L"TestImage");
-	tf->SetRectSize(sp2->_spriteSize);
-	BoxCollider* bc2 = ECS::_ecs->GetComponentManager()->AddComponent<BoxCollider>(square2, sp2->_spriteSize);
-	_monsterId = square2;
 }
 
 World::~World()
