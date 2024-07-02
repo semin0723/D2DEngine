@@ -37,9 +37,6 @@ void World::PreUpdate(float dt)
 
 void World::Update(float dt)
 {
-	Transform* tf = ECS::_ecs->GetComponentManager()->Getcomponent<Transform>(_monsterId);
-	BoxCollider* bc = ECS::_ecs->GetComponentManager()->Getcomponent<BoxCollider>(_monsterId);
-	bc->SetBorderLocation(tf->GetTransform());
 
 }
 

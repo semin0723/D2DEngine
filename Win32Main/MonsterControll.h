@@ -19,6 +19,7 @@ public:
 	void UnRegistEvent();
 
 	void MonsterCreated(const GameObjectCreated* event);
+	void MonsterDestroyed(const GameObjectDestroyed* event);
 private:
 	using MonsterInfo = std::vector<EntityId>;
 

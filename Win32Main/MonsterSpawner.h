@@ -8,7 +8,7 @@
 class MonsterSpawner : public EventListener
 {
 public:
-	MonsterSpawner() { RegistEvent(); }
+	MonsterSpawner() : _spawnPosition(Vector3(500, 100, 0)) { RegistEvent(); }
 	~MonsterSpawner() { UnRegistEvent(); }
 
 	void RegistEvent();
@@ -20,6 +20,7 @@ public:
 	void SpawnMonster();
 
 	const int GetCurRound() const { return _curRound; }
+	const Vector3 GetSpawnPosition() const { return _spawnPosition; }
 private:
 	int _spawnCount = 25;
 	int _curRound = 0;

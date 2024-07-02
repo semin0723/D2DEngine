@@ -49,18 +49,30 @@ void RenderSystem::Update(float dt)
 
 void RenderSystem::RegistEvent()
 {
-	RegisterCallback(&RenderSystem::eventTest);
+	RegisterCallback(&RenderSystem::OnObjectCreated);
+	RegisterCallback(&RenderSystem::OnObjectDestroyed);
 }
 
 void RenderSystem::UnRegistEvent()
 {
-	UnRegisterCallback(&RenderSystem::eventTest);
+	UnRegisterCallback(&RenderSystem::OnObjectCreated);
+	UnRegisterCallback(&RenderSystem::OnObjectDestroyed);
 }
 
-void RenderSystem::eventTest(const GameObjectCreated* event)
+void RenderSystem::OnObjectCreated(const GameObjectCreated* event)
 {
 	IEntity* entity = ECS::_ecs->GetEntityManager()->GetEntity(event->_entityId);
 	_renderObject[(UINT)event->_layer].push_back(RenderObject(event->_entityId, entity));
+}
+
+void RenderSystem::OnObjectDestroyed(const GameObjectDestroyed* event)
+{
+	for (auto it = _renderObject[(UINT)event->_layer].begin(); it != _renderObject[(UINT)event->_layer].end(); it++) {
+		if ((*it)._eid == event->_entityId) {
+			_renderObject[(UINT)event->_layer].erase(it);
+			break;
+		}
+	}
 }
 
 D2D1_MATRIX_3X2_F RenderSystem::CalcTransform(Vector3& pos, Vector3& scale, Vector3& rot, Vector3& spriteMid)

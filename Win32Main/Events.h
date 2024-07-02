@@ -27,6 +27,11 @@ struct GameObjectCreated : public Event<GameObjectCreated> {
 	Object_Layer _layer;
 	GameObjectCreated(EntityId eid, Object_Layer layer) : _entityId(eid), _layer(layer) {}
 };
+struct GameObjectDestroyed : public Event<GameObjectDestroyed> {
+	EntityId _entityId;
+	Object_Layer _layer;
+	GameObjectDestroyed(EntityId eid, Object_Layer layer) : _entityId(eid), _layer(layer) {}
+};
 
 struct CreateSprite : public Event<CreateSprite> {
 	EntityId _entityId;

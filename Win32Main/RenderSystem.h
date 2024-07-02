@@ -32,7 +32,8 @@ private:
 	void RegistEvent();
 	void UnRegistEvent();
 
-	void eventTest(const GameObjectCreated* event);
+	void OnObjectCreated(const GameObjectCreated* event);
+	void OnObjectDestroyed(const GameObjectDestroyed* event);
 
 	struct RenderObject {
 		EntityId _eid;

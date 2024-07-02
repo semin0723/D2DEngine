@@ -1,6 +1,5 @@
 #include "MonsterSpawner.h"
 #include "Monster.h"
-#include "EnumClass.h"
 
 void MonsterSpawner::RegistEvent()
 {

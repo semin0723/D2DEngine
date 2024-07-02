@@ -4,6 +4,7 @@
 #include "InputSystem.h"
 #include "PlayerControllSystem.h"
 #include "ColliderSystem.h"
+#include "MonsterControll.h"
 #include "World.h"
 
 void DemoApp::Initialize(HINSTANCE _hInstance)
@@ -19,6 +20,7 @@ void DemoApp::Initialize(HINSTANCE _hInstance)
 	RenderSystem* render = ECS::_ecs->GetSystemManager()->AddSystem<RenderSystem>(GetRenderTarget());
 
 	PlayerControllSystem* pControll = ECS::_ecs->GetSystemManager()->AddSystem<PlayerControllSystem>();
+	MonsterControll* mctrl = ECS::_ecs->GetSystemManager()->AddSystem<MonsterControll>();
 	World* world = ECS::_ecs->GetSystemManager()->AddSystem<World>();
 	render->SetCurWorld(world);
 

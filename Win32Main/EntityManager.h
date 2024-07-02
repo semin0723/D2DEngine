@@ -37,8 +37,8 @@ class EntityManager
 
 		virtual void DestroyEntity(IEntity* entity) {
 			EntityList::iterator it;
-			for (EntityList::iterator i; i != _entities.end(); i++) {
-				if (entity->GetEntityId() == (*it)->GetEntityId()) {
+			for (EntityList::iterator i = _entities.begin(); i != _entities.end(); i++) {
+				if (entity->GetEntityId() == (*i)->GetEntityId()) {
 					it = i;
 					break;
 				}
