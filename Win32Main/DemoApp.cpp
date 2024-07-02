@@ -20,6 +20,7 @@ void DemoApp::Initialize(HINSTANCE _hInstance)
 
 	PlayerControllSystem* pControll = ECS::_ecs->GetSystemManager()->AddSystem<PlayerControllSystem>();
 	World* world = ECS::_ecs->GetSystemManager()->AddSystem<World>();
+	render->SetCurWorld(world);
 
 	ColliderSystem* cs = ECS::_ecs->GetSystemManager()->AddSystem<ColliderSystem>();
 	cs->SetCollisionMatrix(Object_Layer::Player, Object_Layer::Monster);

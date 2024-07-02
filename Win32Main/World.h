@@ -2,6 +2,7 @@
 #include "ECSElements.h"
 #include "EventListener.h"
 #include "globalheader.h"
+#include "Camera.h"
 #include "Events.h"
 
 class World : public System<World>, public EventListener
@@ -13,6 +14,8 @@ public:
 	virtual void PreUpdate(float dt);
 	virtual void Update(float dt);
 	virtual void PostUpdate(float dt);
+
+	Camera* _mainCamera;
 
 private:
 	std::vector<EntityId> _objects;

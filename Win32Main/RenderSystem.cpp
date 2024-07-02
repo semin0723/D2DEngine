@@ -2,6 +2,7 @@
 #include "Sprite.h"
 #include "Transform.h"
 #include "BoxCollider.h"
+#include "Util.h"
 
 RenderSystem::RenderSystem(ID2D1HwndRenderTarget* target) : _target(target)
 {
@@ -17,24 +18,31 @@ RenderSystem::~RenderSystem()
 
 void RenderSystem::Update(float dt)
 {
+	D2D1::Matrix3x2F cameraTransform = _curWorld->_mainCamera->GetCameraTransform();
+	D2D1InvertMatrix(&cameraTransform);
+	D2D1_RECT_F cameraBound = GetBounds(_curWorld->_mainCamera->_cameraPosition, _curWorld->_mainCamera->_cameraSize);
+
 	for (int i = 0; i < (UINT)Object_Layer::End; i++) {
 		for (auto& entity : _renderObject[i]) {
 			Transform* transform = entity._obj->GetComponent<Transform>();
 			Sprite* sprite = entity._obj->GetComponent<Sprite>();
 			if (transform == nullptr || sprite == nullptr) continue;
 
-			_target->SetTransform(transform->GetTransform());
-			_target->DrawBitmap(sprite->_sprite->_bitmap);
-
 			BoxCollider* bc = entity._obj->GetComponent<BoxCollider>();
 			if (bc == nullptr) continue;
-			_target->DrawRectangle(
-				D2D1::RectF(
-					bc->_borderPos[0].x, bc->_borderPos[0].y,
-					bc->_borderPos[2].x, bc->_borderPos[2].y
-				),
-				_greenBrush
-			);
+
+			D2D1_RECT_F objBound = bc->_bounds;
+			if (CheckCameraBorder(cameraBound, objBound) == true) {
+				_target->SetTransform(transform->GetTransform() * cameraTransform);
+				_target->DrawBitmap(sprite->_sprite->_bitmap);
+				_target->DrawRectangle(
+					D2D1::RectF(
+						bc->_borderPos[0].x, bc->_borderPos[0].y,
+						bc->_borderPos[2].x, bc->_borderPos[2].y
+					),
+					_greenBrush
+				);
+			}
 		}
 	}
 }

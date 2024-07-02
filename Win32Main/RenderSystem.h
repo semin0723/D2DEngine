@@ -3,6 +3,7 @@
 #include "ECSElements.h"
 #include "globalheader.h"	
 #include "EventListener.h"
+#include "World.h"
 #include "Events.h"
 
 
@@ -23,9 +24,10 @@ public:
 	~RenderSystem();
 
 	virtual void Update(float dt);
-
+	void SetCurWorld(World* world) { _curWorld = world; }
 private:
 	ID2D1HwndRenderTarget* _target;
+	World* _curWorld = nullptr;
 
 	void RegistEvent();
 	void UnRegistEvent();

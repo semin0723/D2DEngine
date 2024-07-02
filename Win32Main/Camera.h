@@ -2,10 +2,10 @@
 #include "ECSElements.h"
 #include "globalheader.h"
 
-class Camera : public Component<Camera>
+class Camera
 {
 public:
-	Camera() {}
+	Camera() { UpdateCameraTransform(); }
 	~Camera() {}
 
 	D2D1_POINT_2F _cameraPosition = { 0, 0 };

@@ -20,11 +20,12 @@ public:
 	virtual void PostUpdate(float dt) = 0;
 
 protected:
-	ISystem(float updateInterval = -1.0f) : _lastUpdateTime(0), _updateInterval(updateInterval) {}
+	ISystem(unsigned long long priority = 100, float updateInterval = -1.0f) : _lastUpdateTime(0), _updateInterval(updateInterval), _systemPriority(priority) {}
 
 private:
 	float _lastUpdateTime;
 	float _updateInterval;
+	unsigned long long _systemPriority;
 
 	bool _enabled	= true;	
 	bool _canUpdate	= true;
