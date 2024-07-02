@@ -124,14 +124,14 @@
     <Filter Include="소스 파일\Component\Animation">
       <UniqueIdentifier>{b89296f7-1724-439c-86f1-b50ee74a8b36}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Util\ECSTypeId">
-      <UniqueIdentifier>{ca4f16cb-acbf-4367-b245-aa8fa1ede7b0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Util\Vector3">
       <UniqueIdentifier>{3ab0bcd1-87d3-4e16-a63e-617b297ce2ba}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Camera">
       <UniqueIdentifier>{22951d17-e7c2-4830-8b20-04810f6be930}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\ECS\ECSTypeId">
+      <UniqueIdentifier>{ca4f16cb-acbf-4367-b245-aa8fa1ede7b0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -277,7 +277,7 @@
       <Filter>소스 파일\Component\Animation</Filter>
     </ClInclude>
     <ClInclude Include="FamilyTypeId.h">
-      <Filter>소스 파일\Util\ECSTypeId</Filter>
+      <Filter>소스 파일\ECS\ECSTypeId</Filter>
     </ClInclude>
     <ClInclude Include="Vector3.h">
       <Filter>소스 파일\Util\Vector3</Filter>
@@ -393,7 +393,7 @@
       <Filter>소스 파일\Component\Animation</Filter>
     </ClCompile>
     <ClCompile Include="FamilyTypeId.cpp">
-      <Filter>소스 파일\Util\ECSTypeId</Filter>
+      <Filter>소스 파일\ECS\ECSTypeId</Filter>
     </ClCompile>
     <ClCompile Include="Vector3.cpp">
       <Filter>소스 파일\Util\Vector3</Filter>
