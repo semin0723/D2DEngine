@@ -4,6 +4,7 @@
 
 #include "CollisionEvents.h"
 #include "StateEvents.h"
+#include "GamePlayEvents.h"
 
 struct KeyDown : public Event<KeyDown> {
 	const int _keyCode;

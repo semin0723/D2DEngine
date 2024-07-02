@@ -133,6 +133,12 @@
     <Filter Include="소스 파일\ECS\ECSTypeId">
       <UniqueIdentifier>{ca4f16cb-acbf-4367-b245-aa8fa1ede7b0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\GameElements">
+      <UniqueIdentifier>{fa8990f0-f902-4cd6-9c23-b4f2216ce633}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\System\MonsterControll">
+      <UniqueIdentifier>{07a25466-8604-42d3-bbbc-32671b026993}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -285,6 +291,21 @@
     <ClInclude Include="Camera.h">
       <Filter>소스 파일\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="MonsterSpawner.h">
+      <Filter>소스 파일\GameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePlayEvents.h">
+      <Filter>소스 파일\GameEvents</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>소스 파일\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Components.h">
+      <Filter>헤더 파일\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterControll.h">
+      <Filter>소스 파일\System\MonsterControll</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Win32Main.cpp">
@@ -400,6 +421,15 @@
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>소스 파일\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterSpawner.cpp">
+      <Filter>소스 파일\GameElements</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>소스 파일\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterControll.cpp">
+      <Filter>소스 파일\System\MonsterControll</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

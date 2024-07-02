@@ -1,7 +1,7 @@
 #pragma once
 #include "ECSElements.h"
 
-class StatComponent : Component<StatComponent>
+class StatComponent : public Component<StatComponent>
 {
 public:
 	StatComponent() {}

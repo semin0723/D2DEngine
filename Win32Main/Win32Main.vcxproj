@@ -70,6 +70,13 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>..\bin\</OutDir>
+    <TargetName>$(ProjectName)_d</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>..\bin\</OutDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -120,6 +127,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -137,6 +145,7 @@
     <ClInclude Include="CollisionEvents.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentManager.h" />
+    <ClInclude Include="Components.h" />
     <ClInclude Include="DemoApp.h" />
     <ClInclude Include="ECSBase.h" />
     <ClInclude Include="ECSCall.h" />
@@ -153,12 +162,16 @@
     <ClInclude Include="Events.h" />
     <ClInclude Include="FamilyTypeId.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="GamePlayEvents.h" />
     <ClInclude Include="IComponent.h" />
     <ClInclude Include="IEntity.h" />
     <ClInclude Include="IEvent.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="ISystem.h" />
+    <ClInclude Include="Monster.h" />
+    <ClInclude Include="MonsterControll.h" />
+    <ClInclude Include="MonsterSpawner.h" />
     <ClInclude Include="PlayerControllSystem.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="Resource.h" />
@@ -205,6 +218,9 @@
     <ClCompile Include="IEvent.cpp" />
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="ISystem.cpp" />
+    <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="MonsterControll.cpp" />
+    <ClCompile Include="MonsterSpawner.cpp" />
     <ClCompile Include="PlayerControllSystem.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="ResourceSystem.cpp" />
