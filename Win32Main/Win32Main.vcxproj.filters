@@ -139,6 +139,9 @@
     <Filter Include="소스 파일\System\MonsterControll">
       <UniqueIdentifier>{07a25466-8604-42d3-bbbc-32671b026993}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Component\Detect">
+      <UniqueIdentifier>{7998a6b5-2b68-4d48-ba39-0ee3079a594c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -306,6 +309,9 @@
     <ClInclude Include="MonsterControll.h">
       <Filter>소스 파일\System\MonsterControll</Filter>
     </ClInclude>
+    <ClInclude Include="DetectComponent.h">
+      <Filter>소스 파일\Component\Detect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Win32Main.cpp">
@@ -430,6 +436,9 @@
     </ClCompile>
     <ClCompile Include="MonsterControll.cpp">
       <Filter>소스 파일\System\MonsterControll</Filter>
+    </ClCompile>
+    <ClCompile Include="DetectComponent.cpp">
+      <Filter>소스 파일\Component\Detect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -11,7 +11,7 @@ World::World()
 
 	EntityId square = CreateGameObject<Square>(Object_Layer::Player);
 	Transform* tf = ECS::_ecs->GetComponentManager()->AddComponent<Transform>(square, Vector3(100.0f, 100.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
-	Sprite* sp = ECS::_ecs->GetComponentManager()->AddComponent<Sprite>(square, L"TestImage");
+	Sprite* sp = ECS::_ecs->GetComponentManager()->AddComponent<Sprite>(square, L"TowerTest");
 	tf->SetRectSize(sp->_spriteSize);
 	BoxCollider* bc = ECS::_ecs->GetComponentManager()->AddComponent<BoxCollider>(square, sp->_spriteSize);
 	ECS::_ecs->SendEvent<RegistPlayer>(square);

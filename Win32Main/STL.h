@@ -11,3 +11,6 @@
 #include <unordered_map>
 #include <algorithm>
 #include <map>
+#define _USE_MATH_DEFINES
+#include <cmath>
+#include "math.h"
