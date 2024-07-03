@@ -133,14 +133,17 @@
     <Filter Include="소스 파일\ECS\ECSTypeId">
       <UniqueIdentifier>{ca4f16cb-acbf-4367-b245-aa8fa1ede7b0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\GameElements">
-      <UniqueIdentifier>{fa8990f0-f902-4cd6-9c23-b4f2216ce633}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\System\MonsterControll">
       <UniqueIdentifier>{07a25466-8604-42d3-bbbc-32671b026993}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Component\Detect">
       <UniqueIdentifier>{7998a6b5-2b68-4d48-ba39-0ee3079a594c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\System\TowerControll">
+      <UniqueIdentifier>{41af62cc-1e9a-45a4-9b9a-c54dcf8807ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Spawner">
+      <UniqueIdentifier>{fa8990f0-f902-4cd6-9c23-b4f2216ce633}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -295,7 +298,7 @@
       <Filter>소스 파일\Camera</Filter>
     </ClInclude>
     <ClInclude Include="MonsterSpawner.h">
-      <Filter>소스 파일\GameElements</Filter>
+      <Filter>소스 파일\Spawner</Filter>
     </ClInclude>
     <ClInclude Include="GamePlayEvents.h">
       <Filter>소스 파일\GameEvents</Filter>
@@ -311,6 +314,9 @@
     </ClInclude>
     <ClInclude Include="DetectComponent.h">
       <Filter>소스 파일\Component\Detect</Filter>
+    </ClInclude>
+    <ClInclude Include="TowerControll.h">
+      <Filter>소스 파일\System\TowerControll</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -429,7 +435,7 @@
       <Filter>소스 파일\Camera</Filter>
     </ClCompile>
     <ClCompile Include="MonsterSpawner.cpp">
-      <Filter>소스 파일\GameElements</Filter>
+      <Filter>소스 파일\Spawner</Filter>
     </ClCompile>
     <ClCompile Include="Monster.cpp">
       <Filter>소스 파일\GameObjects</Filter>
@@ -439,6 +445,9 @@
     </ClCompile>
     <ClCompile Include="DetectComponent.cpp">
       <Filter>소스 파일\Component\Detect</Filter>
+    </ClCompile>
+    <ClCompile Include="TowerControll.cpp">
+      <Filter>소스 파일\System\TowerControll</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
