@@ -20,7 +20,7 @@ class EntityManager
 		EntityContainer(const EntityContainer&) = delete;
 		EntityContainer& operator=(EntityContainer&) = delete;
 
-		using EntityList = std::list<IEntity*>;
+		using EntityList = std::vector<IEntity*>;
 
 	public:
 		EntityContainer() {}

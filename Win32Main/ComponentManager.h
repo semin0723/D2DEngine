@@ -21,7 +21,7 @@ class ComponentManager
 		ComponentContainer(const ComponentContainer&) = delete;
 		ComponentContainer& operator=(ComponentContainer&) = delete;
 
-		using ComponentList = std::list<IComponent*>;
+		using ComponentList = std::vector<IComponent*>;
 
 	public:
 		ComponentContainer() {}
