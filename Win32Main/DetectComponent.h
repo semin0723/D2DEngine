@@ -9,7 +9,7 @@ public:
 	~DetectComponent() {}
 
 
-
+	float _detectRange = 0;
 	EntityId _targetEntity;
 };
 
