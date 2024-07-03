@@ -5,5 +5,10 @@
 
 class TowerControll : public System<TowerControll>, public EventListener
 {
+public:
+
+
+private:
+
 };
 
