@@ -18,7 +18,7 @@ public:
 	virtual void PostUpdate(float dt);
 
 	void SearchEnemyInRange();
-	void Attack();
+	void EnemyAttack();
 
 	void OnGameObjectCreated(const GameObjectCreated* event);
 	void OnGameObjectDestroyed(const GameObjectDestroyed* event);

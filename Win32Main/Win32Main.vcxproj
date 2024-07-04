@@ -139,6 +139,7 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="AnimationComponent.h" />
+    <ClInclude Include="AttackComponent.h" />
     <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ColliderSystem.h" />
@@ -180,7 +181,6 @@
     <ClInclude Include="ResourceSystem.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Square.h" />
-    <ClInclude Include="StatComponent.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateComponent.h" />
     <ClInclude Include="StateEvents.h" />
@@ -198,6 +198,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimationComponent.cpp" />
+    <ClCompile Include="AttackComponent.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ColliderSystem.cpp" />
@@ -231,7 +232,6 @@
     <ClCompile Include="ResourceSystem.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Square.cpp" />
-    <ClCompile Include="StatComponent.cpp" />
     <ClCompile Include="StateComponent.cpp" />
     <ClCompile Include="System.cpp" />
     <ClCompile Include="SystemManager.cpp" />

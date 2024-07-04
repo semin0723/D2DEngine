@@ -1,5 +1,6 @@
 #include "TowerControll.h"
 #include "Components.h"
+#include "Events.h"
 
 void TowerControll::RegistEvent()
 {
@@ -36,7 +37,7 @@ void TowerControll::Update(float dt)
 	}
 
 	//АјАн
-	Attack();
+	//EnemyAttack();
 }
 
 void TowerControll::PostUpdate(float dt)
@@ -73,8 +74,18 @@ void TowerControll::SearchEnemyInRange()
 	}
 }
 
-void TowerControll::Attack()
+void TowerControll::EnemyAttack()
 {
+	for (int i = 0; i < _towers.size(); i++) {
+		AttackComponent* ac = ComponentManager->Getcomponent<AttackComponent>(_towers[i]);
+		DetectComponent* dc = ComponentManager->Getcomponent<DetectComponent>(_towers[i]);
+		if (ac->_multiAttack == false) {
+			ecs->SendEvent<Attack>(dc->_targetEntity, ac->_damage);
+		}
+		else {
+			ecs->SendEvent<AreaAttack>(dc->_targetEntity, ac->_damage, ac->_attackRect);
+		}
+	}
 }
 
 void TowerControll::OnGameObjectCreated(const GameObjectCreated* event)

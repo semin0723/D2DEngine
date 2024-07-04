@@ -145,6 +145,9 @@
     <Filter Include="소스 파일\Spawner">
       <UniqueIdentifier>{fa8990f0-f902-4cd6-9c23-b4f2216ce633}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Component\Attack">
+      <UniqueIdentifier>{31ecd97c-ab5a-4cae-83a6-3f3f2b41024f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -270,9 +273,6 @@
     <ClInclude Include="Sprite.h">
       <Filter>소스 파일\Component\Sprite</Filter>
     </ClInclude>
-    <ClInclude Include="StatComponent.h">
-      <Filter>소스 파일\Component\AbilityStat</Filter>
-    </ClInclude>
     <ClInclude Include="Transform.h">
       <Filter>소스 파일\Component\Transform</Filter>
     </ClInclude>
@@ -320,6 +320,9 @@
     </ClInclude>
     <ClInclude Include="MonsterStat.h">
       <Filter>소스 파일\Component\AbilityStat</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackComponent.h">
+      <Filter>소스 파일\Component\Attack</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -416,9 +419,6 @@
     <ClCompile Include="Sprite.cpp">
       <Filter>소스 파일\Component\Sprite</Filter>
     </ClCompile>
-    <ClCompile Include="StatComponent.cpp">
-      <Filter>소스 파일\Component\AbilityStat</Filter>
-    </ClCompile>
     <ClCompile Include="Transform.cpp">
       <Filter>소스 파일\Component\Transform</Filter>
     </ClCompile>
@@ -454,6 +454,9 @@
     </ClCompile>
     <ClCompile Include="MonsterStat.cpp">
       <Filter>소스 파일\Component\AbilityStat</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackComponent.cpp">
+      <Filter>소스 파일\Component\Attack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
