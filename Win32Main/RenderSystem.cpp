@@ -34,7 +34,9 @@ void RenderSystem::Update(float dt)
 			D2D1_RECT_F objBound = bc->_bounds;
 			if (CheckBorder(cameraBound, objBound) == true) {
 				_target->SetTransform(transform->GetTransform() * cameraTransform);
-				_target->DrawBitmap(sprite->_sprite->_bitmap);
+				// 몬스터 40px, 포탑 96px, 이펙트 64px
+				if(i == (UINT)Object_Layer::Monster) _target->DrawBitmap(sprite->_sprite->_bitmap, D2D1::RectF(0, 0, 40, 40));
+				else _target->DrawBitmap(sprite->_sprite->_bitmap);
 				_target->DrawRectangle(
 					D2D1::RectF(
 						bc->_borderPos[0].x, bc->_borderPos[0].y,
