@@ -318,6 +318,9 @@
     <ClInclude Include="TowerControll.h">
       <Filter>소스 파일\System\TowerControll</Filter>
     </ClInclude>
+    <ClInclude Include="MonsterStat.h">
+      <Filter>소스 파일\Component\AbilityStat</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Win32Main.cpp">
@@ -448,6 +451,9 @@
     </ClCompile>
     <ClCompile Include="TowerControll.cpp">
       <Filter>소스 파일\System\TowerControll</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterStat.cpp">
+      <Filter>소스 파일\Component\AbilityStat</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

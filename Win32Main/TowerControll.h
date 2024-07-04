@@ -28,5 +28,13 @@ private:
 
 	Enemies _enemies;
 	Towers _towers;
+
+	Vector3 GetCenterPos(EntityId eid);
+};
+
+struct compare {
+	bool operator()(const std::pair<float, EntityId>& a, const std::pair<float, EntityId>& b) {
+		return a.first > b.first;
+	}
 };
 

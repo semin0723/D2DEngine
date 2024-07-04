@@ -6,6 +6,7 @@
 #include "ColliderSystem.h"
 #include "MonsterControll.h"
 #include "World.h"
+#include "TowerControll.h"
 
 void DemoApp::Initialize(HINSTANCE _hInstance)
 {
@@ -20,6 +21,7 @@ void DemoApp::Initialize(HINSTANCE _hInstance)
 	RenderSystem* render = SystemManager->AddSystem<RenderSystem>(GetRenderTarget());
 
 	PlayerControllSystem* pControll = SystemManager->AddSystem<PlayerControllSystem>();
+	TowerControll* tc = SystemManager->AddSystem<TowerControll>();
 	MonsterControll* mctrl = SystemManager->AddSystem<MonsterControll>();
 	World* world = SystemManager->AddSystem<World>();
 	render->SetCurWorld(world);

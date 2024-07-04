@@ -173,6 +173,7 @@
     <ClInclude Include="Monster.h" />
     <ClInclude Include="MonsterControll.h" />
     <ClInclude Include="MonsterSpawner.h" />
+    <ClInclude Include="MonsterStat.h" />
     <ClInclude Include="PlayerControllSystem.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="Resource.h" />
@@ -224,6 +225,7 @@
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MonsterControll.cpp" />
     <ClCompile Include="MonsterSpawner.cpp" />
+    <ClCompile Include="MonsterStat.cpp" />
     <ClCompile Include="PlayerControllSystem.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="ResourceSystem.cpp" />

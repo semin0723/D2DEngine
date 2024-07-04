@@ -6,6 +6,7 @@ class DetectComponent : public Component<DetectComponent>
 {
 public:
 	DetectComponent() {}	
+	DetectComponent(float range) : _detectRange(range) {}
 	~DetectComponent() {}
 
 

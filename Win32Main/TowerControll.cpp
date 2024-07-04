@@ -15,11 +15,28 @@ void TowerControll::UnRegistEvent()
 
 void TowerControll::PreUpdate(float dt)
 {
-	SearchEnemyInRange();
 }
 
 void TowerControll::Update(float dt)
 {
+	// 탐색
+	SearchEnemyInRange();
+
+	// 회전
+	for (int i = 0; i < _towers.size(); i++) {
+		Transform* tfTower = ComponentManager->Getcomponent<Transform>(_towers[i]);
+		DetectComponent* dcTower = ComponentManager->Getcomponent<DetectComponent>(_towers[i]);
+
+		if (dcTower->_targetEntity._index == (std::numeric_limits<ULL>::max)()) continue;
+
+		Vector3 towerCenterPos = GetCenterPos(_towers[i]);
+		Vector3 targetCenterPos = GetCenterPos(dcTower->_targetEntity);
+		Vector3 targetDir = targetCenterPos - towerCenterPos;
+		tfTower->CalcRotation(targetDir);
+	}
+
+	//공격
+	Attack();
 }
 
 void TowerControll::PostUpdate(float dt)
@@ -29,26 +46,30 @@ void TowerControll::PostUpdate(float dt)
 void TowerControll::SearchEnemyInRange()
 {
 	using MonsterDistance = std::pair<float, EntityId>; // distance, entityId
-	using MonsterInRange = std::priority_queue<MonsterDistance, std::vector<MonsterDistance>, std::greater<MonsterDistance>>;
-
+	using MonsterInRange = std::priority_queue<MonsterDistance, std::vector<MonsterDistance>, compare>;
+	 
 	for (int i = 0; i < _towers.size(); i++) {
 		MonsterInRange monstersInRange;
 
-		Transform* tfTower = ComponentManager->Getcomponent<Transform>(_towers[i]);
 		DetectComponent* dcTower = ComponentManager->Getcomponent<DetectComponent>(_towers[i]);
 
-		Vector3 towerCenterPos = tfTower->_position + (tfTower->_rectSize / 2);
+		Vector3 towerCenterPos = GetCenterPos(_towers[i]);
 		for (int j = 0; j < _enemies.size(); j++) {
-			Transform* tfEnemy = ComponentManager->Getcomponent<Transform>(_enemies[i]);
-			Vector3 enemyCenterPos = tfEnemy->_position + (tfEnemy->_rectSize / 2);
-
+			Vector3 enemyCenterPos = GetCenterPos(_enemies[j]);
 			float distance = (enemyCenterPos - towerCenterPos).Magnitude();
 			if (distance <= dcTower->_detectRange) {
-				monstersInRange.push({ distance, _enemies[i] });
+				// 기존에 등록된 타겟이 범위 내에 아직도 존재하는가.
+				if (_enemies[j] == dcTower->_targetEntity) return;
+				monstersInRange.push({ distance, _enemies[j] });
 			}
 		}
 
-		dcTower->_targetEntity = monstersInRange.top().second;
+		if (!monstersInRange.empty()) {
+			dcTower->_targetEntity = monstersInRange.top().second;
+		}
+		else {
+			dcTower->_targetEntity = EntityId((std::numeric_limits<ULL>::max)(), (std::numeric_limits<ULL>::max)());
+		}
 	}
 }
 
@@ -70,8 +91,9 @@ void TowerControll::OnGameObjectDestroyed(const GameObjectDestroyed* event)
 {
 	if (event->_layer == Object_Layer::Monster) {
 		for (Enemies::iterator it = _enemies.begin(); it != _enemies.end(); it++) {
-			if (*it == event->_entityId) {
+			if ((*it) == event->_entityId) {
 				_enemies.erase(it);
+				break;
 			}
 		}
 	}
@@ -79,7 +101,15 @@ void TowerControll::OnGameObjectDestroyed(const GameObjectDestroyed* event)
 		for (Enemies::iterator it = _towers.begin(); it != _towers.end(); it++) {
 			if (*it == event->_entityId) {
 				_towers.erase(it);
+				break;
 			}
 		}
 	}
+}
+
+Vector3 TowerControll::GetCenterPos(EntityId eid)
+{
+	Transform* tf = ComponentManager->Getcomponent<Transform>(eid);
+
+	return tf->_position + (tf->_rectSize / 2.0f);
 }

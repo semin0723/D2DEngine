@@ -32,7 +32,7 @@ void MonsterControll::Update(float dt)
 		tf = ComponentManager->Getcomponent<Transform>(_monsters[i]);
 		bc = ComponentManager->Getcomponent<BoxCollider>(_monsters[i]);
 		if (tf == nullptr || bc == nullptr) continue;
-		tf->_position += Vector3(50, 100, 0) * dt;
+		tf->_position += Vector3(0, 100, 0) * dt;
 		bc->SetBorderLocation(tf->GetTransform());
 		if (tf->_position.y >= 800) {
 			EntityManager->DestroyEntity(_monsters[i]);
