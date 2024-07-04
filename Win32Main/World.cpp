@@ -15,6 +15,12 @@ World::World()
 	DetectComponent* dc = ComponentManager->AddComponent<DetectComponent>(square, 400);
 	ECS::_ecs->SendEvent<RegistPlayer>(square);
 
+	EntityId bg = CreateGameObject<Square>(Object_Layer::Background);
+	Transform* tfbg = ComponentManager->AddComponent<Transform>(bg, Vector3(350.0f, 0, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	Sprite* spbg = ComponentManager->AddComponent<Sprite>(bg, L"TestBg");
+	tfbg->SetRectSize(spbg->_spriteSize);
+	BoxCollider* bcbg = ComponentManager->AddComponent<BoxCollider>(bg, spbg->_spriteSize);
+
 }
 
 World::~World()
