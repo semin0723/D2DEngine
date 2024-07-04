@@ -7,9 +7,8 @@ public:
 	StatComponent() {}
 	~StatComponent() {}
 
-	int _hp = 0;
 	int _damage = 0;
-	int _defence = 0;
-	float _moveSpeed = 0;
+	float _criticalRate = 0;
+	bool _multiAttack = false;
 };
 
