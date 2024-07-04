@@ -5,3 +5,4 @@
 #include "Sprite.h"
 #include "StateComponent.h"
 #include "Transform.h"
+#include "DetectComponent.h"

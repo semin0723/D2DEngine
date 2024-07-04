@@ -61,7 +61,7 @@ void RenderSystem::UnRegistEvent()
 
 void RenderSystem::OnObjectCreated(const GameObjectCreated* event)
 {
-	IEntity* entity = ECS::_ecs->GetEntityManager()->GetEntity(event->_entityId);
+	IEntity* entity = EntityManager->GetEntity(event->_entityId);
 	_renderObject[(UINT)event->_layer].push_back(RenderObject(event->_entityId, entity));
 }
 

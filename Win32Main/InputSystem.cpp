@@ -16,7 +16,7 @@ void InputSystem::PreUpdate(float dt)
 {
 	for (int i = 0; i < 256; i++) {
 		if (GetAsyncKeyState(i) & 0x8000) {
-			ECS::_ecs->SendEvent<KeyDown>(i, dt);
+			ecs->SendEvent<KeyDown>(i, dt);
 		}
 	}
 }

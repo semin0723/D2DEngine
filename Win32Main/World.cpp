@@ -10,10 +10,10 @@ World::World()
 	_mainCamera = new Camera;
 
 	EntityId square = CreateGameObject<Square>(Object_Layer::Player);
-	Transform* tf = ECS::_ecs->GetComponentManager()->AddComponent<Transform>(square, Vector3(100.0f, 100.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
-	Sprite* sp = ECS::_ecs->GetComponentManager()->AddComponent<Sprite>(square, L"TowerTest");
+	Transform* tf = ComponentManager->AddComponent<Transform>(square, Vector3(100.0f, 100.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	Sprite* sp = ComponentManager->AddComponent<Sprite>(square, L"TowerTest");
 	tf->SetRectSize(sp->_spriteSize);
-	BoxCollider* bc = ECS::_ecs->GetComponentManager()->AddComponent<BoxCollider>(square, sp->_spriteSize);
+	BoxCollider* bc = ComponentManager->AddComponent<BoxCollider>(square, sp->_spriteSize);
 	ECS::_ecs->SendEvent<RegistPlayer>(square);
 
 }
@@ -21,7 +21,7 @@ World::World()
 World::~World()
 {
 	for (int i = 0; i < _objects.size(); i++) {
-		ECS::_ecs->GetEntityManager()->DestroyEntity(_objects[i]);
+		EntityManager->DestroyEntity(_objects[i]);
 	}
 }
 

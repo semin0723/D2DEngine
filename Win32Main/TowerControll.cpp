@@ -1,4 +1,5 @@
 #include "TowerControll.h"
+#include "Components.h"
 
 void TowerControll::RegistEvent()
 {
@@ -27,8 +28,27 @@ void TowerControll::PostUpdate(float dt)
 
 void TowerControll::SearchEnemyInRange()
 {
-	for (int i = 0; i < _towers.size(); i++) {
+	using MonsterDistance = std::pair<float, EntityId>; // distance, entityId
+	using MonsterInRange = std::priority_queue<MonsterDistance, std::vector<MonsterDistance>, std::greater<MonsterDistance>>;
 
+	for (int i = 0; i < _towers.size(); i++) {
+		MonsterInRange monstersInRange;
+
+		Transform* tfTower = ComponentManager->Getcomponent<Transform>(_towers[i]);
+		DetectComponent* dcTower = ComponentManager->Getcomponent<DetectComponent>(_towers[i]);
+
+		Vector3 towerCenterPos = tfTower->_position + (tfTower->_rectSize / 2);
+		for (int j = 0; j < _enemies.size(); j++) {
+			Transform* tfEnemy = ComponentManager->Getcomponent<Transform>(_enemies[i]);
+			Vector3 enemyCenterPos = tfEnemy->_position + (tfEnemy->_rectSize / 2);
+
+			float distance = (enemyCenterPos - towerCenterPos).Magnitude();
+			if (distance <= dcTower->_detectRange) {
+				monstersInRange.push({ distance, _enemies[i] });
+			}
+		}
+
+		dcTower->_targetEntity = monstersInRange.top().second;
 	}
 }
 

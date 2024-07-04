@@ -29,14 +29,14 @@ void MonsterControll::Update(float dt)
 	Transform* tf = nullptr;
 	BoxCollider* bc = nullptr;
 	for (int i = 0; i < _monsters.size(); i++) {
-		tf = ECS::_ecs->GetComponentManager()->Getcomponent<Transform>(_monsters[i]);
-		bc = ECS::_ecs->GetComponentManager()->Getcomponent<BoxCollider>(_monsters[i]);
+		tf = ComponentManager->Getcomponent<Transform>(_monsters[i]);
+		bc = ComponentManager->Getcomponent<BoxCollider>(_monsters[i]);
 		if (tf == nullptr || bc == nullptr) continue;
 		tf->_position += Vector3(50, 100, 0) * dt;
 		bc->SetBorderLocation(tf->GetTransform());
 		if (tf->_position.y >= 800) {
-			ECS::_ecs->GetEntityManager()->DestroyEntity(_monsters[i]);
-			ECS::_ecs->SendEvent<GameObjectDestroyed>(_monsters[i], Object_Layer::Monster);
+			EntityManager->DestroyEntity(_monsters[i]);
+			ecs->SendEvent<GameObjectDestroyed>(_monsters[i], Object_Layer::Monster);
 		}
 	}
 }
@@ -61,9 +61,9 @@ void MonsterControll::MonsterCreated(const GameObjectCreated* event)
 {
 	if (event->_layer != Object_Layer::Monster) return;
 	_monsters.push_back(event->_entityId);
-	Transform* tf = ECS::_ecs->GetComponentManager()->Getcomponent<Transform>(event->_entityId);
-	Sprite* sp = ECS::_ecs->GetComponentManager()->AddComponent<Sprite>(event->_entityId, L"TestImage");
-	BoxCollider* bc = ECS::_ecs->GetComponentManager()->AddComponent<BoxCollider>(event->_entityId, sp->_spriteSize);
+	Transform* tf = ComponentManager->Getcomponent<Transform>(event->_entityId);
+	Sprite* sp = ComponentManager->AddComponent<Sprite>(event->_entityId, L"TestImage");
+	BoxCollider* bc = ComponentManager->AddComponent<BoxCollider>(event->_entityId, sp->_spriteSize);
 	tf->_position = _spawner->GetSpawnPosition();
 }
 

@@ -43,10 +43,10 @@ void ColliderSystem::CheckCollision(UINT layer1Idx, UINT layer2Idx)
 	std::vector<EntityId>& right	= _registeredEntity[layer2Idx];
 
 	for (auto& i : left) {
-		BoxCollider* bcLeft = ECS::_ecs->GetComponentManager()->Getcomponent<BoxCollider>(i);
+		BoxCollider* bcLeft = ComponentManager->Getcomponent<BoxCollider>(i);
 		if (bcLeft == nullptr) continue;
 		for (auto& j : right) {
-			BoxCollider* bcRight = ECS::_ecs->GetComponentManager()->Getcomponent<BoxCollider>(j);
+			BoxCollider* bcRight = ComponentManager->Getcomponent<BoxCollider>(j);
 			if (bcRight == nullptr) continue;
 
 			bool isCollision = ChackOverLap(bcLeft->_calculatedBorderPos, bcRight->_calculatedBorderPos);

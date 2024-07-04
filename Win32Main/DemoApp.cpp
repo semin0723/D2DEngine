@@ -15,16 +15,16 @@ void DemoApp::Initialize(HINSTANCE _hInstance)
 	//TODO: 여기서 코어에 관한 모든 요소를 초기화 합니다.
 	ECS::Initialize();
 
-	InputSystem* input = ECS::_ecs->GetSystemManager()->AddSystem<InputSystem>();
+	InputSystem* input = SystemManager->AddSystem<InputSystem>();
 	ResourceSystem::GetInstance()->Initialize(GetRenderTarget());
-	RenderSystem* render = ECS::_ecs->GetSystemManager()->AddSystem<RenderSystem>(GetRenderTarget());
+	RenderSystem* render = SystemManager->AddSystem<RenderSystem>(GetRenderTarget());
 
-	PlayerControllSystem* pControll = ECS::_ecs->GetSystemManager()->AddSystem<PlayerControllSystem>();
-	MonsterControll* mctrl = ECS::_ecs->GetSystemManager()->AddSystem<MonsterControll>();
-	World* world = ECS::_ecs->GetSystemManager()->AddSystem<World>();
+	PlayerControllSystem* pControll = SystemManager->AddSystem<PlayerControllSystem>();
+	MonsterControll* mctrl = SystemManager->AddSystem<MonsterControll>();
+	World* world = SystemManager->AddSystem<World>();
 	render->SetCurWorld(world);
 
-	ColliderSystem* cs = ECS::_ecs->GetSystemManager()->AddSystem<ColliderSystem>();
+	ColliderSystem* cs = SystemManager->AddSystem<ColliderSystem>();
 	cs->SetCollisionMatrix(Object_Layer::Player, Object_Layer::Monster);
 
 

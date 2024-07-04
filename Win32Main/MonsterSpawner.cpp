@@ -25,8 +25,8 @@ void MonsterSpawner::OnRoundStart(const RoundStart* event)
 
 void MonsterSpawner::SpawnMonster()
 {
-	EntityId newEntityId = ECS::_ecs->GetEntityManager()->CreateEntity<Monster>();
-	IEntity* newEntity = ECS::_ecs->GetEntityManager()->GetEntity(newEntityId);
+	EntityId newEntityId = EntityManager->CreateEntity<Monster>();
+	IEntity* newEntity = EntityManager->GetEntity(newEntityId);
 	static_cast<Monster*>(newEntity)->Initialize();
 	ECS::_ecs->SendEvent<GameObjectCreated>(newEntityId, Object_Layer::Monster);
 }
