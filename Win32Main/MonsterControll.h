@@ -18,6 +18,9 @@ public:
 	void RegistEvent();
 	void UnRegistEvent();
 
+	void OnHit(const Attack* event);
+	void OnAreaHit(const AreaAttack* event);
+
 	void MonsterCreated(const GameObjectCreated* event);
 	void MonsterDestroyed(const GameObjectDestroyed* event);
 private:

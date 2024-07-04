@@ -49,12 +49,24 @@ void MonsterControll::RegistEvent()
 {
 	RegisterCallback(&MonsterControll::MonsterCreated);
 	RegisterCallback(&MonsterControll::MonsterDestroyed);
+	RegisterCallback(&MonsterControll::OnHit);
+	RegisterCallback(&MonsterControll::OnAreaHit);
 }
 
 void MonsterControll::UnRegistEvent()
 {
 	UnRegisterCallback(&MonsterControll::MonsterCreated);
 	UnRegisterCallback(&MonsterControll::MonsterDestroyed);
+	UnRegisterCallback(&MonsterControll::OnHit);
+	UnRegisterCallback(&MonsterControll::OnAreaHit);
+}
+
+void MonsterControll::OnHit(const Attack* event)
+{
+}
+
+void MonsterControll::OnAreaHit(const AreaAttack* event)
+{
 }
 
 void MonsterControll::MonsterCreated(const GameObjectCreated* event)
