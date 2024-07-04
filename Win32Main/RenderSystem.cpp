@@ -32,7 +32,7 @@ void RenderSystem::Update(float dt)
 			if (bc == nullptr) continue;
 
 			D2D1_RECT_F objBound = bc->_bounds;
-			if (CheckCameraBorder(cameraBound, objBound) == true) {
+			if (CheckBorder(cameraBound, objBound) == true) {
 				_target->SetTransform(transform->GetTransform() * cameraTransform);
 				_target->DrawBitmap(sprite->_sprite->_bitmap);
 				_target->DrawRectangle(

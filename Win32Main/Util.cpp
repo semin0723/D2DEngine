@@ -1,12 +1,12 @@
 #include "Util.h"
 
-bool CheckCameraBorder(D2D1_RECT_F camera, D2D1_RECT_F obj)
+bool CheckBorder(D2D1_RECT_F obj1, D2D1_RECT_F obj2)
 {
     if (
-        obj.left > camera.right ||
-        obj.right < camera.left ||
-        obj.top > camera.bottom ||
-        obj.bottom < camera.top
+        obj1.left > obj2.right ||
+        obj1.right < obj2.left ||
+        obj1.top > obj2.bottom ||
+        obj1.bottom < obj2.top
         ) {
         return false;
     }
