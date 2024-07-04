@@ -32,5 +32,5 @@ private:
 	float _timer = 0;
 
 	int _width = 1600;
-	int _height = 900;
+	int _height = 940;
 };
