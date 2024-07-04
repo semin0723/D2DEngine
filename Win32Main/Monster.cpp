@@ -4,5 +4,5 @@
 void Monster::Initialize()
 {
 	AddComponent<Transform>();
-	AddComponent<StatComponent>();
+	AddComponent<MonsterStat>();
 }
