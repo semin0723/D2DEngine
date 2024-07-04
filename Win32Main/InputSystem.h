@@ -2,6 +2,7 @@
 #include "ECSCall.h"
 #include "ECSElements.h"
 #include "EventListener.h"
+#include "globalheader.h"
 
 class InputSystem : public System<InputSystem>, public EventListener
 {
@@ -14,6 +15,6 @@ public:
 	virtual void PostUpdate(float dt);
 
 private:
-	bool* _prevKeyState;
+	std::vector<bool> _keyState;
 };
 

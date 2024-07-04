@@ -2,21 +2,31 @@
 #include "windows.h"
 #include "Events.h"
 
-InputSystem::InputSystem()
+InputSystem::InputSystem() : _keyState(256, false)
 {
-	_prevKeyState = new bool[256];
 }
 
 InputSystem::~InputSystem()
 {
-	delete[] _prevKeyState;
 }
 
 void InputSystem::PreUpdate(float dt)
 {
 	for (int i = 0; i < 256; i++) {
 		if (GetAsyncKeyState(i) & 0x8000) {
-			ecs->SendEvent<KeyDown>(i, dt);
+			if (_keyState[i] == false) {
+				_keyState[i] = true;
+				ecs->SendEvent<KeyDown>(i, dt);
+			}
+			else {
+				ecs->SendEvent<Key>(i, dt);
+			}
+		}
+		else {
+			if (_keyState[i] == true) {
+				_keyState[i] = false;
+				ecs->SendEvent<KeyUp>(i, dt);
+			}
 		}
 	}
 }
