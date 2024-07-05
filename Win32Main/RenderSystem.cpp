@@ -33,23 +33,21 @@ void RenderSystem::Update(float dt)
 			if (CheckBorder(cameraBound, objBound) == true) {
 				_target->SetTransform(transform->GetTransform() * cameraTransform);
 				// 몬스터 40px, 포탑 96px, 이펙트 64px
-				if(i == (UINT)Object_Layer::Monster) _target->DrawBitmap(sprite->_sprite->_bitmap, D2D1::RectF(0, 0, 40, 40));
-				else {
-					AnimationComponent* ac = entity._obj->GetComponent<AnimationComponent>();
-					if (ac == nullptr) {
-						_target->DrawBitmap(sprite->_sprite->_bitmap);
-					}
-					else {
-						Animation* anim = ac->GetCurAnimation();
-						FrameInfo finfo = anim->_frames[ac->_curFrame];
-						D2D1_RECT_F dest = { 0, 0, finfo._pixelSize, finfo._pixelSize };
-						D2D1_RECT_F src = { finfo._left * finfo._pixelSize, finfo._top * finfo._pixelSize, 
-							(finfo._left + 1) * finfo._pixelSize, 
-							(finfo._top + 1) * finfo._pixelSize };
-						_target->DrawBitmap(sprite->_sprite->_bitmap, dest, 1.0f, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, src);
-					}
-					
+				AnimationComponent* ac = entity._obj->GetComponent<AnimationComponent>();
+				if (ac == nullptr) {
+					_target->DrawBitmap(sprite->_sprite->_bitmap);
 				}
+				else {
+					Animation* anim = ac->GetCurAnimation();
+					FrameInfo finfo = anim->_frames[ac->_curFrame];
+					D2D1_RECT_F dest = { 0, 0, finfo._pixelSize, finfo._pixelSize };
+					D2D1_RECT_F src = { finfo._left * finfo._pixelSize, finfo._top * finfo._pixelSize, 
+						(finfo._left + 1) * finfo._pixelSize, 
+						(finfo._top + 1) * finfo._pixelSize };
+					_target->DrawBitmap(sprite->_sprite->_bitmap, dest, 1.0f, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, src);
+				}
+					
+#ifdef _DEBUG
 				_target->DrawRectangle(
 					D2D1::RectF(
 						bc->_borderPos[0].x, bc->_borderPos[0].y,
@@ -57,6 +55,7 @@ void RenderSystem::Update(float dt)
 					),
 					_greenBrush
 				);
+#endif
 			}
 		}
 	}
