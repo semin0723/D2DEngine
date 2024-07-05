@@ -13,7 +13,7 @@ World::World()
 	tf->SetRectSize(sp->_spriteSize);
 	BoxCollider* bc = ComponentManager->AddComponent<BoxCollider>(square, sp->_spriteSize);
 	DetectComponent* dc = ComponentManager->AddComponent<DetectComponent>(square, 400);
-	AttackComponent* at = ComponentManager->AddComponent<AttackComponent>(square, 1, 0.5f);
+	AttackComponent* at = ComponentManager->AddComponent<AttackComponent>(square, 50, 0.5f);
 	ECS::_ecs->SendEvent<RegistPlayer>(square);
 
 	EntityId bg = CreateGameObject<Square>(Object_Layer::Background);

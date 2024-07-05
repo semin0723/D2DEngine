@@ -106,7 +106,7 @@ void MonsterControll::OnHit(const Attack* event)
 			MonsterStat* ms = ComponentManager->Getcomponent<MonsterStat>(_monsters[i]);
 			Transform* tf = ComponentManager->Getcomponent<Transform>(_monsters[i]);
 			ms->_hp -= (std::max)((event->_damage - ms->_defence), 0);
-			ecs->SendEvent<CreateEffect>(L"Hit", tf->_position);
+			ecs->SendEvent<CreateEffect>(L"Hit", tf->_position - Vector3(12, 12, 0));
 			if (ms->_hp <= 0) {
 				ecs->SendEvent<GameObjectDestroyed>(_monsters[i], Object_Layer::Monster);
 			}
