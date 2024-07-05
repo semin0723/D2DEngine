@@ -3,38 +3,34 @@
 #include <d2d1.h>
 
 struct FrameInfo {
-	float _left;
-	float _top;
-	float _right;
-	float _bottom;
-	float _playTime;
+	int _left;
+	int _top;
+	int _pixelSize;
+	float _timePerFrame;
 
 	FrameInfo() {
 		_left = 0;
 		_top = 0;
-		_right = 0;
-		_bottom = 0;
-		_playTime = 0;
+		_pixelSize = 0;
+		_timePerFrame = 0;
 	}
-	FrameInfo(const float left, const float top, const float right, const float bottom, const float duration) {
+	FrameInfo(const float left, const float top, const float pixelSize, const float time) {
 		_left = left;
 		_top = top;
-		_right = right;
-		_bottom = bottom;
-		_playTime = duration;
+		_pixelSize = pixelSize;
+		_timePerFrame = time;
 	}
 };
 
 class Animation {
 public:
 	Animation() {}
+	Animation(int frameCount) : _frames(frameCount) {}
 	~Animation() { 
-		if (_animationBitmapSource) _animationBitmapSource->Release(); 
 		_frames.clear();
 	}
 
 	bool _isLoop = false;
 
-	ID2D1Bitmap* _animationBitmapSource = { 0 };
 	std::vector<FrameInfo> _frames;
 };

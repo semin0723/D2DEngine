@@ -148,6 +148,12 @@
     <Filter Include="소스 파일\Component\Attack">
       <UniqueIdentifier>{31ecd97c-ab5a-4cae-83a6-3f3f2b41024f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Effects">
+      <UniqueIdentifier>{37db77b5-3c1c-48dd-aa7a-cbc9938ef79b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\System\Effect">
+      <UniqueIdentifier>{d5575d7c-642c-4d87-ba7d-339f874bf876}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -324,6 +330,12 @@
     <ClInclude Include="AttackComponent.h">
       <Filter>소스 파일\Component\Attack</Filter>
     </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>소스 파일\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectSystem.h">
+      <Filter>소스 파일\System\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Win32Main.cpp">
@@ -457,6 +469,12 @@
     </ClCompile>
     <ClCompile Include="AttackComponent.cpp">
       <Filter>소스 파일\Component\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>소스 파일\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectSystem.cpp">
+      <Filter>소스 파일\System\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

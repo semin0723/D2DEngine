@@ -5,6 +5,7 @@ enum class Object_Layer {
 	Background,
 	Player,
 	Monster,
+	Effect,
 
 	End = 32,
 };

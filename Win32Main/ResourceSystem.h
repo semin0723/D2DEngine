@@ -21,11 +21,12 @@ public:
 
 	void Initialize(ID2D1HwndRenderTarget* target);
 
-	void GetImageFromFile(std::wstring& spriteKey, ID2D1Bitmap** image);
-	Image* GetImage(std::wstring& spriteKey);
+	void GetImageFromFile(const std::wstring& spriteKey, ID2D1Bitmap** image);
+	Image* GetImage(const std::wstring& spriteKey);
 
-	void GetFrameInfoFromFile(std::wstring& animationKey, Animation* animation);
-	Animation* GetAnimation(std::wstring& animationKey);
+	Animation* GetAnimation(const std::wstring& animationKey);
+
+	void CreateEffectAnimations();
 
 private:
 	static ResourceSystem* _instance;

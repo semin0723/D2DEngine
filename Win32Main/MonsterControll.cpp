@@ -104,8 +104,9 @@ void MonsterControll::OnHit(const Attack* event)
 	for (int i = 0; i < _monsters.size(); i++) {
 		if (_monsters[i] == event->_target) {
 			MonsterStat* ms = ComponentManager->Getcomponent<MonsterStat>(_monsters[i]);
+			Transform* tf = ComponentManager->Getcomponent<Transform>(_monsters[i]);
 			ms->_hp -= (std::max)((event->_damage - ms->_defence), 0);
-			// sendEvent<CreateEffect>(); 몬스터 피격 이펙트 출력
+			ecs->SendEvent<CreateEffect>(L"Hit", tf->_position);
 			if (ms->_hp <= 0) {
 				ecs->SendEvent<GameObjectDestroyed>(_monsters[i], Object_Layer::Monster);
 			}
@@ -123,8 +124,6 @@ void MonsterControll::MonsterCreated(const GameObjectCreated* event)
 	if (event->_layer != Object_Layer::Monster) return;
 	_monsters.push_back(event->_entityId);
 	Transform* tf = ComponentManager->Getcomponent<Transform>(event->_entityId);
-	Sprite* sp = ComponentManager->AddComponent<Sprite>(event->_entityId, L"TestImage");
-	BoxCollider* bc = ComponentManager->AddComponent<BoxCollider>(event->_entityId, sp->_spriteSize);
 	tf->_position = _spawner->GetSpawnPosition();
 }
 

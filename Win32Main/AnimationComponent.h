@@ -9,10 +9,14 @@ public:
 	AnimationComponent();
 	~AnimationComponent();
 
-	void ChangeAnimation(std::string& stateName);
+	void ChangeAnimation(std::wstring& stateName);
+	void AddAnimation(std::wstring key, Animation* animation);
+
+	Animation* GetCurAnimation() { return _animations[_curAnimationState]; }
 
 	int _curFrame = 0;
-	std::string _curAnimationState;
-	std::unordered_map<std::string, Animation*> _animations;
+	float _curTime = 0;
+	std::wstring _curAnimationState;
+	std::unordered_map<std::wstring, Animation*> _animations;
 };
 

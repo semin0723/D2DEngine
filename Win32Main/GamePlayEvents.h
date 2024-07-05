@@ -29,3 +29,9 @@ struct AreaAttack : public Event<AreaAttack> {
 	Vector3 _rectSize;
 	AreaAttack(EntityId eid, int damage, Vector3 size) : _target(eid), _damage(damage), _rectSize(size) {}
 };
+
+struct CreateEffect : public Event<CreateEffect> {
+	std::wstring _effectKey;
+	Vector3 _createLocation;
+	CreateEffect(std::wstring key, Vector3 location) : _effectKey(key), _createLocation(location) {}
+};

@@ -37,7 +37,7 @@ void TowerControll::Update(float dt)
 	}
 
 	//АјАн
-	//EnemyAttack();
+	EnemyAttack(dt);
 }
 
 void TowerControll::PostUpdate(float dt)
@@ -74,17 +74,22 @@ void TowerControll::SearchEnemyInRange()
 	}
 }
 
-void TowerControll::EnemyAttack()
+void TowerControll::EnemyAttack(float dt)
 {
 	for (int i = 0; i < _towers.size(); i++) {
 		AttackComponent* ac = ComponentManager->Getcomponent<AttackComponent>(_towers[i]);
 		DetectComponent* dc = ComponentManager->Getcomponent<DetectComponent>(_towers[i]);
-		if (ac->_multiAttack == false) {
-			ecs->SendEvent<Attack>(dc->_targetEntity, ac->_damage);
+		ac->_curTime += dt;
+		if (ac->_curTime >= ac->_attackInterval) {
+			ac->_curTime -= ac->_attackInterval;
+			if (ac->_multiAttack == false) {
+				ecs->SendEvent<Attack>(dc->_targetEntity, ac->_damage);
+			}
+			else {
+				ecs->SendEvent<AreaAttack>(dc->_targetEntity, ac->_damage, ac->_attackRect);
+			}
 		}
-		else {
-			ecs->SendEvent<AreaAttack>(dc->_targetEntity, ac->_damage, ac->_attackRect);
-		}
+
 	}
 }
 

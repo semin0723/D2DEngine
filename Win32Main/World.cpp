@@ -9,15 +9,16 @@ World::World()
 
 	EntityId square = CreateGameObject<Square>(Object_Layer::Player);
 	Transform* tf = ComponentManager->AddComponent<Transform>(square, Vector3(200.0f, 100.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
-	Sprite* sp = ComponentManager->AddComponent<Sprite>(square, L"TowerTest");
+	Sprite* sp = ComponentManager->AddComponent<Sprite>(square, L"Images\\TowerTest");
 	tf->SetRectSize(sp->_spriteSize);
 	BoxCollider* bc = ComponentManager->AddComponent<BoxCollider>(square, sp->_spriteSize);
 	DetectComponent* dc = ComponentManager->AddComponent<DetectComponent>(square, 400);
+	AttackComponent* at = ComponentManager->AddComponent<AttackComponent>(square, 1, 0.5f);
 	ECS::_ecs->SendEvent<RegistPlayer>(square);
 
 	EntityId bg = CreateGameObject<Square>(Object_Layer::Background);
 	Transform* tfbg = ComponentManager->AddComponent<Transform>(bg, Vector3(350.0f, 0, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
-	Sprite* spbg = ComponentManager->AddComponent<Sprite>(bg, L"TestBg");
+	Sprite* spbg = ComponentManager->AddComponent<Sprite>(bg, L"Images\\TestBg");
 	tfbg->SetRectSize(spbg->_spriteSize);
 	BoxCollider* bcbg = ComponentManager->AddComponent<BoxCollider>(bg, spbg->_spriteSize);
 

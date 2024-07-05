@@ -22,6 +22,7 @@ public:
 		}
 
 		T* newSystem = new T(std::forward<ARGS>(systemArgs)...);
+		newSystem->_systemManager = this;
 		_systems[tid] = newSystem;
 
 		_workOrder.push_back(newSystem);

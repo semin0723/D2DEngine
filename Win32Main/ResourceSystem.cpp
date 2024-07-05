@@ -29,7 +29,7 @@ void ResourceSystem::Initialize(ID2D1HwndRenderTarget* target)
 	);
 }
 
-Image* ResourceSystem::GetImage(std::wstring& spriteKey)
+Image* ResourceSystem::GetImage(const std::wstring& spriteKey)
 {
 	if (_resources.find(spriteKey) == _resources.end()) {
 		Image* newImage = new Image;
@@ -40,57 +40,67 @@ Image* ResourceSystem::GetImage(std::wstring& spriteKey)
 	return _resources[spriteKey];
 }
 
-Animation* ResourceSystem::GetAnimation(std::wstring& animationKey)
+Animation* ResourceSystem::GetAnimation(const std::wstring& animationKey)
 {
-	if (_animations.find(animationKey) == _animations.end()) {
-		Animation* animation = new Animation;
-		GetFrameInfoFromFile(animationKey, animation);
-		_animations.insert({ animationKey, animation });
-	}
-
 	return _animations[animationKey];
 }
 
-void ResourceSystem::GetFrameInfoFromFile(std::wstring& animationKey, Animation* animation)
+void ResourceSystem::CreateEffectAnimations()
 {
-	std::wstring filename = L"data\\Animation\\FrameInfo\\" + animationKey + L".CSV";
+	std::wstring filename = L"data\\Animation\\EffectAnimationFrame.csv";
 	std::wifstream file(filename);
-	if (!file.is_open()) {
-		return;
-	}
+	if (!file.is_open()) return;
+	std::wstringstream wss;
+	float pixelCount = 0;
 	std::wstring line;
-
-	int frameCount = 0;
+	std::wstring tmp;
 	std::getline(file, line);
-	std::wstringstream wss(line);
-	wss >> frameCount;
+	wss = std::wstringstream(line);
+	wss >> pixelCount;
 
-	for (int i = 0; i < frameCount; i++) {
-		FrameInfo frame;
-		getline(file, line);
-		std::wstringstream wss(line);
-		std::wstring tmp;
+	while (true) {
+		
+		std::wstring animationKey = L"";
+		int frameCount = 0;
+		int left = 0;
+		int top = 0;
+		float timePerFrame = 0;
+
+		std::getline(file, animationKey);
+		if (animationKey == L"") break;
+
+		// framecount
+		std::getline(file, line);
+		wss = std::wstringstream(line);
+		wss >> frameCount;
+
+		// frame start idx (left, top)
+		std::getline(file, line);
+		wss = std::wstringstream(line);
 		std::getline(wss, tmp, L',');
-		frame._left = (float)_wtoi(tmp.c_str());
+		left = _wtoi(tmp.c_str());
 		std::getline(wss, tmp, L',');
-		frame._top = (float)_wtoi(tmp.c_str());
-		std::getline(wss, tmp, L',');
-		frame._right = (float)_wtoi(tmp.c_str());
-		std::getline(wss, tmp, L',');
-		frame._bottom = (float)_wtoi(tmp.c_str());
-		std::getline(wss, tmp, L',');
-		frame._playTime = (float)_wtoi(tmp.c_str());
-		animation->_frames.push_back(frame);
+		top = _wtoi(tmp.c_str());
+
+		// time per frame
+		std::getline(file, line);
+		timePerFrame = _wtof(line.c_str());
+
+		Animation* newAnimation = new Animation;
+		for (int i = 0; i < frameCount; i++) {
+			newAnimation->_frames.push_back(FrameInfo(left + i, top, pixelCount, timePerFrame));
+		}
+		_animations.insert({ animationKey, newAnimation });
 	}
 }
 
-void ResourceSystem::GetImageFromFile(std::wstring& spriteKey, ID2D1Bitmap** image)
+void ResourceSystem::GetImageFromFile(const std::wstring& spriteKey, ID2D1Bitmap** image)
 {
 	IWICBitmapDecoder* decoder = nullptr;
 	IWICFormatConverter* converter = nullptr;
 	IWICBitmapFrameDecode* frame = nullptr;
 
-	std::wstring imageFilePath = L"data\\Images\\" + spriteKey + L".png";
+	std::wstring imageFilePath = L"data\\" + spriteKey + L".png";
 
 	HRESULT res = _wicFactory->CreateDecoderFromFilename(
 		imageFilePath.c_str(),
