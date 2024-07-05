@@ -44,8 +44,8 @@ Animation* ResourceSystem::GetAnimation(std::wstring& animationKey)
 {
 	if (_animations.find(animationKey) == _animations.end()) {
 		Animation* animation = new Animation;
-		GetImageFromFile(animationKey, &animation->_animationBitmapSource);
 		GetFrameInfoFromFile(animationKey, animation);
+		_animations.insert({ animationKey, animation });
 	}
 
 	return _animations[animationKey];

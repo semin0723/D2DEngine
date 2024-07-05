@@ -23,6 +23,8 @@ public:
 	Vector3 operator-	(const Vector3& v) const;
 	Vector3 operator*	(const float& scalar) const;
 	Vector3 operator/	(const float& scalar) const;
+
+	bool operator==		(const Vector3& v) const;
 };
 
 const float dot(Vector3& a, Vector3& b);

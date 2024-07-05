@@ -82,3 +82,8 @@ Vector3 Vector3::operator*	(const float& scalar) const {
 Vector3 Vector3::operator/	(const float& scalar) const {
 	return Vector3(*this) /= scalar;
 }
+
+bool Vector3::operator==(const Vector3& v) const
+{
+	return ((x == v.x) && (y == v.y) && (z == v.z));
+}

@@ -20,6 +20,7 @@ public:
 	void SpawnMonster();
 
 	const int GetCurRound() const { return _curRound; }
+	void SetSpawnPosition(Vector3& pos) { _spawnPosition = pos; }
 	const Vector3 GetSpawnPosition() const { return _spawnPosition; }
 private:
 	int _spawnCount = 25;

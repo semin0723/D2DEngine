@@ -3,7 +3,6 @@
 
 class Monster : public Entity<Monster>
 {
-public:
-	void Initialize();
+
 };
 
