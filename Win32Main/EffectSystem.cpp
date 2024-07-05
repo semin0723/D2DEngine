@@ -50,7 +50,7 @@ void EffectSystem::OnCreateEffect(const CreateEffect* event)
 	EntityId newEntity = EntityManager->CreateEntity<Effect>();
 	Transform* tf = ComponentManager->AddComponent<Transform>(newEntity);
 	Sprite* sp = ComponentManager->AddComponent<Sprite>(newEntity, L"Images\\HitEffects");
-	BoxCollider* bc = ComponentManager->AddComponent<BoxCollider>(newEntity, Vector3(64, 64, 0));
+	BoxCollider* bc = ComponentManager->AddComponent<BoxCollider>(newEntity, Vector3(64.0f, 64.0f, 0));
 	AnimationComponent* ac = ComponentManager->AddComponent<AnimationComponent>(newEntity);
 
 	tf->SetRectSize(sp->_spriteSize);

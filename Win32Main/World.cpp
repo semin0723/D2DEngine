@@ -12,7 +12,7 @@ World::World()
 	Sprite* sp = ComponentManager->AddComponent<Sprite>(square, L"Images\\TowerTest");
 	tf->SetRectSize(sp->_spriteSize);
 	BoxCollider* bc = ComponentManager->AddComponent<BoxCollider>(square, sp->_spriteSize);
-	DetectComponent* dc = ComponentManager->AddComponent<DetectComponent>(square, 400);
+	DetectComponent* dc = ComponentManager->AddComponent<DetectComponent>(square, 400.0f);
 	AttackComponent* at = ComponentManager->AddComponent<AttackComponent>(square, 50, 0.5f);
 	ECS::_ecs->SendEvent<RegistPlayer>(square);
 

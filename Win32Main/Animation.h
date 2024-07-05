@@ -14,7 +14,7 @@ struct FrameInfo {
 		_pixelSize = 0;
 		_timePerFrame = 0;
 	}
-	FrameInfo(const float left, const float top, const float pixelSize, const float time) {
+	FrameInfo(const int left, const int top, const int pixelSize, const float time) {
 		_left = left;
 		_top = top;
 		_pixelSize = pixelSize;

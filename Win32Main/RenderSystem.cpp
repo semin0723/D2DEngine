@@ -40,10 +40,10 @@ void RenderSystem::Update(float dt)
 				else {
 					Animation* anim = ac->GetCurAnimation();
 					FrameInfo finfo = anim->_frames[ac->_curFrame];
-					D2D1_RECT_F dest = { 0, 0, finfo._pixelSize, finfo._pixelSize };
-					D2D1_RECT_F src = { finfo._left * finfo._pixelSize, finfo._top * finfo._pixelSize, 
-						(finfo._left + 1) * finfo._pixelSize, 
-						(finfo._top + 1) * finfo._pixelSize };
+					D2D1_RECT_F dest = { 0, 0, (FLOAT)finfo._pixelSize, (FLOAT)finfo._pixelSize };
+					D2D1_RECT_F src = { (FLOAT)(finfo._left * finfo._pixelSize), (FLOAT)(finfo._top * finfo._pixelSize),
+						(FLOAT)((finfo._left + 1) * finfo._pixelSize),
+						(FLOAT)((finfo._top + 1) * finfo._pixelSize) };
 					_target->DrawBitmap(sprite->_sprite->_bitmap, dest, 1.0f, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, src);
 				}
 					
