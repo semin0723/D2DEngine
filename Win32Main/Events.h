@@ -22,6 +22,25 @@ struct Key : public Event<Key> {
 	Key(const int keyCode, const float delta) : _keyCode(keyCode), _delta(delta) {}
 };
 
+struct MouseButtonDown : public Event<MouseButtonDown> {
+	const int _keyCode;
+	D2D1_POINT_2F _position;
+	const float _delta;
+	MouseButtonDown(const int keyCode, D2D1_POINT_2F pos, const float delta) : _keyCode(keyCode), _position(pos), _delta(delta) {}
+};
+struct MouseButtonUp : public Event<MouseButtonUp> {
+	const int _keyCode;
+	D2D1_POINT_2F _position;
+	const float _delta;
+	MouseButtonUp(const int keyCode, D2D1_POINT_2F pos, const float delta) : _keyCode(keyCode), _position(pos), _delta(delta) {}
+};
+struct MouseButton : public Event<MouseButton> {
+	const int _keyCode;
+	D2D1_POINT_2F _position;
+	const float _delta;
+	MouseButton(const int keyCode, D2D1_POINT_2F pos, const float delta) : _keyCode(keyCode), _position(pos), _delta(delta) {}
+};
+
 struct GameObjectCreated : public Event<GameObjectCreated> {
 	EntityId _entityId;
 	Object_Layer _layer;
