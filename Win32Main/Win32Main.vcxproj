@@ -193,6 +193,8 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TowerControll.h" />
     <ClInclude Include="Transform.h" />
+    <ClInclude Include="UIGroup.h" />
+    <ClInclude Include="UISystem.h" />
     <ClInclude Include="Util.h" />
     <ClInclude Include="utilheader.h" />
     <ClInclude Include="Vector3.h" />
@@ -242,6 +244,8 @@
     <ClCompile Include="SystemManager.cpp" />
     <ClCompile Include="TowerControll.cpp" />
     <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="UIGroup.cpp" />
+    <ClCompile Include="UISystem.cpp" />
     <ClCompile Include="Util.cpp" />
     <ClCompile Include="Vector3.cpp" />
     <ClCompile Include="Win32Main.cpp" />

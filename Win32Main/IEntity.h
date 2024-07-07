@@ -4,6 +4,7 @@
 #include "ComponentManager.h"
 
 using EntityTypeId	= TypeId;
+using ChildEntities = std::vector<EntityId>;
 
 // 엔티티의 id의 invalid값도 handle의 invalid값과 같은 값으로 설정합니다.
 static const ULL INVALID_ENTITY_ID = (std::numeric_limits<ULL>::max)();
@@ -32,6 +33,11 @@ public:
 	virtual const EntityTypeId GetEntityTypeId() const = 0;
 	const EntityId GetEntityId() const { return _entityId; }
 
+	void SetParentEntity(EntityId id) { _parent = id; }
+	void AddChildEntity(EntityId id) { _childs.push_back(id); }
+	const EntityId GetParentEntityId() const { return _parent; }
+	const ChildEntities& GetChildEntityId() const{ return _childs; }
+
 	// 설정할 state의 상태에 따라 해당 엔티티를 보이게 할거냐 숨길거냐를 설정하는 곳.
 	void SetActive(bool state);
 	bool Active() const { return _active; }
@@ -40,8 +46,12 @@ public:
 	virtual void OnDisable() {}
 
 protected:
+
 	// EntityManager에서 id를 생성해야 합니다.
 	EntityId	_entityId;
+
+	EntityId	_parent;
+	ChildEntities _childs;
 
 	bool		_active;
 

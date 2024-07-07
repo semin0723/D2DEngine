@@ -154,6 +154,15 @@
     <Filter Include="소스 파일\System\Effect">
       <UniqueIdentifier>{d5575d7c-642c-4d87-ba7d-339f874bf876}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Component\UI">
+      <UniqueIdentifier>{3029ae56-a089-4178-b4ba-3aed117daa45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\UI\Group">
+      <UniqueIdentifier>{b0467fd7-bc14-41cb-805a-94ea9c47513c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\System\UI">
+      <UniqueIdentifier>{a9232a72-673b-492f-b299-5a16f7c65867}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -336,6 +345,12 @@
     <ClInclude Include="EffectSystem.h">
       <Filter>소스 파일\System\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="UIGroup.h">
+      <Filter>소스 파일\Component\UI\Group</Filter>
+    </ClInclude>
+    <ClInclude Include="UISystem.h">
+      <Filter>소스 파일\System\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Win32Main.cpp">
@@ -475,6 +490,12 @@
     </ClCompile>
     <ClCompile Include="EffectSystem.cpp">
       <Filter>소스 파일\System\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="UIGroup.cpp">
+      <Filter>소스 파일\Component\UI\Group</Filter>
+    </ClCompile>
+    <ClCompile Include="UISystem.cpp">
+      <Filter>소스 파일\System\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
