@@ -34,7 +34,7 @@ void MonsterSpawner::SpawnMonster()
 		Sprite* sp = ComponentManager->AddComponent<Sprite>(newEntityId, L"Images\\TestImage");
 		tf->_rectSize = Vector3(40, 40, 0);
 		BoxCollider* bc = ComponentManager->AddComponent<BoxCollider>(newEntityId, Vector3(40, 40, 0));
-		MonsterStat* ms = ComponentManager->AddComponent<MonsterStat>(newEntityId, 100, 0, 200);
+		MonsterStat* ms = ComponentManager->AddComponent<MonsterStat>(newEntityId, 100, 0, 200.0f);
 
 		ECS::_ecs->SendEvent<GameObjectCreated>(newEntityId, Object_Layer::Monster);
 	}
