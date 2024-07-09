@@ -163,6 +163,24 @@
     <Filter Include="소스 파일\System\UI">
       <UniqueIdentifier>{a9232a72-673b-492f-b299-5a16f7c65867}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Component\UI\Transform">
+      <UniqueIdentifier>{8df89e86-ac1d-4d90-954b-f02607637e71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\UI\Button">
+      <UniqueIdentifier>{2d411a6e-e968-444c-993f-3457a080ac68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\UI\Button\ButtonState">
+      <UniqueIdentifier>{0cc6ddb1-8ae5-4f95-bc50-a30e5647bc87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\UI\Button\ButtonState\Normal">
+      <UniqueIdentifier>{1c06c465-2372-4a5e-9441-18d8eeaf433c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\UI\Button\ButtonState\Pressed">
+      <UniqueIdentifier>{ae8c8b5f-acb4-41b6-938a-e83896aec461}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Component\UI\Button\ButtonState\Released">
+      <UniqueIdentifier>{d54d3f92-039b-4e68-82d9-c32863531936}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -351,6 +369,21 @@
     <ClInclude Include="UISystem.h">
       <Filter>소스 파일\System\UI</Filter>
     </ClInclude>
+    <ClInclude Include="UITransform.h">
+      <Filter>소스 파일\Component\UI\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>소스 파일\Component\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonNormal.h">
+      <Filter>소스 파일\Component\UI\Button\ButtonState\Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonPressed.h">
+      <Filter>소스 파일\Component\UI\Button\ButtonState\Pressed</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonReleased.h">
+      <Filter>소스 파일\Component\UI\Button\ButtonState\Released</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Win32Main.cpp">
@@ -496,6 +529,21 @@
     </ClCompile>
     <ClCompile Include="UISystem.cpp">
       <Filter>소스 파일\System\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UITransform.cpp">
+      <Filter>소스 파일\Component\UI\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>소스 파일\Component\UI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonNormal.cpp">
+      <Filter>소스 파일\Component\UI\Button\ButtonState\Normal</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonPressed.cpp">
+      <Filter>소스 파일\Component\UI\Button\ButtonState\Pressed</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonReleased.cpp">
+      <Filter>소스 파일\Component\UI\Button\ButtonState\Released</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
