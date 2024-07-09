@@ -6,14 +6,15 @@ class Sprite : public Component<Sprite>
 {
 public:
 	Sprite(std::wstring spriteKey) {
-		_sprite = ResourceSystem::GetInstance()->GetImage(spriteKey);
-		_spriteSize = Vector3(_sprite->_bitmap->GetSize().width, _sprite->_bitmap->GetSize().height, 0);
+		GetImage(spriteKey);
 	}
 	~Sprite() {}
 
 	void SetFlipX(const bool state) { _flipX = state; }
 	void SetFlipY(const bool state) { _flipY = state; }
 	void SetFlipZ(const bool state) { _flipZ = state; }
+
+	void GetImage(const std::wstring& spriteKey);
 
 	Image* _sprite;
 	Vector3 _spriteSize;
