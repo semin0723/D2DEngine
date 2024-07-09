@@ -46,6 +46,7 @@ void InputSystem::PostUpdate(float dt)
 
 void InputSystem::UpdateMouse(float dt)
 {
+	static float accumulateTime;
 	_prevMouseState = _curMouseState;
 
 	POINT pos;
@@ -56,6 +57,12 @@ void InputSystem::UpdateMouse(float dt)
 
 	_curMouseState._position.x = (FLOAT)pos.x;
 	_curMouseState._position.y = (FLOAT)pos.y;
+
+	accumulateTime += dt;
+	if (accumulateTime >= _throttleInverval) {
+		accumulateTime -= _throttleInverval;
+		ecs->SendEvent<MouseMove>(_curMouseState._position);
+	}
 
 	_curMouseState._mouseLButton = (GetAsyncKeyState(VK_LBUTTON) & 0x8000) != 0;
 	_curMouseState._mouseRButton = (GetAsyncKeyState(VK_RBUTTON) & 0x8000) != 0;

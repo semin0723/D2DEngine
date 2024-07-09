@@ -29,5 +29,6 @@ private:
 	std::vector<bool> _keyState;
 	Mouse _curMouseState;
 	Mouse _prevMouseState;
+	float _throttleInverval = 0.01667f;
 };
 
