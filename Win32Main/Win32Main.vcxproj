@@ -143,6 +143,7 @@
     <ClInclude Include="AttackComponent.h" />
     <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="Button.h" />
+    <ClInclude Include="ButtonClicked.h" />
     <ClInclude Include="ButtonNormal.h" />
     <ClInclude Include="ButtonPressed.h" />
     <ClInclude Include="ButtonReleased.h" />
@@ -211,6 +212,7 @@
     <ClCompile Include="AttackComponent.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="ButtonClicked.cpp" />
     <ClCompile Include="ButtonNormal.cpp" />
     <ClCompile Include="ButtonPressed.cpp" />
     <ClCompile Include="ButtonReleased.cpp" />

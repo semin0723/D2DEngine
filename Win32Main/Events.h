@@ -72,3 +72,9 @@ struct RegistPlayer : public Event<RegistPlayer> {
 	EntityId _entityId;
 	RegistPlayer(EntityId eid) : _entityId(eid) {}
 };
+
+// Button Clicked	
+struct ButtonClick : public Event<ButtonClick> {
+	EntityId _entityId;
+	ButtonClick(EntityId eid) : _entityId(eid) {}
+};

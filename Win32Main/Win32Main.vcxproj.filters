@@ -181,6 +181,9 @@
     <Filter Include="소스 파일\Component\UI\Button\ButtonState\Released">
       <UniqueIdentifier>{d54d3f92-039b-4e68-82d9-c32863531936}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Component\UI\Button\ButtonState\Clicked">
+      <UniqueIdentifier>{ea144276-f16d-4b7a-aa27-3f7b5e5366ab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -384,6 +387,9 @@
     <ClInclude Include="ButtonReleased.h">
       <Filter>소스 파일\Component\UI\Button\ButtonState\Released</Filter>
     </ClInclude>
+    <ClInclude Include="ButtonClicked.h">
+      <Filter>소스 파일\Component\UI\Button\ButtonState\Clicked</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Win32Main.cpp">
@@ -544,6 +550,9 @@
     </ClCompile>
     <ClCompile Include="ButtonReleased.cpp">
       <Filter>소스 파일\Component\UI\Button\ButtonState\Released</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonClicked.cpp">
+      <Filter>소스 파일\Component\UI\Button\ButtonState\Clicked</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
