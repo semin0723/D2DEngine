@@ -14,7 +14,7 @@ public:
 	void AddChildUI(EntityId id);
 	const Childs& GetChildUI();
 
-	// groupOrder이 클 수록 앞에 그려짐. 
+	// groupOrder이 낮을수록 앞에 그려짐. 
 	// 그룹별 우선순위 내림차순 정렬
 	UINT _groupOrder = 0;
 };

@@ -7,11 +7,21 @@
 
 class UISystem : public System<UISystem>, public EventListener
 {
+	using UIGroupEntities = std::vector<EntityId>;
+
 public:
 	UISystem();
 	~UISystem();
 	
-	bool CheckMouseOnUI(D2D1_POINT_2F pos);
+	virtual void PreUpdate(float dt);
+	virtual void Update(float dt);
+	virtual void PostUpdate(float dt);
+
+	void GetMouseOnUI(EntityId id, EntityId& get, const D2D1_POINT_2F& pos);
+
+	std::pair<EntityId, int> GetEffectedEntity(const D2D1_POINT_2F& pos);
+	bool CheckEntityId(EntityId& eid);
+	void SwapOrder(UIGroupEntities& group, int targetidx);
 
 	void RegistEvent();
 	void UnRegistEvent();
@@ -21,8 +31,6 @@ public:
 	void OnMouseButtonUp(const MouseButtonUp* event);
 
 private:
-	using UIGroupEntities = std::vector<EntityId>;
-
 	UIGroupEntities _uigroups;
 };
 
