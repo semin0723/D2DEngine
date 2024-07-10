@@ -22,3 +22,19 @@ D2D1_RECT_F GetBounds(D2D1_POINT_2F pos, D2D1_POINT_2F rect)
 {
     return { pos.x, pos.y, pos.x + rect.x, pos.y + rect.y };
 }
+
+std::wstring StringToWstring(std::string& str)
+{
+    std::wstring tmp;
+    tmp.assign(str.begin(), str.end());
+    wprintf(tmp.c_str());
+    return tmp;
+}
+
+std::string WstringToString(std::wstring& wstr)
+{
+    std::string tmp;
+    tmp.assign(wstr.begin(), wstr.end());
+    printf(tmp.c_str());
+    return tmp;
+}
