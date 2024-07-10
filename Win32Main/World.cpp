@@ -33,6 +33,7 @@ World::World()
 	ButtonComponent* btnc = ComponentManager->AddComponent<ButtonComponent>(uibtn);
 	btnc->SetOwner(uibtn);
 	btntf->_size = spbtn->_spriteSize;
+	btnc->AddOnclickFunction(std::bind(&World::MoveCamera, this));
 
 	EntityManager->GetEntity(uigroup1)->AddChildEntity(uibtn);
 	EntityManager->GetEntity(uibtn)->SetParentEntity(uigroup1);
@@ -57,6 +58,17 @@ void World::Update(float dt)
 
 void World::PostUpdate(float dt)
 {
+}
+
+void World::MoveCamera()
+{
+	EntityId square = CreateGameObject<Square>(Object_Layer::Player);
+	Transform* tf = ComponentManager->AddComponent<Transform>(square, Vector3(500.0f, 100.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	Sprite* sp = ComponentManager->AddComponent<Sprite>(square, L"Images\\TowerTest");
+	tf->SetRectSize(sp->_spriteSize);
+	BoxCollider* bc = ComponentManager->AddComponent<BoxCollider>(square, sp->_spriteSize);
+	DetectComponent* dc = ComponentManager->AddComponent<DetectComponent>(square, 400.0f);
+	AttackComponent* at = ComponentManager->AddComponent<AttackComponent>(square, 50, 0.5f);
 }
 
 void World::RegistEvent()

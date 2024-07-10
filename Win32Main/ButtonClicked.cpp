@@ -13,6 +13,8 @@ ButtonClicked::~ButtonClicked()
 void ButtonClicked::StateEnter()
 {
 	ButtonComponent* btn = ComponentManager->Getcomponent<ButtonComponent>(_owner);
+	if(btn->_onclick) btn->_onclick();
+
 	btn->ChangeState(Button_State::Released);
 }
 

@@ -17,6 +17,7 @@ public:
 
 	Camera* _mainCamera;
 
+	void MoveCamera();
 private:
 	std::vector<EntityId> _objects;
 
