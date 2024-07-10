@@ -1,8 +1,9 @@
 #include "ButtonClicked.h"
 #include "Components.h"
 
-ButtonClicked::ButtonClicked()
+ButtonClicked::ButtonClicked(const std::string& name)
 {
+	_stateName = name;
 }
 
 ButtonClicked::~ButtonClicked()
@@ -11,8 +12,8 @@ ButtonClicked::~ButtonClicked()
 
 void ButtonClicked::StateEnter()
 {
-	Button* btn = ComponentManager->Getcomponent<Button>(_owner);
-	btn->ChangeState(Button_State::Normal);
+	ButtonComponent* btn = ComponentManager->Getcomponent<ButtonComponent>(_owner);
+	btn->ChangeState(Button_State::Released);
 }
 
 void ButtonClicked::StateUpdate(float dt)

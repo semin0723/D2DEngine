@@ -1,8 +1,9 @@
 #include "ButtonReleased.h"
 #include "Components.h"
 
-ButtonReleased::ButtonReleased()
+ButtonReleased::ButtonReleased(const std::string& name)
 {
+	_stateName = name;
 }
 
 ButtonReleased::~ButtonReleased()
@@ -19,7 +20,7 @@ void ButtonReleased::StateUpdate(float dt)
 	accumulateTime += dt;
 	if (accumulateTime >= _stateChangeInterval) {
 		accumulateTime = 0;
-		Button* btn = ComponentManager->Getcomponent<Button>(_owner);
+		ButtonComponent* btn = ComponentManager->Getcomponent<ButtonComponent>(_owner);
 		btn->ChangeState(Button_State::Normal);
 	}
 }

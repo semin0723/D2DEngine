@@ -5,7 +5,7 @@ class ButtonReleased :
     public State
 {
 public:
-    ButtonReleased();
+    ButtonReleased(const std::string& name);
     virtual ~ButtonReleased();
 
     virtual void StateEnter();
@@ -13,6 +13,6 @@ public:
     virtual void StateExit();
 
 private:
-    float _stateChangeInterval = 0.25f;
+    float _stateChangeInterval = 0.05f;
 };
 

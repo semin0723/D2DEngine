@@ -20,7 +20,7 @@ void RenderSystem::Update(float dt)
 	D2D1InvertMatrix(&cameraTransform);
 	D2D1_RECT_F cameraBound = GetBounds(_curWorld->_mainCamera->_cameraPosition, _curWorld->_mainCamera->_cameraSize);
 
-	for (int i = 0; i < (UINT)Object_Layer::End; i++) {
+	for (int i = 0; i < (UINT)Object_Layer::UI; i++) {
 		for (auto& entity : _renderObject[i]) {
 			Transform* transform = entity._obj->GetComponent<Transform>();
 			Sprite* sprite = entity._obj->GetComponent<Sprite>();
@@ -58,6 +58,42 @@ void RenderSystem::Update(float dt)
 #endif
 			}
 		}
+	}
+	std::sort(_renderObject[(UINT)Object_Layer::UI].begin(), _renderObject[(UINT)Object_Layer::UI].end(), [&](RenderObject& a, RenderObject& b) {
+			UIGroup* uileft = ComponentManager->Getcomponent<UIGroup>(a._eid);
+			UIGroup* uiright = ComponentManager->Getcomponent<UIGroup>(b._eid);
+			return uileft->_groupOrder < uiright->_groupOrder;
+		});
+
+	for (int i = _renderObject[(UINT)Object_Layer::UI].size() - 1; i >= 0; i--) {
+		if (_renderObject[(UINT)Object_Layer::UI][i]._obj->Active() == false) continue;
+		UpdateUI(_renderObject[(UINT)Object_Layer::UI][i]._eid);
+	}
+	
+}
+
+void RenderSystem::UpdateUI(EntityId id)
+{
+	IEntity* ui = EntityManager->GetEntity(id);
+	UITransform* uitf = ui->GetComponent<UITransform>();
+	Sprite* sp = ui->GetComponent<Sprite>();
+
+	_target->SetTransform(uitf->_screenTransform);
+	if (sp == nullptr) {
+		_target->FillRectangle(
+			D2D1::RectF(
+				uitf->_position.x, uitf->_position.y,
+				uitf->_position.x + uitf->_size.x,
+				uitf->_position.y + uitf->_size.y),
+			_greenBrush);
+	}
+	else {
+		_target->DrawBitmap(sp->_sprite->_bitmap, D2D1::RectF(0, 0, uitf->_size.x, uitf->_size.y));
+	}
+
+	std::vector<EntityId> child = ui->GetChildEntityId();
+	for (auto& i : child) {
+		UpdateUI(i);
 	}
 }
 

@@ -1,8 +1,9 @@
 #include "ButtonPressed.h"
 #include "Components.h"
 
-ButtonPressed::ButtonPressed()
+ButtonPressed::ButtonPressed(const std::string& name)
 {
+	_stateName = name;
 }
 
 ButtonPressed::~ButtonPressed()
@@ -12,7 +13,7 @@ ButtonPressed::~ButtonPressed()
 void ButtonPressed::StateEnter()
 {
 	Sprite* sp = ComponentManager->Getcomponent<Sprite>(_owner);
-	sp->GetImage(L"ButtonPressed");
+	sp->GetImage(L"Images\\Button\\" + StringToWstring(_stateName));
 }
 
 void ButtonPressed::StateUpdate(float dt)

@@ -7,6 +7,7 @@ enum class Object_Layer {
 	Monster,
 	Effect,
 
+	UI = 31,
 	End = 32,
 };
 

@@ -142,11 +142,13 @@
     <ClInclude Include="AnimationComponent.h" />
     <ClInclude Include="AttackComponent.h" />
     <ClInclude Include="BoxCollider.h" />
-    <ClInclude Include="Button.h" />
+    <ClInclude Include="ButtonComponent.h" />
     <ClInclude Include="ButtonClicked.h" />
+    <ClInclude Include="ButtonHover.h" />
     <ClInclude Include="ButtonNormal.h" />
     <ClInclude Include="ButtonPressed.h" />
     <ClInclude Include="ButtonReleased.h" />
+    <ClInclude Include="ButtonStates.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ColliderSystem.h" />
     <ClInclude Include="CollisionEvents.h" />
@@ -187,6 +189,7 @@
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceSystem.h" />
+    <ClInclude Include="SampleButton.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Square.h" />
     <ClInclude Include="State.h" />
@@ -195,6 +198,7 @@
     <ClInclude Include="STL.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="SystemManager.h" />
+    <ClInclude Include="Systems.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TowerControll.h" />
     <ClInclude Include="Transform.h" />
@@ -211,8 +215,9 @@
     <ClCompile Include="AnimationComponent.cpp" />
     <ClCompile Include="AttackComponent.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
-    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="ButtonComponent.cpp" />
     <ClCompile Include="ButtonClicked.cpp" />
+    <ClCompile Include="ButtonHover.cpp" />
     <ClCompile Include="ButtonNormal.cpp" />
     <ClCompile Include="ButtonPressed.cpp" />
     <ClCompile Include="ButtonReleased.cpp" />
@@ -248,6 +253,7 @@
     <ClCompile Include="PlayerControllSystem.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="ResourceSystem.cpp" />
+    <ClCompile Include="SampleButton.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Square.cpp" />
     <ClCompile Include="StateComponent.cpp" />

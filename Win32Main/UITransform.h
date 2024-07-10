@@ -6,10 +6,11 @@
 class UITransform : public Component<UITransform>
 {
 public:
-	UITransform() {}
+	UITransform();
 	UITransform(Vector3 pos, Vector3 scale, Vector3 rotate);
 	~UITransform() {}
 	
+	void UpdateTransform();
 	void UpdatePosition();
 	const Vector3 GetScreenPosition() const;
 	const Vector3& GetRectSize() const { return _size; }

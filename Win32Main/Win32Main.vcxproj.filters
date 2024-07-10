@@ -184,6 +184,9 @@
     <Filter Include="소스 파일\Component\UI\Button\ButtonState\Clicked">
       <UniqueIdentifier>{ea144276-f16d-4b7a-aa27-3f7b5e5366ab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Component\UI\Button\ButtonState\Hover">
+      <UniqueIdentifier>{c70e0384-00a3-4e0d-ac9b-ac3f821083f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -375,7 +378,7 @@
     <ClInclude Include="UITransform.h">
       <Filter>소스 파일\Component\UI\Transform</Filter>
     </ClInclude>
-    <ClInclude Include="Button.h">
+    <ClInclude Include="ButtonComponent.h">
       <Filter>소스 파일\Component\UI\Button</Filter>
     </ClInclude>
     <ClInclude Include="ButtonNormal.h">
@@ -389,6 +392,18 @@
     </ClInclude>
     <ClInclude Include="ButtonClicked.h">
       <Filter>소스 파일\Component\UI\Button\ButtonState\Clicked</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonHover.h">
+      <Filter>소스 파일\Component\UI\Button\ButtonState\Hover</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems.h">
+      <Filter>헤더 파일\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="SampleButton.h">
+      <Filter>소스 파일\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonStates.h">
+      <Filter>헤더 파일\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -539,7 +554,7 @@
     <ClCompile Include="UITransform.cpp">
       <Filter>소스 파일\Component\UI\Transform</Filter>
     </ClCompile>
-    <ClCompile Include="Button.cpp">
+    <ClCompile Include="ButtonComponent.cpp">
       <Filter>소스 파일\Component\UI\Button</Filter>
     </ClCompile>
     <ClCompile Include="ButtonNormal.cpp">
@@ -553,6 +568,12 @@
     </ClCompile>
     <ClCompile Include="ButtonClicked.cpp">
       <Filter>소스 파일\Component\UI\Button\ButtonState\Clicked</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonHover.cpp">
+      <Filter>소스 파일\Component\UI\Button\ButtonState\Hover</Filter>
+    </ClCompile>
+    <ClCompile Include="SampleButton.cpp">
+      <Filter>소스 파일\GameObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

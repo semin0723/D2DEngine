@@ -14,7 +14,5 @@ public:
 	void SetOwner(EntityId id) { _owner = id; }
 protected:
 	EntityId _owner;
-
-private:
 	std::string _stateName;
 };

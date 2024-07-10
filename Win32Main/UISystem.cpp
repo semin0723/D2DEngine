@@ -3,10 +3,12 @@
 
 UISystem::UISystem()
 {
+	RegistEvent();
 }
 
 UISystem::~UISystem()
 {
+	UnRegistEvent();
 }
 
 void UISystem::PreUpdate(float dt)
@@ -15,6 +17,10 @@ void UISystem::PreUpdate(float dt)
 
 void UISystem::Update(float dt)
 {
+	for (int i = 0; i < _uigroups.size(); i++) {
+		if (EntityManager->GetEntity(_uigroups[i])->Active() == false) continue;
+		UpdateUI(_uigroups[i], dt);
+	}
 }
 
 void UISystem::PostUpdate(float dt)
@@ -28,12 +34,19 @@ void UISystem::GetMouseOnUI(EntityId curid, EntityId& get, const D2D1_POINT_2F& 
 	Vector3 uiSize = uitf->GetRectSize();
 
 	if (
-		uiPos.x >= pos.x &&
-		(uiPos.x + uiSize.x) <= pos.x &&
-		uiPos.y >= pos.y &&
-		(uiPos.y + uiSize.y) <= pos.y
+		uiPos.x <= pos.x &&
+		(uiPos.x + uiSize.x) >= pos.x &&
+		uiPos.y <= pos.y &&
+		(uiPos.y + uiSize.y) >= pos.y
 		) {
 		get = curid;
+	}
+
+	ButtonComponent* btnc = ComponentManager->Getcomponent<ButtonComponent>(curid);
+	if (btnc != nullptr && get != curid) {
+		if (btnc->_curState == Button_State::Pressed) {
+			btnc->ChangeState(Button_State::Released);
+		}
 	}
 
 	std::vector<EntityId> childEntities = EntityManager->GetEntity(curid)->GetChildEntityId();
@@ -69,13 +82,44 @@ bool UISystem::CheckEntityId(EntityId& eid)
 
 void UISystem::SwapOrder(UIGroupEntities& group, int targetidx)
 {
-	EntityId tmp = group[0];
-	group[0] = group[targetidx];
-	group[targetidx] = tmp;
+	UIGroup* uigroup1 = ComponentManager->Getcomponent<UIGroup>(group[0]);
+	UIGroup* uigroup2 = ComponentManager->Getcomponent<UIGroup>(group[targetidx]);
+
+	UINT tmporder = uigroup1->_groupOrder;
+	uigroup1->_groupOrder = uigroup2->_groupOrder;
+	uigroup2->_groupOrder = tmporder;
+}
+
+void UISystem::UpdateUI(EntityId id, float dt)
+{
+	UITransform* uitf = ComponentManager->Getcomponent<UITransform>(id);
+	uitf->UpdatePosition();
+
+	ButtonComponent* btnc = ComponentManager->Getcomponent<ButtonComponent>(id);
+	if (btnc != nullptr) {
+		btnc->_states[btnc->_curState]->StateUpdate(dt);
+	}
+
+	std::vector<EntityId> childEntities = EntityManager->GetEntity(id)->GetChildEntityId();
+
+	for (auto& child : childEntities) {
+		UpdateUI(child, dt);
+	}
+}
+
+void UISystem::DestroyUI(EntityId id)
+{
+	std::vector<EntityId> childEntities = EntityManager->GetEntity(id)->GetChildEntityId();
+	for (auto& child : childEntities) {
+		DestroyUI(child);
+	}
+	EntityManager->DestroyEntity(id);
 }
 
 void UISystem::RegistEvent()
 {
+	RegisterCallback(&UISystem::OnUICreate);
+	RegisterCallback(&UISystem::OnUIDestroyed);
 	RegisterCallback(&UISystem::OnMouseButtonDown);
 	RegisterCallback(&UISystem::OnMouseButton);
 	RegisterCallback(&UISystem::OnMouseButtonUp);
@@ -83,6 +127,8 @@ void UISystem::RegistEvent()
 
 void UISystem::UnRegistEvent()
 {
+	UnRegisterCallback(&UISystem::OnUICreate);
+	UnRegisterCallback(&UISystem::OnUIDestroyed);
 	UnRegisterCallback(&UISystem::OnMouseButtonDown);
 	UnRegisterCallback(&UISystem::OnMouseButton);
 	UnRegisterCallback(&UISystem::OnMouseButtonUp);
@@ -98,6 +144,12 @@ void UISystem::OnMouseButtonDown(const MouseButtonDown* event)
 	}
 	else {
 		SwapOrder(_uigroups, effectedUI.second);
+		ButtonComponent* btnc = ComponentManager->Getcomponent<ButtonComponent>(effectedUI.first);
+		if (btnc != nullptr) {
+			if (btnc->_curState == Button_State::Normal) {
+				btnc->ChangeState(Button_State::Pressed);
+			}
+		}
 	}
 
 }
@@ -117,5 +169,28 @@ void UISystem::OnMouseButtonUp(const MouseButtonUp* event)
 	}
 	else {
 		SwapOrder(_uigroups, effectedUI.second);
+		ButtonComponent* btnc = ComponentManager->Getcomponent<ButtonComponent>(effectedUI.first);
+		if (btnc != nullptr) {
+			if (btnc->_curState == Button_State::Pressed) {
+				btnc->ChangeState(Button_State::Clicked);
+			}
+		}
+	}
+}
+
+void UISystem::OnUICreate(const GameObjectCreated* event)
+{
+	if (event->_layer != Object_Layer::UI) return;
+	_uigroups.push_back(event->_entityId);
+}
+
+void UISystem::OnUIDestroyed(const GameObjectDestroyed* event)
+{
+	if (event->_layer != Object_Layer::UI) return;
+	for (UIGroupEntities::iterator it = _uigroups.begin(); it != _uigroups.end(); it++) {
+		if (*it == event->_entityId) {
+			DestroyUI(event->_entityId);
+			break;
+		}
 	}
 }

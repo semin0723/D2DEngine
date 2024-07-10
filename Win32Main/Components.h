@@ -12,4 +12,4 @@
 // UI
 #include "UITransform.h"
 #include "UIGroup.h"
-#include "Button.h"
+#include "ButtonComponent.h"

@@ -18,10 +18,14 @@ public:
 	virtual void PostUpdate(float dt);
 
 	void GetMouseOnUI(EntityId id, EntityId& get, const D2D1_POINT_2F& pos);
-
 	std::pair<EntityId, int> GetEffectedEntity(const D2D1_POINT_2F& pos);
+
+
 	bool CheckEntityId(EntityId& eid);
 	void SwapOrder(UIGroupEntities& group, int targetidx);
+
+	void UpdateUI(EntityId id, float dt);
+	void DestroyUI(EntityId id);
 
 	void RegistEvent();
 	void UnRegistEvent();
@@ -29,6 +33,9 @@ public:
 	void OnMouseButtonDown(const MouseButtonDown* event);
 	void OnMouseButton(const MouseButton* event);
 	void OnMouseButtonUp(const MouseButtonUp* event);
+	
+	void OnUICreate(const GameObjectCreated* event);
+	void OnUIDestroyed(const GameObjectDestroyed* event);
 
 private:
 	UIGroupEntities _uigroups;

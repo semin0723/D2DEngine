@@ -30,6 +30,12 @@ private:
 		return eid;
 	}
 
+	template<class E>
+	EntityId CreateUIObject() {
+		EntityId eid = ECS::_ecs->GetEntityManager()->CreateEntity<E>();
+		return eid;
+	}
+
 	EntityId _monsterId; // 테스트용
 };
 

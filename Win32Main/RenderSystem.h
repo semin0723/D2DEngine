@@ -29,6 +29,8 @@ private:
 	ID2D1HwndRenderTarget* _target;
 	World* _curWorld = nullptr;
 
+	void UpdateUI(EntityId id);
+
 	void RegistEvent();
 	void UnRegistEvent();
 

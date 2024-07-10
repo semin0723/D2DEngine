@@ -1,7 +1,17 @@
 #include "UITransform.h"
 #include "ECSCall.h"
 
+UITransform::UITransform() : _position{ 0, 0, 0 }, _scale{ 1.0f, 1.0f, 1.0f }, _rotate{ 0, 0, 0 }
+{
+	UpdateTransform();
+}
+
 UITransform::UITransform(Vector3 pos, Vector3 scale, Vector3 rotate) : _position(pos), _scale(scale), _rotate(rotate)
+{
+	UpdateTransform();
+}
+
+void UITransform::UpdateTransform()
 {
 	_relativeTransform =
 		D2D1::Matrix3x2F::Scale(_scale.x, _scale.y) *
@@ -12,6 +22,8 @@ UITransform::UITransform(Vector3 pos, Vector3 scale, Vector3 rotate) : _position
 
 void UITransform::UpdatePosition()
 {
+	UpdateTransform();
+
 	EntityId parent = EntityManager->GetEntity(_owner)->GetParentEntityId();
 
 	// no parent
@@ -26,7 +38,7 @@ void UITransform::UpdatePosition()
 
 const Vector3 UITransform::GetScreenPosition() const
 {
-	D2D1_POINT_2F pos = { _position.x, _position.y };
+	D2D1_POINT_2F pos = { 0, 0 };
 	pos = pos * _screenTransform;
 	return Vector3(pos.x, pos.y, 0);
 }

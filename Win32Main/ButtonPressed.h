@@ -5,7 +5,7 @@ class ButtonPressed :
     public State
 {
 public:
-    ButtonPressed();
+    ButtonPressed(const std::string& name);
     virtual ~ButtonPressed();
 
     virtual void StateEnter();
