@@ -26,7 +26,7 @@ public:
 
 private:
 	UINT _collisionMatrix[(UINT)Object_Layer::End] = {};
-	std::map<std::pair<UINT, UINT>, bool> _collisionHistory;
+	std::map<std::pair<ULL, ULL>, bool> _collisionHistory;
 	std::vector<EntityId> _registeredEntity[(UINT)Object_Layer::End] = {};
 };
 

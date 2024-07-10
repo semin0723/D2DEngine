@@ -75,7 +75,7 @@ private:
 		size_t newSize = oldSize + _expandSize;
 
 		_handleTable.resize(newSize);
-		for (int i = oldSize; i < newSize; i++) {
+		for (size_t i = oldSize; i < newSize; i++) {
 			_handleTable[i] = EntityTable(0, nullptr);
 		}
 	}

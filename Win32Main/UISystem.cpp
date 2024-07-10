@@ -68,6 +68,7 @@ std::pair<EntityId, int> UISystem::GetEffectedEntity(const D2D1_POINT_2F& pos)
 			return { EntityId(), -1};
 		}
 	}
+	return { EntityId(), -1 };
 }
 
 bool UISystem::CheckEntityId(EntityId& eid)

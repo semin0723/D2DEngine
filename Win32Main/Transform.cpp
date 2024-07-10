@@ -21,7 +21,7 @@ void Transform::CalcRotation(Vector3& movedir)
 {
 	Vector3 normalDir = movedir.Normalized();
 	float cosValue = dot(_normal, normalDir);
-	float angle = acosf(cosValue) * (180 / M_PI);
+	float angle = float(acosf(cosValue) * (180 / M_PI));
 	Vector3 crossVector = Cross(_normal, normalDir);
 	_normal = normalDir;
 	if (crossVector.z < 0) {

@@ -50,7 +50,7 @@ void ColliderSystem::CheckCollision(UINT layer1Idx, UINT layer2Idx)
 			if (bcRight == nullptr) continue;
 
 			bool isCollision = ChackOverLap(bcLeft->_calculatedBorderPos, bcRight->_calculatedBorderPos);
-			std::pair<UINT, UINT> collisionKey = { (std::min)(i._index, j._index), (std::max)(i._index, j._index) };
+			std::pair<ULL, ULL> collisionKey = { (std::min)(i._index, j._index), (std::max)(i._index, j._index) };
 
 			if (bcLeft->_isTrigger == true || bcRight->_isTrigger == true) {
 				if (_collisionHistory[collisionKey] == false) {
