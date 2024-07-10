@@ -4,12 +4,13 @@
 
 class State;
 
-class Button : public Component<Button>
+class ButtonComponent : public Component<ButtonComponent>
 {
 public:
-	Button();
-	~Button();
+	ButtonComponent();
+	~ButtonComponent();
 
+	void SetOwner(EntityId id);
 	void ChangeState(Button_State state);
 	void AddState(Button_State state, State* stateAction);
 
