@@ -1,13 +1,5 @@
 #include "DemoApp.h"
-#include "RenderSystem.h"
-#include "ResourceSystem.h"
-#include "InputSystem.h"
-#include "PlayerControllSystem.h"
-#include "ColliderSystem.h"
-#include "MonsterControll.h"
-#include "World.h"
-#include "TowerControll.h"
-#include "EffectSystem.h"
+#include "Systems.h"
 
 void DemoApp::Initialize(HINSTANCE _hInstance)
 {
@@ -25,6 +17,7 @@ void DemoApp::Initialize(HINSTANCE _hInstance)
 	TowerControll* tc = SystemManager->AddSystem<TowerControll>();
 	MonsterControll* mctrl = SystemManager->AddSystem<MonsterControll>();
 	EffectSystem* effect = SystemManager->AddSystem<EffectSystem>();
+	UISystem* ui = SystemManager->AddSystem<UISystem>();
 
 	World* world = SystemManager->AddSystem<World>();
 	render->SetCurWorld(world);
