@@ -89,7 +89,10 @@ void World::OnMapClick(const ClickInGame* event)
 	else {
 		if (_actionState == 1) {
 			std::pair<int, int> idx = ConvertClickToIdx(Vector3(event->_position.x, event->_position.y, 0));
-			if (idx.first > 9 || idx.first < 0 || idx.second > 9 || idx.second < 0) return;
+			if (idx.first > 9 || idx.first < 0 || idx.second > 9 || idx.second < 0) {
+				_actionState = 0;
+				return;
+			}
 			if (_mapdata[idx.second][idx.first]._tileState == Tile_State::Empty) {
 				EntityId newTower = CreateTower(ConvertIdxToTile(idx));
 				_mapdata[idx.second][idx.first]._tileState = Tile_State::Tower;
