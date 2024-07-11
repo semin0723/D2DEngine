@@ -84,11 +84,11 @@ void ResourceSystem::CreateEffectAnimations()
 
 		// time per frame
 		std::getline(file, line);
-		timePerFrame = _wtof(line.c_str());
+		timePerFrame = (float)_wtof(line.c_str());
 
 		Animation* newAnimation = new Animation;
 		for (int i = 0; i < frameCount; i++) {
-			newAnimation->_frames.push_back(FrameInfo(left + i, top, pixelCount, timePerFrame));
+			newAnimation->_frames.push_back(FrameInfo(left + i, top, (int)pixelCount, timePerFrame));
 		}
 		_animations.insert({ animationKey, newAnimation });
 	}
