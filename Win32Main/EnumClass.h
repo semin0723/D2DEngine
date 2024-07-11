@@ -19,3 +19,11 @@ enum class Button_State {
 	Clicked,
 
 };
+
+enum class Tile_State {
+	Default,
+	Road,
+	Empty,
+	Tower,
+
+};

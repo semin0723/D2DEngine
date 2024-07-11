@@ -5,6 +5,17 @@
 #include "Camera.h"
 #include "Events.h"
 
+struct tileInfo {
+	Tile_State _tileState; 
+	EntityId _towerId;
+	UINT _towerGrade;
+	tileInfo() {
+		_tileState = Tile_State::Default;
+		_towerId = EntityId();
+		_towerGrade = 0;
+	}
+};
+
 class World : public System<World>, public EventListener
 {
 public:
@@ -17,12 +28,25 @@ public:
 
 	Camera* _mainCamera;
 
-	void MoveCamera();
+	void OnMapClick(const ClickInGame* event);
+
 private:
-	std::vector<EntityId> _objects;
+	std::vector<std::vector<tileInfo>> _mapdata;
+	UINT _actionState = 0;
+
+	void InitialGame();
 
 	void RegistEvent();
 	void UnRegistEvent();
+
+	void EnterCreateState() { _actionState = 1; }
+
+	Vector3 _tileoffset	{ 50.0f, 75.0f, 0 };
+	float _sizePerTile = 106.0f;
+	std::pair<int, int> ConvertClickToIdx(const Vector3& clickLoc);
+	Vector3 ConvertIdxToTile(std::pair<int, int>& idx);
+
+	EntityId CreateTower(const Vector3& loc);
 
 	template<class E>
 	EntityId CreateGameObject(Object_Layer layer) {
@@ -36,7 +60,5 @@ private:
 		EntityId eid = ECS::_ecs->GetEntityManager()->CreateEntity<E>();
 		return eid;
 	}
-
-	EntityId _monsterId; // 테스트용
 };
 

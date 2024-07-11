@@ -94,6 +94,33 @@ void ResourceSystem::CreateEffectAnimations()
 	}
 }
 
+const std::vector<std::vector<int>>& ResourceSystem::LoadMapData()
+{
+	if (!_mapdata.empty()) {
+		return _mapdata;
+	}
+
+	std::wstring filename = L"data\\Map\\MapData.CSV";
+	std::wifstream file(filename);
+	//if (!file.is_open()) return;
+
+	std::wstringstream wss;
+	std::wstring line;
+	while (true) {
+		std::getline(file, line);
+		if (line == L"") break;
+		std::vector<int> mapline;
+
+		wss = std::wstringstream(line);
+		std::wstring tmp;
+		while (std::getline(wss, tmp, L',')) {
+			mapline.push_back(_wtoi(tmp.c_str()));
+		}
+		_mapdata.push_back(mapline);
+	}
+	return _mapdata;
+}
+
 void ResourceSystem::GetImageFromFile(const std::wstring& spriteKey, ID2D1Bitmap** image)
 {
 	IWICBitmapDecoder* decoder = nullptr;

@@ -9,7 +9,7 @@ SystemManager::SystemManager()
 SystemManager::~SystemManager()
 {
 	for (SystemOrder::reverse_iterator it = _workOrder.rbegin(); it != _workOrder.rend(); it++) {
-		delete (*it);
+		if(*it != nullptr) delete (*it);
 		*it = nullptr;
 	}
 	_workOrder.clear();

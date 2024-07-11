@@ -10,8 +10,11 @@ class ResourceSystem
 public:
 	ResourceSystem() {}
 	~ResourceSystem() {
-		for (auto res : _resources) {
+		for (auto& res : _resources) {
 			res.second->~Image();
+		}
+		for (auto& res : _animations) {
+			res.second->~Animation();
 		}
 		_wicFactory->Release();
 	}
@@ -28,11 +31,15 @@ public:
 
 	void CreateEffectAnimations();
 
+	const std::vector<std::vector<int>>& LoadMapData();
+
 private:
 	static ResourceSystem* _instance;
 
 	ID2D1HwndRenderTarget* _target = { 0 };
 	IWICImagingFactory* _wicFactory = { 0 };
+
+	std::vector<std::vector<int>> _mapdata;
 
 	std::unordered_map<std::wstring, Image*> _resources;
 	std::unordered_map<std::wstring, Animation*> _animations;

@@ -6,7 +6,7 @@ MonsterControll::MonsterControll() : _wayPoint(4), _dirs(4)
 {
 	_spawner = new MonsterSpawner;
 
-	_wayPoint[0] = Vector3(31 + 350, 31, 0);
+	_wayPoint[0] = Vector3(78.0f, 103.0f, 0);
 	_wayPoint[1] = Vector3(31 + 350, 829, 0);
 	_wayPoint[2] = Vector3(829 + 350, 829, 0);
 	_wayPoint[3] = Vector3(829 + 350, 31, 0);

@@ -282,9 +282,6 @@
     <ClInclude Include="RenderSystem.h">
       <Filter>소스 파일\System\Render</Filter>
     </ClInclude>
-    <ClInclude Include="World.h">
-      <Filter>소스 파일\System\World</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerControllSystem.h">
       <Filter>소스 파일\System\PlayerControll</Filter>
     </ClInclude>
@@ -404,6 +401,12 @@
     </ClInclude>
     <ClInclude Include="ButtonStates.h">
       <Filter>헤더 파일\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultUIObject.h">
+      <Filter>소스 파일\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="World.h">
+      <Filter>소스 파일\System\World</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -573,6 +576,9 @@
       <Filter>소스 파일\Component\UI\Button\ButtonState\Hover</Filter>
     </ClCompile>
     <ClCompile Include="SampleButton.cpp">
+      <Filter>소스 파일\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="DefaultUIObject.cpp">
       <Filter>소스 파일\GameObjects</Filter>
     </ClCompile>
   </ItemGroup>

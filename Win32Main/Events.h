@@ -48,6 +48,11 @@ struct MouseButton : public Event<MouseButton> {
 	MouseButton(const int keyCode, D2D1_POINT_2F pos, const float delta) : _keyCode(keyCode), _position(pos), _delta(delta) {}
 };
 
+struct ClickInGame : public Event<ClickInGame> {
+	D2D1_POINT_2F _position;
+	ClickInGame(D2D1_POINT_2F pos) : _position(pos) {}
+};
+
 // Create and Destroy Object
 struct GameObjectCreated : public Event<GameObjectCreated> {
 	EntityId _entityId;

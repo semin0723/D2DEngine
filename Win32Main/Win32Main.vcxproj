@@ -155,6 +155,7 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentManager.h" />
     <ClInclude Include="Components.h" />
+    <ClInclude Include="DefaultUIObject.h" />
     <ClInclude Include="DemoApp.h" />
     <ClInclude Include="DetectComponent.h" />
     <ClInclude Include="ECSBase.h" />
@@ -225,6 +226,7 @@
     <ClCompile Include="ColliderSystem.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComponentManager.cpp" />
+    <ClCompile Include="DefaultUIObject.cpp" />
     <ClCompile Include="DemoApp.cpp" />
     <ClCompile Include="DetectComponent.cpp" />
     <ClCompile Include="ECSBase.cpp" />
