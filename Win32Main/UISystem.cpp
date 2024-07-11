@@ -89,6 +89,12 @@ void UISystem::SwapOrder(UIGroupEntities& group, int targetidx)
 	UINT tmporder = uigroup1->_groupOrder;
 	uigroup1->_groupOrder = uigroup2->_groupOrder;
 	uigroup2->_groupOrder = tmporder;
+
+	std::sort(group.begin(), group.end(), [&](EntityId& a, EntityId& b) {
+		UIGroup* uileft = ComponentManager->Getcomponent<UIGroup>(a);
+		UIGroup* uiright = ComponentManager->Getcomponent<UIGroup>(b);
+		return uileft->_groupOrder < uiright->_groupOrder;
+		});
 }
 
 void UISystem::UpdateUI(EntityId id, float dt)
@@ -141,7 +147,7 @@ void UISystem::OnMouseButtonDown(const MouseButtonDown* event)
 	std::pair<EntityId, int> effectedUI = GetEffectedEntity(event->_position);
 
 	if (effectedUI.second == -1) {
-		// send message to game
+		ecs->SendEvent<ClickInGame>(event->_position);
 	}
 	else {
 		SwapOrder(_uigroups, effectedUI.second);
