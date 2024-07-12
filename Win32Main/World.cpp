@@ -49,15 +49,35 @@ World::World()
 	btntf->_size = Vector3(300.0f, 100.0f, 0);
 	btnc->AddOnclickFunction(std::bind(&World::EnterCreateState, this));
 
+	EntityId			uibtn2				= CreateUIObject<SampleButton>();
+	UITransform*		btn2tf				= ComponentManager->AddComponent<UITransform>(uibtn2, Vector3(50.0f, 140.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	Sprite*				spbtn2				= ComponentManager->AddComponent<Sprite>(uibtn2, L"Images\\Button\\ButtonNormal");
+	ButtonComponent*	btn2c				= ComponentManager->AddComponent<ButtonComponent>(uibtn2);
+	btn2c->SetOwner(uibtn2);
+	btn2tf->_size = Vector3(300.0f, 100.0f, 0);
+	btn2c->AddOnclickFunction(std::bind(&World::EnterDeleteState, this));
+
+	EntityId			uibtn3				= CreateUIObject<SampleButton>();
+	UITransform*		btn3tf				= ComponentManager->AddComponent<UITransform>(uibtn3, Vector3(50.0f, 30.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	Sprite*				spbtn3				= ComponentManager->AddComponent<Sprite>(uibtn3, L"Images\\Button\\ButtonNormal");
+	ButtonComponent*	btn3c				= ComponentManager->AddComponent<ButtonComponent>(uibtn3);
+	btn3c->SetOwner(uibtn3);
+	btn3tf->_size = Vector3(300.0f, 100.0f, 0);
+	btn3c->AddOnclickFunction(std::bind(&World::EnterMergeState, this));
+
 	EntityManager->GetEntity(uigroup1)->AddChildEntity(uibuttonpannel);
 	EntityManager->GetEntity(uigroup1)->AddChildEntity(uimoneypannel);
 
 	EntityManager->GetEntity(uimoneypannel)->SetParentEntity(uigroup1);
 
 	EntityManager->GetEntity(uibuttonpannel)->AddChildEntity(uibtn);
+	EntityManager->GetEntity(uibuttonpannel)->AddChildEntity(uibtn2);
+	EntityManager->GetEntity(uibuttonpannel)->AddChildEntity(uibtn3);
 	EntityManager->GetEntity(uibuttonpannel)->SetParentEntity(uigroup1);
 
 	EntityManager->GetEntity(uibtn)->SetParentEntity(uibuttonpannel);
+	EntityManager->GetEntity(uibtn2)->SetParentEntity(uibuttonpannel);
+	EntityManager->GetEntity(uibtn3)->SetParentEntity(uibuttonpannel);
 
 	
 	
@@ -87,20 +107,47 @@ void World::OnMapClick(const ClickInGame* event)
 {
 	if (_actionState == 0) return;
 	else {
-		if (_actionState == 1) {
-			std::pair<int, int> idx = ConvertClickToIdx(Vector3(event->_position.x, event->_position.y, 0));
-			if (idx.first > 9 || idx.first < 0 || idx.second > 9 || idx.second < 0) {
-				_actionState = 0;
-				return;
-			}
-			if (_mapdata[idx.second][idx.first]._tileState == Tile_State::Empty) {
-				EntityId newTower = CreateTower(ConvertIdxToTile(idx));
-				_mapdata[idx.second][idx.first]._tileState = Tile_State::Tower;
-				_mapdata[idx.second][idx.first]._towerGrade = 1;
-				_mapdata[idx.second][idx.first]._towerId = newTower;
-			}
+		std::pair<int, int> idx = ConvertClickToIdx(Vector3(event->_position.x, event->_position.y, 0));
+		if (idx.first > 9 || idx.first < 0 || idx.second > 9 || idx.second < 0) {
 			_actionState = 0;
+			return;
 		}
+		
+		if (_actionState == 1) {
+			if (_mapdata[idx.second][idx.first]._tileState == Tile_State::Empty) {
+				EntityId newTower = CreateTower(ConvertIdxToTile(idx), 1);
+				SetTileInfo(idx, Tile_State::Tower, Tower_Type::Tower1_1, newTower, 1);
+			}
+		}
+		else if (_actionState == 2) {
+			if (_mapdata[idx.second][idx.first]._tileState == Tile_State::Tower) {
+				for (int i = 0; i < _mapdata.size(); i++) {
+					for (int j = 0; j < _mapdata[i].size(); j++) {
+						if (i == idx.second && j == idx.first) continue;
+						if (_mapdata[i][j]._tileState != Tile_State::Tower) continue;
+
+						if (
+							_mapdata[i][j]._towerGrade == _mapdata[idx.second][idx.first]._towerGrade &&
+							_mapdata[i][j]._towerType == _mapdata[idx.second][idx.first]._towerType
+							) {
+							EntityId newTower = CreateTower(ConvertIdxToTile(idx), _mapdata[idx.second][idx.first]._towerGrade);
+							UINT newGrade = _mapdata[idx.second][idx.first]._towerGrade + 1;
+							DeleteTower(idx);
+							DeleteTower({ j, i });
+
+							SetTileInfo(idx, Tile_State::Tower, Tower_Type::Tower1_2, newTower, newGrade);
+						}
+					}
+				}
+			}
+		}
+		else if (_actionState == 3) {
+			if (_mapdata[idx.second][idx.first]._tileState == Tile_State::Tower) {
+				DeleteTower(idx);
+			}	
+			// 재화 올라가는 이벤트 호출
+		}
+		_actionState = 0;
 	}
 }
 
@@ -117,6 +164,7 @@ void World::InitialGame()
 			else {
 				info._tileState = Tile_State::Empty;
 			}
+			info._towerType = Tower_Type::Default;
 			info._towerGrade = 0;
 			info._towerId = EntityId();
 			tmp.push_back(info);
@@ -145,7 +193,7 @@ std::pair<int, int> World::ConvertClickToIdx(const Vector3& loc)
 	return std::pair<int, int>((int)((loc.x - _tileoffset.x) / _sizePerTile), (int)((loc.y - _tileoffset.y) / _sizePerTile));
 }
 
-EntityId World::CreateTower(const Vector3& loc)
+EntityId World::CreateTower(const Vector3& loc, UINT towerGrade)
 {
 	EntityId				tower		= CreateGameObject<Square>(Object_Layer::Player);
 	Transform*				tf			= ComponentManager->AddComponent<Transform>(tower, loc, Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
@@ -156,4 +204,18 @@ EntityId World::CreateTower(const Vector3& loc)
 	tf->SetRectSize(sp->_spriteSize);
 
 	return tower;
+}
+
+void World::DeleteTower(const std::pair<int, int>& idx)
+{
+	ecs->SendEvent<GameObjectDestroyed>(_mapdata[idx.second][idx.first]._towerId, Object_Layer::Player);
+	SetTileInfo(idx, Tile_State::Empty, Tower_Type::Default, EntityId(), 0);
+}
+
+void World::SetTileInfo(const std::pair<int, int>& idx, Tile_State state, Tower_Type type, const EntityId& towerId, UINT grade)
+{
+	_mapdata[idx.second][idx.first]._tileState = state;
+	_mapdata[idx.second][idx.first]._towerType = type;
+	_mapdata[idx.second][idx.first]._towerGrade = grade;
+	_mapdata[idx.second][idx.first]._towerId = towerId;
 }

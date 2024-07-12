@@ -7,10 +7,12 @@
 
 struct tileInfo {
 	Tile_State _tileState; 
+	Tower_Type _towerType;
 	EntityId _towerId;
 	UINT _towerGrade;
 	tileInfo() {
 		_tileState = Tile_State::Default;
+		_towerType = Tower_Type::Default;
 		_towerId = EntityId();
 		_towerGrade = 0;
 	}
@@ -39,14 +41,19 @@ private:
 	void RegistEvent();
 	void UnRegistEvent();
 
+	// 1 : createTower    2 : MergeTower     3 : DeleteTower
 	void EnterCreateState() { _actionState = 1; }
+	void EnterMergeState()	{ _actionState = 2; }
+	void EnterDeleteState() { _actionState = 3; }
 
 	Vector3 _tileoffset	{ 50.0f, 75.0f, 0 };
 	float _sizePerTile = 106.0f;
 	std::pair<int, int> ConvertClickToIdx(const Vector3& clickLoc);
 	Vector3 ConvertIdxToTile(std::pair<int, int>& idx);
 
-	EntityId CreateTower(const Vector3& loc);
+	void SetTileInfo(const std::pair<int, int>& idx, Tile_State state, Tower_Type type, const EntityId& towerId, UINT grade);
+	EntityId CreateTower(const Vector3& loc, UINT towerGrade);
+	void DeleteTower(const std::pair<int, int>& idx);
 
 	template<class E>
 	EntityId CreateGameObject(Object_Layer layer) {

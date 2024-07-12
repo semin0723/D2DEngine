@@ -35,3 +35,15 @@ struct CreateEffect : public Event<CreateEffect> {
 	Vector3 _createLocation;
 	CreateEffect(std::wstring key, Vector3 location) : _effectKey(key), _createLocation(location) {}
 };
+
+struct EarnMoney : public Event<EarnMoney> {
+	Money_Type _moneyType;
+	UINT _earn;
+	EarnMoney(Money_Type type, UINT cost) : _moneyType(type), _earn(cost) {}
+};
+
+struct UseMoney : public Event<UseMoney> {
+	Money_Type _moneyType;
+	UINT _earn;
+	UseMoney(Money_Type type, UINT cost) : _moneyType(type), _earn(cost) {}
+};

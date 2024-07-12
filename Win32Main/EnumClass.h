@@ -27,3 +27,18 @@ enum class Tile_State {
 	Tower,
 
 };
+
+enum class Tower_Type {
+	Default,
+	Tower1_1,
+	Tower1_2,
+	Tower1_3,
+
+};
+
+enum class Money_Type {
+	Default,
+	Credit,
+	Special,
+
+};
