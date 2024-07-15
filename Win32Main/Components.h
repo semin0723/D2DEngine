@@ -13,3 +13,4 @@
 #include "UITransform.h"
 #include "UIGroup.h"
 #include "ButtonComponent.h"
+#include "TextComponent.h"

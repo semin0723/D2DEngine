@@ -97,6 +97,14 @@ void RenderSystem::UpdateUI(EntityId id)
 	}
 }
 
+void RenderSystem::TextRender(EntityId id)
+{
+	UITransform* uitf = ComponentManager->Getcomponent<UITransform>(id);
+	TextComponent* tc = ComponentManager->Getcomponent<TextComponent>(id);
+	if (tc == nullptr) return;
+
+}
+
 void RenderSystem::RegistEvent()
 {
 	RegisterCallback(&RenderSystem::OnObjectCreated);

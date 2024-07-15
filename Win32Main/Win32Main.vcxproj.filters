@@ -187,6 +187,9 @@
     <Filter Include="소스 파일\Component\UI\Button\ButtonState\Hover">
       <UniqueIdentifier>{c70e0384-00a3-4e0d-ac9b-ac3f821083f9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Component\UI\Text">
+      <UniqueIdentifier>{3e8a2c6c-bd52-4e2a-b6af-693ff113a3c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -408,6 +411,9 @@
     <ClInclude Include="World.h">
       <Filter>소스 파일\System\World</Filter>
     </ClInclude>
+    <ClInclude Include="TextComponent.h">
+      <Filter>소스 파일\Component\UI\Text</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Win32Main.cpp">
@@ -580,6 +586,9 @@
     </ClCompile>
     <ClCompile Include="DefaultUIObject.cpp">
       <Filter>소스 파일\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="TextComponent.cpp">
+      <Filter>소스 파일\Component\UI\Text</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

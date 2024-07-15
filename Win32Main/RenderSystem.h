@@ -27,9 +27,11 @@ public:
 	void SetCurWorld(World* world) { _curWorld = world; }
 private:
 	ID2D1HwndRenderTarget* _target;
+
 	World* _curWorld = nullptr;
 
 	void UpdateUI(EntityId id);
+	void TextRender(EntityId id);
 
 	void RegistEvent();
 	void UnRegistEvent();

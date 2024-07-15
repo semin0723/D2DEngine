@@ -4,6 +4,8 @@
 #include "Animation.h"
 #include "wincodec.h"
 #pragma comment(lib, "windowscodecs.lib")
+#include <dwrite.h>
+#pragma comment(lib,"dwrite.lib")
 
 class ResourceSystem
 {
@@ -17,6 +19,11 @@ public:
 			res.second->~Animation();
 		}
 		_wicFactory->Release();
+
+		for (auto& res : _textformats) {
+			res.second->Release();
+		}
+		_writeFactory->Release();
 	}
 
 	static ResourceSystem* GetInstance();
@@ -28,6 +35,7 @@ public:
 	Image* GetImage(const std::wstring& spriteKey);
 
 	Animation* GetAnimation(const std::wstring& animationKey);
+	IDWriteTextFormat* GetTextFormat(std::wstring& fontName, float fontSize);
 
 	void CreateEffectAnimations();
 
@@ -38,9 +46,11 @@ private:
 
 	ID2D1HwndRenderTarget* _target = { 0 };
 	IWICImagingFactory* _wicFactory = { 0 };
+	IDWriteFactory* _writeFactory = { 0 };
 
 	std::vector<std::vector<int>> _mapdata;
 
+	std::map<std::pair<std::wstring, float>, IDWriteTextFormat*> _textformats;
 	std::unordered_map<std::wstring, Image*> _resources;
 	std::unordered_map<std::wstring, Animation*> _animations;
 };

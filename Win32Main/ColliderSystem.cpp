@@ -15,7 +15,7 @@ ColliderSystem::~ColliderSystem()
 void ColliderSystem::PostUpdate(float dt)
 {
 	for (UINT l1 = 0; l1 < (UINT)Object_Layer::End; l1++) {
-		for (UINT l2 = 0; l2 < (UINT)Object_Layer::End; l2++) {
+		for (UINT l2 = l1; l2 < (UINT)Object_Layer::End; l2++) {
 			if (_collisionMatrix[l1] & (1 << l2)) {
 				CheckCollision(l1, l2);
 			}

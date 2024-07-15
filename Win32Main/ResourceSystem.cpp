@@ -27,6 +27,11 @@ void ResourceSystem::Initialize(ID2D1HwndRenderTarget* target)
 		CLSCTX_INPROC_SERVER,
 		IID_PPV_ARGS(&_wicFactory)
 	);
+
+	HRESULT hr = DWriteCreateFactory(
+		DWRITE_FACTORY_TYPE_SHARED,
+		__uuidof(_writeFactory),
+		reinterpret_cast<IUnknown**>(&_writeFactory));
 }
 
 Image* ResourceSystem::GetImage(const std::wstring& spriteKey)
@@ -43,6 +48,28 @@ Image* ResourceSystem::GetImage(const std::wstring& spriteKey)
 Animation* ResourceSystem::GetAnimation(const std::wstring& animationKey)
 {
 	return _animations[animationKey];
+}
+
+IDWriteTextFormat* ResourceSystem::GetTextFormat(std::wstring& fontName, float fontSize)
+{
+	if (_textformats.find({ fontName, fontSize }) == _textformats.end()) {
+		IDWriteTextFormat* textformat = nullptr;
+
+		_writeFactory->CreateTextFormat(
+			fontName.c_str(),
+			nullptr,
+			DWRITE_FONT_WEIGHT_NORMAL,
+			DWRITE_FONT_STYLE_NORMAL,
+			DWRITE_FONT_STRETCH_NORMAL,
+			fontSize,
+			L"",
+			&textformat
+		);
+
+		_textformats[{fontName, fontSize}] = textformat;
+	}
+	
+	return _textformats[{fontName, fontSize}];
 }
 
 void ResourceSystem::CreateEffectAnimations()
