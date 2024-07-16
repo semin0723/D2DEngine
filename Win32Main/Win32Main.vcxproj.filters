@@ -414,9 +414,6 @@
     <ClInclude Include="TextComponent.h">
       <Filter>소스 파일\Component\UI\Text</Filter>
     </ClInclude>
-    <ClInclude Include="UITemplate.h">
-      <Filter>소스 파일\System\World</Filter>
-    </ClInclude>
     <ClInclude Include="GameObjects.h">
       <Filter>소스 파일\GameObjects</Filter>
     </ClInclude>
@@ -595,9 +592,6 @@
     </ClCompile>
     <ClCompile Include="TextComponent.cpp">
       <Filter>소스 파일\Component\UI\Text</Filter>
-    </ClCompile>
-    <ClCompile Include="UITemplate.cpp">
-      <Filter>소스 파일\System\World</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
