@@ -33,13 +33,16 @@ World::World()
 	UIGroup*			uig					= ComponentManager->AddComponent<UIGroup>(uigroup1);
 	
 	EntityId uibuttonpannel = ButtonArea();
-	EntityId uimoneypannel = MoneyArea();
+	EntityId uimoneypannel	= MoneyArea();
+	EntityId uilifepannel	= LifeArea();
 
 	EntityManager->GetEntity(uigroup1)->AddChildEntity(uibuttonpannel);
 	EntityManager->GetEntity(uigroup1)->AddChildEntity(uimoneypannel);
+	EntityManager->GetEntity(uigroup1)->AddChildEntity(uilifepannel);
 
 	EntityManager->GetEntity(uimoneypannel)->SetParentEntity(uigroup1);
 	EntityManager->GetEntity(uibuttonpannel)->SetParentEntity(uigroup1);
+	EntityManager->GetEntity(uilifepannel)->SetParentEntity(uigroup1);
 
 }
 
@@ -60,6 +63,9 @@ void World::Update(float dt)
 
 	TextComponent* moneytc = ComponentManager->Getcomponent<TextComponent>(_moneyText);
 	moneytc->_text = std::to_wstring(_money);
+
+	TextComponent* lifetc = ComponentManager->Getcomponent<TextComponent>(_lifeText);
+	lifetc->_text = std::to_wstring(_life);
 }
 
 void World::PostUpdate(float dt)
@@ -219,6 +225,11 @@ EntityId World::MoneyArea()
 	Sprite*				pannel2sp		= ComponentManager->AddComponent<Sprite>(uimoneypannel, L"Images\\UIPannel");
 	pannel2tf->_size = Vector3(400.0f, 100.0f, 0);
 
+	EntityId			imagemoney		= EntityManager->CreateEntity<DefaultUIObject>();
+	UITransform*		imguitf			= ComponentManager->AddComponent<UITransform>(imagemoney, Vector3(20.0f, 10.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	Sprite*				imguisp			= ComponentManager->AddComponent<Sprite>(imagemoney, L"Images\\Money");
+	imguitf->_size = Vector3(80.0f, 80.0f, 0);
+
 	EntityId			textmoney		= EntityManager->CreateEntity<DefaultUIObject>();
 	UITransform*		textmoneytf		= ComponentManager->AddComponent<UITransform>(textmoney, Vector3(300.0f, 10.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
 	TextComponent*		textmoneytc		= ComponentManager->AddComponent<TextComponent>(textmoney);
@@ -231,9 +242,44 @@ EntityId World::MoneyArea()
 	_moneyText = textmoney;
 
 	EntityManager->GetEntity(uimoneypannel)->AddChildEntity(textmoney);
+	EntityManager->GetEntity(uimoneypannel)->AddChildEntity(imagemoney);
+
 	EntityManager->GetEntity(textmoney)->SetParentEntity(uimoneypannel);
+	EntityManager->GetEntity(imagemoney)->SetParentEntity(uimoneypannel);
 
 	return uimoneypannel;
+}
+
+EntityId World::LifeArea()
+{
+	EntityId			uilifepannel		= EntityManager->CreateEntity<DefaultUIObject>();
+	UITransform*		pannel2tf			= ComponentManager->AddComponent<UITransform>(uilifepannel, Vector3(1150.0f, 170.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	Sprite*				pannel2sp			= ComponentManager->AddComponent<Sprite>(uilifepannel, L"Images\\UIPannel");
+	pannel2tf->_size = Vector3(400.0f, 100.0f, 0);
+
+	EntityId			imagelife			= EntityManager->CreateEntity<DefaultUIObject>();
+	UITransform*		imguitf				= ComponentManager->AddComponent<UITransform>(imagelife, Vector3(20.0f, 10.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	Sprite*				imguisp				= ComponentManager->AddComponent<Sprite>(imagelife, L"Images\\Life");
+	imguitf->_size = Vector3(80.0f, 80.0f, 0);
+
+	EntityId			textlife			= EntityManager->CreateEntity<DefaultUIObject>();
+	UITransform*		textmoneytf = ComponentManager->AddComponent<UITransform>(textlife, Vector3(300.0f, 10.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	TextComponent*		textmoneytc = ComponentManager->AddComponent<TextComponent>(textlife);
+	textmoneytf->_size = Vector3(80.0f, 80.0f, 0);
+	textmoneytc->_text = L"0";
+	textmoneytc->_fontSize = 40.0f;
+	textmoneytc->_textAlignment = DWRITE_TEXT_ALIGNMENT_CENTER;
+	textmoneytc->_paragraphAlignemt = DWRITE_PARAGRAPH_ALIGNMENT_CENTER;
+
+	_lifeText = textlife;
+
+	EntityManager->GetEntity(uilifepannel)->AddChildEntity(textlife);
+	EntityManager->GetEntity(uilifepannel)->AddChildEntity(imagelife);
+
+	EntityManager->GetEntity(textlife)->SetParentEntity(uilifepannel);
+	EntityManager->GetEntity(imagelife)->SetParentEntity(uilifepannel);
+
+	return uilifepannel;
 }
 
 EntityId World::ButtonArea()

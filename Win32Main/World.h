@@ -72,6 +72,7 @@ private:
 	}
 
 	EntityId MoneyArea();
+	EntityId LifeArea();
 	EntityId ButtonArea();
 
 private:
