@@ -4,11 +4,12 @@
 
 using Childs = std::vector<EntityId>;
 
+
 class UIGroup : public Component<UIGroup>
 {
-	
+	static UINT orderidx;
 public:
-	UIGroup() {}
+	UIGroup() : _groupOrder(orderidx++) {}
 	~UIGroup() {}
 
 	void AddChildUI(EntityId id);

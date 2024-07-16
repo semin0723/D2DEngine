@@ -51,3 +51,9 @@ struct DecreseLife : public Event<DecreseLife> {
 	UINT _life;
 	DecreseLife(UINT life) : _life(life) {}
 };
+
+struct UIStateChange : public Event< UIStateChange> {
+	EntityId _eid;
+	bool _state;
+	UIStateChange(EntityId id, bool state) : _eid(id), _state(state) {}
+};

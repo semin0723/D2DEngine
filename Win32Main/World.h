@@ -45,9 +45,9 @@ private:
 	void UnRegistEvent();
 
 	// 1 : createTower    2 : MergeTower     3 : DeleteTower
-	void EnterCreateState() { _actionState = 1; }
-	void EnterMergeState()	{ _actionState = 2; }
-	void EnterDeleteState() { _actionState = 3; }
+	void EnterCreateState() { if (_isGameRunning) _actionState = 1; }
+	void EnterMergeState()	{ if (_isGameRunning) _actionState = 2; }
+	void EnterDeleteState() { if (_isGameRunning) _actionState = 3; }
 
 	Vector3 _tileoffset	{ 50.0f, 75.0f, 0 };
 	float _sizePerTile = 106.0f;
@@ -75,6 +75,8 @@ private:
 	EntityId LifeArea();
 	EntityId ButtonArea();
 
+	EntityId PauseArea();
+
 private:
 	// 인게임 로직 관련 부분
 	int _life = 50;
@@ -84,7 +86,8 @@ private:
 	EntityId _moneyText;
 
 	bool _isGameRunning = true;
-
+	EntityId _pauseUIGroup;
 	void Pause();
+	void Resume();
 };
 

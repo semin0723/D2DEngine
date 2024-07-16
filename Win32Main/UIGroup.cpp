@@ -1,6 +1,8 @@
 #include "UIGroup.h"
 #include "ECSCall.h"
 
+UINT UIGroup::orderidx = 0;
+
 void UIGroup::AddChildUI(EntityId id)
 {
     IEntity* ownerEntity = EntityManager->GetEntity(_owner);

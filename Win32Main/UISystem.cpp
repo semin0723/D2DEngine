@@ -97,6 +97,15 @@ void UISystem::SwapOrder(UIGroupEntities& group, int targetidx)
 		});
 }
 
+void UISystem::SwapOrder(UIGroupEntities& group, EntityId targetId)
+{
+	int idx = 0;
+	for (; idx < group.size(); idx++) {
+		if (group[idx] == targetId) break;
+	}
+	SwapOrder(group, idx);
+}
+
 void UISystem::UpdateUI(EntityId id, float dt)
 {
 	UITransform* uitf = ComponentManager->Getcomponent<UITransform>(id);
@@ -123,6 +132,15 @@ void UISystem::DestroyUI(EntityId id)
 	EntityManager->DestroyEntity(id);
 }
 
+void UISystem::SetActive(EntityId id, bool state)
+{
+	EntityManager->GetEntity(id)->SetActive(state);
+	std::vector<EntityId> childs = EntityManager->GetEntity(id)->GetChildEntityId();
+	for (auto& child : childs) {
+		SetActive(child, state);
+	}
+}
+
 void UISystem::RegistEvent()
 {
 	RegisterCallback(&UISystem::OnUICreate);
@@ -130,6 +148,7 @@ void UISystem::RegistEvent()
 	RegisterCallback(&UISystem::OnMouseButtonDown);
 	RegisterCallback(&UISystem::OnMouseButton);
 	RegisterCallback(&UISystem::OnMouseButtonUp);
+	RegisterCallback(&UISystem::ChangeUIstate);
 }
 
 void UISystem::UnRegistEvent()
@@ -139,6 +158,7 @@ void UISystem::UnRegistEvent()
 	UnRegisterCallback(&UISystem::OnMouseButtonDown);
 	UnRegisterCallback(&UISystem::OnMouseButton);
 	UnRegisterCallback(&UISystem::OnMouseButtonUp);
+	UnRegisterCallback(&UISystem::ChangeUIstate);
 }
 
 void UISystem::OnMouseButtonDown(const MouseButtonDown* event)
@@ -200,4 +220,10 @@ void UISystem::OnUIDestroyed(const GameObjectDestroyed* event)
 			break;
 		}
 	}
+}
+
+void UISystem::ChangeUIstate(const UIStateChange* event)
+{
+	SetActive(event->_eid, event->_state);
+	SwapOrder(_uigroups, event->_eid);
 }

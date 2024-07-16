@@ -13,7 +13,6 @@ void DemoApp::Initialize(HINSTANCE _hInstance)
 	ResourceSystem::GetInstance()->Initialize(GetRenderTarget());
 	RenderSystem* render = SystemManager->AddSystem<RenderSystem>(GetRenderTarget());
 
-	PlayerControllSystem* pControll = SystemManager->AddSystem<PlayerControllSystem>();
 	TowerControll* tc = SystemManager->AddSystem<TowerControll>();
 	MonsterControll* mctrl = SystemManager->AddSystem<MonsterControll>();
 	EffectSystem* effect = SystemManager->AddSystem<EffectSystem>();

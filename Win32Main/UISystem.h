@@ -23,9 +23,11 @@ public:
 
 	bool CheckEntityId(EntityId& eid);
 	void SwapOrder(UIGroupEntities& group, int targetidx);
+	void SwapOrder(UIGroupEntities& group, EntityId targetId);
 
 	void UpdateUI(EntityId id, float dt);
 	void DestroyUI(EntityId id);
+	void SetActive(EntityId id, bool state);
 
 	void RegistEvent();
 	void UnRegistEvent();
@@ -36,6 +38,7 @@ public:
 	
 	void OnUICreate(const GameObjectCreated* event);
 	void OnUIDestroyed(const GameObjectDestroyed* event);
+	void ChangeUIstate(const UIStateChange* event);
 
 private:
 	UIGroupEntities _uigroups;
