@@ -1,8 +1,6 @@
 #include "World.h"
 #include "ECSCall.h"
-#include "Square.h"
-#include "SampleButton.h"
-#include "DefaultUIObject.h"
+#include "GameObjects.h"
 #include "Components.h"
 
 World::World()
