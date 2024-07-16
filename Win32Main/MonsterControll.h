@@ -18,8 +18,7 @@ public:
 	void RegistEvent();
 	void UnRegistEvent();
 
-	Vector3& GetTargetWayPoint(Vector3& normal);
-	Vector3& GetNextDir(Vector3& curDir);
+	Vector3 GetNextDir(int curWayPointIdx);
 
 	void OnHit(const Attack* event);
 	void OnAreaHit(const AreaAttack* event);
@@ -29,9 +28,9 @@ public:
 private:
 	using MonsterInfo = std::vector<EntityId>;
 	using WayPoint = std::vector<Vector3>;
-	using MoveDir = std::vector<Vector3>;
+	using MonsterWayPointIdxInfo = std::vector<int>;
 
-	MoveDir _dirs;
+	MonsterWayPointIdxInfo _idxInfo;
 	WayPoint _wayPoint;
 	MonsterInfo _monsters;
 	MonsterSpawner* _spawner = nullptr;

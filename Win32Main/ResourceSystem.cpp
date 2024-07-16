@@ -50,7 +50,7 @@ Animation* ResourceSystem::GetAnimation(const std::wstring& animationKey)
 	return _animations[animationKey];
 }
 
-IDWriteTextFormat* ResourceSystem::GetTextFormat(std::wstring& fontName, float fontSize)
+IDWriteTextFormat* ResourceSystem::GetTextFormat(std::wstring& fontName, float fontSize, DWRITE_TEXT_ALIGNMENT textallign, DWRITE_PARAGRAPH_ALIGNMENT paragraphalign)
 {
 	if (_textformats.find({ fontName, fontSize }) == _textformats.end()) {
 		IDWriteTextFormat* textformat = nullptr;
@@ -69,6 +69,9 @@ IDWriteTextFormat* ResourceSystem::GetTextFormat(std::wstring& fontName, float f
 		_textformats[{fontName, fontSize}] = textformat;
 	}
 	
+	_textformats[{fontName, fontSize}]->SetTextAlignment(textallign);
+	_textformats[{fontName, fontSize}]->SetParagraphAlignment(paragraphalign);
+
 	return _textformats[{fontName, fontSize}];
 }
 
@@ -146,6 +149,50 @@ const std::vector<std::vector<int>>& ResourceSystem::LoadMapData()
 		_mapdata.push_back(mapline);
 	}
 	return _mapdata;
+}
+
+const std::vector<Vector3>& ResourceSystem::LoadMonsterWayPoint()
+{
+	if (!_wayPoint.empty()) {
+		return _wayPoint;
+	}
+
+	std::wstring filename = L"data\\Map\\MonsterWayPoint.CSV";
+	std::wifstream file(filename);
+	//if (!file.is_open()) return;
+	std::wstringstream wss;
+	std::wstring line;
+	std::wstring tmp;
+	Vector3 offset;
+	float tileSize = 0;
+
+	//offset
+	std::getline(file, line);
+	wss = std::wstringstream(line);
+	std::getline(wss, tmp, L',');
+	offset.x = _wtof(tmp.c_str());
+	std::getline(wss, tmp, L',');
+	offset.y = _wtof(tmp.c_str());
+
+	// tilesize
+	std::getline(file, line);
+	wss = std::wstringstream(line);
+	wss >> tileSize;
+
+	while (true) {
+		std::getline(file, line);
+		if (line == L"") break;
+		wss = std::wstringstream(line);
+		Vector3 pos;
+		std::getline(wss, tmp, L',');
+		pos.x = _wtoi(tmp.c_str()) * tileSize + offset.x;
+		std::getline(wss, tmp, L',');
+		pos.y = _wtoi(tmp.c_str()) * tileSize + offset.y;
+
+		_wayPoint.push_back(pos);
+	}
+
+	return _wayPoint;
 }
 
 void ResourceSystem::GetImageFromFile(const std::wstring& spriteKey, ID2D1Bitmap** image)

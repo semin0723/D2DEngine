@@ -35,11 +35,12 @@ public:
 	Image* GetImage(const std::wstring& spriteKey);
 
 	Animation* GetAnimation(const std::wstring& animationKey);
-	IDWriteTextFormat* GetTextFormat(std::wstring& fontName, float fontSize);
+	IDWriteTextFormat* GetTextFormat(std::wstring& fontName, float fontSize, DWRITE_TEXT_ALIGNMENT textallign, DWRITE_PARAGRAPH_ALIGNMENT paragraphalign);
 
 	void CreateEffectAnimations();
 
 	const std::vector<std::vector<int>>& LoadMapData();
+	const std::vector<Vector3>& LoadMonsterWayPoint();
 
 private:
 	static ResourceSystem* _instance;
@@ -49,6 +50,7 @@ private:
 	IDWriteFactory* _writeFactory = { 0 };
 
 	std::vector<std::vector<int>> _mapdata;
+	std::vector<Vector3> _wayPoint;
 
 	std::map<std::pair<std::wstring, float>, IDWriteTextFormat*> _textformats;
 	std::unordered_map<std::wstring, Image*> _resources;
