@@ -31,7 +31,6 @@ private:
 	World* _curWorld = nullptr;
 
 	void UpdateUI(EntityId id);
-	void TextRender(EntityId id);
 
 	void RegistEvent();
 	void UnRegistEvent();
@@ -51,6 +50,7 @@ private:
 
 	std::vector<RenderObject> _renderObject[(UINT)Object_Layer::End] = {};
 	ID2D1SolidColorBrush* _greenBrush;
+	ID2D1SolidColorBrush* _blackBrush;
 
 	D2D1_MATRIX_3X2_F CalcTransform(Vector3& pos, Vector3& scale, Vector3& rot, Vector3& midPos);
 };

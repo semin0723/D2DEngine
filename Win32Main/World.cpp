@@ -4,6 +4,7 @@
 #include "SampleButton.h"
 #include "DefaultUIObject.h"
 #include "Components.h"
+#include "UITemplate.h"
 
 World::World()
 {
@@ -36,11 +37,6 @@ World::World()
 	Sprite*				pannelsp			= ComponentManager->AddComponent<Sprite>(uibuttonpannel, L"Images\\UIPannel");
 	panneltf->_size = Vector3(400.0f, 400.0f, 0);
 
-	EntityId			uimoneypannel		= CreateUIObject<DefaultUIObject>();
-	UITransform*		pannel2tf			= ComponentManager->AddComponent<UITransform>(uimoneypannel, Vector3(1150.0f, 50.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
-	Sprite*				pannel2sp			= ComponentManager->AddComponent<Sprite>(uimoneypannel, L"Images\\UIPannel");
-	pannel2tf->_size = Vector3(400.0f, 100.0f, 0);
-
 	EntityId			uibtn				= CreateUIObject<SampleButton>();
 	UITransform*		btntf				= ComponentManager->AddComponent<UITransform>(uibtn, Vector3(50.0f, 250.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
 	Sprite*				spbtn				= ComponentManager->AddComponent<Sprite>(uibtn, L"Images\\Button\\ButtonNormal");
@@ -64,6 +60,8 @@ World::World()
 	btn3c->SetOwner(uibtn3);
 	btn3tf->_size = Vector3(300.0f, 100.0f, 0);
 	btn3c->AddOnclickFunction(std::bind(&World::EnterMergeState, this));
+
+	EntityId uimoneypannel = MoneyArea();
 
 	EntityManager->GetEntity(uigroup1)->AddChildEntity(uibuttonpannel);
 	EntityManager->GetEntity(uigroup1)->AddChildEntity(uimoneypannel);
@@ -96,7 +94,8 @@ void World::PreUpdate(float dt)
 
 void World::Update(float dt)
 {
-
+	TextComponent* lifetc = ComponentManager->Getcomponent<TextComponent>(_lifeText);
+	lifetc->_text = std::to_wstring(_life);
 }
 
 void World::PostUpdate(float dt)
@@ -151,6 +150,11 @@ void World::OnMapClick(const ClickInGame* event)
 	}
 }
 
+void World::OnLifeDecrese(const DecreseLife* event)
+{
+	_life -= event->_life;
+}
+
 void World::InitialGame()
 {
 	std::vector<std::vector<int>> mapdata = ResourceSystem::GetInstance()->LoadMapData();
@@ -176,11 +180,13 @@ void World::InitialGame()
 void World::RegistEvent()
 {
 	RegisterCallback(&World::OnMapClick);
+	RegisterCallback(&World::OnLifeDecrese);
 }
 
 void World::UnRegistEvent()
 {
 	UnRegisterCallback(&World::OnMapClick);
+	UnRegisterCallback(&World::OnLifeDecrese);
 }
 
 Vector3 World::ConvertIdxToTile(std::pair<int, int>& idx)
@@ -199,7 +205,7 @@ EntityId World::CreateTower(const Vector3& loc, UINT towerGrade)
 	Transform*				tf			= ComponentManager->AddComponent<Transform>(tower, loc, Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
 	Sprite*					sp			= ComponentManager->AddComponent<Sprite>(tower, L"Images\\TowerTest");
 	BoxCollider*			bc			= ComponentManager->AddComponent<BoxCollider>(tower, sp->_spriteSize);
-	DetectComponent*		dc			= ComponentManager->AddComponent<DetectComponent>(tower, 400.0f);
+	DetectComponent*		dc			= ComponentManager->AddComponent<DetectComponent>(tower, 200.0f);
 	AttackComponent*		at			= ComponentManager->AddComponent<AttackComponent>(tower, 50, 0.5f);
 	tf->SetRectSize(sp->_spriteSize);
 
@@ -219,3 +225,28 @@ void World::SetTileInfo(const std::pair<int, int>& idx, Tile_State state, Tower_
 	_mapdata[idx.second][idx.first]._towerGrade = grade;
 	_mapdata[idx.second][idx.first]._towerId = towerId;
 }
+
+EntityId World::MoneyArea()
+{
+	EntityId			uimoneypannel	= EntityManager->CreateEntity<DefaultUIObject>();
+	UITransform*		pannel2tf		= ComponentManager->AddComponent<UITransform>(uimoneypannel, Vector3(1150.0f, 50.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	Sprite*				pannel2sp		= ComponentManager->AddComponent<Sprite>(uimoneypannel, L"Images\\UIPannel");
+	pannel2tf->_size = Vector3(400.0f, 100.0f, 0);
+
+	EntityId			textmoney		= EntityManager->CreateEntity<DefaultUIObject>();
+	UITransform*		textmoneytf		= ComponentManager->AddComponent<UITransform>(textmoney, Vector3(300.0f, 10.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	TextComponent*		textmoneytc		= ComponentManager->AddComponent<TextComponent>(textmoney);
+	textmoneytf->_size = Vector3(80.0f, 80.0f, 0);
+	textmoneytc->_text = L"0";
+	textmoneytc->_fontSize = 50.0f;
+	textmoneytc->_textAlignment = DWRITE_TEXT_ALIGNMENT_CENTER;
+	textmoneytc->_paragraphAlignemt = DWRITE_PARAGRAPH_ALIGNMENT_CENTER;
+
+	_lifeText = textmoney;
+
+	EntityManager->GetEntity(uimoneypannel)->AddChildEntity(textmoney);
+	EntityManager->GetEntity(textmoney)->SetParentEntity(uimoneypannel);
+
+	return uimoneypannel;
+}
+

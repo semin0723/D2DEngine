@@ -31,10 +31,15 @@ public:
 	Camera* _mainCamera;
 
 	void OnMapClick(const ClickInGame* event);
+	void OnLifeDecrese(const DecreseLife* event);
 
 private:
 	std::vector<std::vector<tileInfo>> _mapdata;
 	UINT _actionState = 0;
+
+	int _life = 50;
+
+	EntityId _lifeText;
 
 	void InitialGame();
 
@@ -67,5 +72,7 @@ private:
 		EntityId eid = ECS::_ecs->GetEntityManager()->CreateEntity<E>();
 		return eid;
 	}
+
+	EntityId MoneyArea();
 };
 

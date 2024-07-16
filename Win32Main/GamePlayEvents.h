@@ -47,3 +47,8 @@ struct UseMoney : public Event<UseMoney> {
 	UINT _earn;
 	UseMoney(Money_Type type, UINT cost) : _moneyType(type), _earn(cost) {}
 };
+
+struct DecreseLife : public Event<DecreseLife> {
+	UINT _life;
+	DecreseLife(UINT life) : _life(life) {}
+};

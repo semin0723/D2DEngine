@@ -5,12 +5,15 @@
 RenderSystem::RenderSystem(ID2D1HwndRenderTarget* target) : _target(target)
 {
 	_target->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Green), &_greenBrush);
+	_target->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Black), &_blackBrush);
+	
 	RegistEvent();
 }
 
 RenderSystem::~RenderSystem()
 {
 	_greenBrush->Release();
+	_blackBrush->Release();
 	UnRegistEvent();
 }
 
@@ -77,9 +80,22 @@ void RenderSystem::UpdateUI(EntityId id)
 	IEntity* ui = EntityManager->GetEntity(id);
 	UITransform* uitf = ui->GetComponent<UITransform>();
 	Sprite* sp = ui->GetComponent<Sprite>();
+	TextComponent* tc = ComponentManager->Getcomponent<TextComponent>(id);
 
 	_target->SetTransform(uitf->_screenTransform);
-	if (sp == nullptr) {
+	if (tc != nullptr) {
+		_target->DrawText(
+			tc->_text.c_str(),
+			tc->_text.size(),
+			ResourceSystem::GetInstance()->GetTextFormat(tc->_font, tc->_fontSize, tc->_textAlignment, tc->_paragraphAlignemt),
+			D2D1::RectF(
+				0, 0,
+				uitf->_size.x, uitf->_size.y
+			),
+			_blackBrush
+		);
+	}
+	else if (sp == nullptr) {
 		_target->FillRectangle(
 			D2D1::RectF(
 				uitf->_position.x, uitf->_position.y,
@@ -95,14 +111,6 @@ void RenderSystem::UpdateUI(EntityId id)
 	for (auto& i : child) {
 		UpdateUI(i);
 	}
-}
-
-void RenderSystem::TextRender(EntityId id)
-{
-	UITransform* uitf = ComponentManager->Getcomponent<UITransform>(id);
-	TextComponent* tc = ComponentManager->Getcomponent<TextComponent>(id);
-	if (tc == nullptr) return;
-
 }
 
 void RenderSystem::RegistEvent()
