@@ -20,10 +20,13 @@ public:
 	void OnCreateEffect(const CreateEffect* event);
 	void OnEffectCreated(const GameObjectCreated* event);
 	void OnEffectDestroyed(const GameObjectDestroyed* event);
+	void OnGamePause(const GamePause* event);
 
 private:
 	using Effects = std::vector<EntityId>;
 
 	Effects _effects;
+
+	bool _isGameRunning = true;
 };
 

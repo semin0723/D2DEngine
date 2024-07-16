@@ -6,12 +6,14 @@ void TowerControll::RegistEvent()
 {
 	RegisterCallback(&TowerControll::OnGameObjectCreated);
 	RegisterCallback(&TowerControll::OnGameObjectDestroyed);
+	RegisterCallback(&TowerControll::OnGamePause);
 }
 
 void TowerControll::UnRegistEvent()
 {
 	UnRegisterCallback(&TowerControll::OnGameObjectCreated);
 	UnRegisterCallback(&TowerControll::OnGameObjectDestroyed);
+	UnRegisterCallback(&TowerControll::OnGamePause);
 }
 
 void TowerControll::PreUpdate(float dt)
@@ -20,6 +22,8 @@ void TowerControll::PreUpdate(float dt)
 
 void TowerControll::Update(float dt)
 {
+	if (_isGameRunning == false) return;
+
 	// Å½»ö
 	SearchEnemyInRange();
 
@@ -121,6 +125,11 @@ void TowerControll::OnGameObjectDestroyed(const GameObjectDestroyed* event)
 			}
 		}
 	}
+}
+
+void TowerControll::OnGamePause(const GamePause* event)
+{
+	_isGameRunning ^= true;
 }
 
 Vector3 TowerControll::GetCenterPos(EntityId eid)

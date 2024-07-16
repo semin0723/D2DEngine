@@ -11,6 +11,8 @@ EffectSystem::EffectSystem()
 
 void EffectSystem::Update(float dt)
 {
+	if (_isGameRunning == false) return;
+
 	AnimationComponent* ac = nullptr; 
 	for (int i = 0; i < _effects.size(); i++) {
 		AnimationComponent* ac = ComponentManager->Getcomponent<AnimationComponent>(_effects[i]);
@@ -36,6 +38,7 @@ void EffectSystem::RegistEvent()
 	RegisterCallback(&EffectSystem::OnEffectCreated);
 	RegisterCallback(&EffectSystem::OnEffectDestroyed);
 	RegisterCallback(&EffectSystem::OnCreateEffect);
+	RegisterCallback(&EffectSystem::OnGamePause);
 }
 
 void EffectSystem::UnRegistEvent()
@@ -43,6 +46,7 @@ void EffectSystem::UnRegistEvent()
 	UnRegisterCallback(&EffectSystem::OnEffectCreated);
 	UnRegisterCallback(&EffectSystem::OnEffectDestroyed);
 	UnRegisterCallback(&EffectSystem::OnCreateEffect);
+	UnRegisterCallback(&EffectSystem::OnGamePause);
 }
 
 void EffectSystem::OnCreateEffect(const CreateEffect* event)
@@ -75,4 +79,9 @@ void EffectSystem::OnEffectDestroyed(const GameObjectDestroyed* event)
 			break;
 		}
 	}
+}
+
+void EffectSystem::OnGamePause(const GamePause* event)
+{
+	_isGameRunning ^= true;
 }

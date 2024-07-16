@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "Events.h"
 
+
 struct tileInfo {
 	Tile_State _tileState; 
 	Tower_Type _towerType;
@@ -32,14 +33,11 @@ public:
 
 	void OnMapClick(const ClickInGame* event);
 	void OnLifeDecrese(const DecreseLife* event);
+	void OnGetMoney(const GetMoney* event);
 
 private:
 	std::vector<std::vector<tileInfo>> _mapdata;
 	UINT _actionState = 0;
-
-	int _life = 50;
-
-	EntityId _lifeText;
 
 	void InitialGame();
 
@@ -74,5 +72,18 @@ private:
 	}
 
 	EntityId MoneyArea();
+	EntityId ButtonArea();
+
+private:
+	// 인게임 로직 관련 부분
+	int _life = 50;
+	EntityId _lifeText;
+
+	int _money = 100;
+	EntityId _moneyText;
+
+	bool _isGameRunning = true;
+
+	void Pause();
 };
 

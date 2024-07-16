@@ -4,7 +4,7 @@
 #include "SampleButton.h"
 #include "DefaultUIObject.h"
 #include "Components.h"
-#include "UITemplate.h"
+#include "../D2DEngine/TimeSystem.h"
 
 World::World()
 {
@@ -32,53 +32,15 @@ World::World()
 	UITransform*		uitf				= ComponentManager->AddComponent<UITransform>(uigroup1);
 	UIGroup*			uig					= ComponentManager->AddComponent<UIGroup>(uigroup1);
 	
-	EntityId			uibuttonpannel		= CreateUIObject<DefaultUIObject>();
-	UITransform*		panneltf			= ComponentManager->AddComponent<UITransform>(uibuttonpannel, Vector3(1150.0f, 750.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
-	Sprite*				pannelsp			= ComponentManager->AddComponent<Sprite>(uibuttonpannel, L"Images\\UIPannel");
-	panneltf->_size = Vector3(400.0f, 400.0f, 0);
-
-	EntityId			uibtn				= CreateUIObject<SampleButton>();
-	UITransform*		btntf				= ComponentManager->AddComponent<UITransform>(uibtn, Vector3(50.0f, 250.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
-	Sprite*				spbtn				= ComponentManager->AddComponent<Sprite>(uibtn, L"Images\\Button\\ButtonNormal");
-	ButtonComponent*	btnc				= ComponentManager->AddComponent<ButtonComponent>(uibtn);
-	btnc->SetOwner(uibtn);
-	btntf->_size = Vector3(300.0f, 100.0f, 0);
-	btnc->AddOnclickFunction(std::bind(&World::EnterCreateState, this));
-
-	EntityId			uibtn2				= CreateUIObject<SampleButton>();
-	UITransform*		btn2tf				= ComponentManager->AddComponent<UITransform>(uibtn2, Vector3(50.0f, 140.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
-	Sprite*				spbtn2				= ComponentManager->AddComponent<Sprite>(uibtn2, L"Images\\Button\\ButtonNormal");
-	ButtonComponent*	btn2c				= ComponentManager->AddComponent<ButtonComponent>(uibtn2);
-	btn2c->SetOwner(uibtn2);
-	btn2tf->_size = Vector3(300.0f, 100.0f, 0);
-	btn2c->AddOnclickFunction(std::bind(&World::EnterDeleteState, this));
-
-	EntityId			uibtn3				= CreateUIObject<SampleButton>();
-	UITransform*		btn3tf				= ComponentManager->AddComponent<UITransform>(uibtn3, Vector3(50.0f, 30.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
-	Sprite*				spbtn3				= ComponentManager->AddComponent<Sprite>(uibtn3, L"Images\\Button\\ButtonNormal");
-	ButtonComponent*	btn3c				= ComponentManager->AddComponent<ButtonComponent>(uibtn3);
-	btn3c->SetOwner(uibtn3);
-	btn3tf->_size = Vector3(300.0f, 100.0f, 0);
-	btn3c->AddOnclickFunction(std::bind(&World::EnterMergeState, this));
-
+	EntityId uibuttonpannel = ButtonArea();
 	EntityId uimoneypannel = MoneyArea();
 
 	EntityManager->GetEntity(uigroup1)->AddChildEntity(uibuttonpannel);
 	EntityManager->GetEntity(uigroup1)->AddChildEntity(uimoneypannel);
 
 	EntityManager->GetEntity(uimoneypannel)->SetParentEntity(uigroup1);
-
-	EntityManager->GetEntity(uibuttonpannel)->AddChildEntity(uibtn);
-	EntityManager->GetEntity(uibuttonpannel)->AddChildEntity(uibtn2);
-	EntityManager->GetEntity(uibuttonpannel)->AddChildEntity(uibtn3);
 	EntityManager->GetEntity(uibuttonpannel)->SetParentEntity(uigroup1);
 
-	EntityManager->GetEntity(uibtn)->SetParentEntity(uibuttonpannel);
-	EntityManager->GetEntity(uibtn2)->SetParentEntity(uibuttonpannel);
-	EntityManager->GetEntity(uibtn3)->SetParentEntity(uibuttonpannel);
-
-	
-	
 }
 
 World::~World()
@@ -94,8 +56,10 @@ void World::PreUpdate(float dt)
 
 void World::Update(float dt)
 {
-	TextComponent* lifetc = ComponentManager->Getcomponent<TextComponent>(_lifeText);
-	lifetc->_text = std::to_wstring(_life);
+	if (_isGameRunning == false) return;
+
+	TextComponent* moneytc = ComponentManager->Getcomponent<TextComponent>(_moneyText);
+	moneytc->_text = std::to_wstring(_money);
 }
 
 void World::PostUpdate(float dt)
@@ -114,6 +78,9 @@ void World::OnMapClick(const ClickInGame* event)
 		
 		if (_actionState == 1) {
 			if (_mapdata[idx.second][idx.first]._tileState == Tile_State::Empty) {
+				// 자원 부족
+				if (_money < 50) return;
+
 				EntityId newTower = CreateTower(ConvertIdxToTile(idx), 1);
 				SetTileInfo(idx, Tile_State::Tower, Tower_Type::Tower1_1, newTower, 1);
 			}
@@ -155,6 +122,11 @@ void World::OnLifeDecrese(const DecreseLife* event)
 	_life -= event->_life;
 }
 
+void World::OnGetMoney(const GetMoney* event)
+{
+	_money += event->_earn;
+}
+
 void World::InitialGame()
 {
 	std::vector<std::vector<int>> mapdata = ResourceSystem::GetInstance()->LoadMapData();
@@ -181,12 +153,14 @@ void World::RegistEvent()
 {
 	RegisterCallback(&World::OnMapClick);
 	RegisterCallback(&World::OnLifeDecrese);
+	RegisterCallback(&World::OnGetMoney);
 }
 
 void World::UnRegistEvent()
 {
 	UnRegisterCallback(&World::OnMapClick);
 	UnRegisterCallback(&World::OnLifeDecrese);
+	UnRegisterCallback(&World::OnGetMoney);
 }
 
 Vector3 World::ConvertIdxToTile(std::pair<int, int>& idx)
@@ -209,6 +183,8 @@ EntityId World::CreateTower(const Vector3& loc, UINT towerGrade)
 	AttackComponent*		at			= ComponentManager->AddComponent<AttackComponent>(tower, 50, 0.5f);
 	tf->SetRectSize(sp->_spriteSize);
 
+	_money -= 50;
+
 	return tower;
 }
 
@@ -216,6 +192,8 @@ void World::DeleteTower(const std::pair<int, int>& idx)
 {
 	ecs->SendEvent<GameObjectDestroyed>(_mapdata[idx.second][idx.first]._towerId, Object_Layer::Player);
 	SetTileInfo(idx, Tile_State::Empty, Tower_Type::Default, EntityId(), 0);
+
+	_money += 50;
 }
 
 void World::SetTileInfo(const std::pair<int, int>& idx, Tile_State state, Tower_Type type, const EntityId& towerId, UINT grade)
@@ -226,6 +204,14 @@ void World::SetTileInfo(const std::pair<int, int>& idx, Tile_State state, Tower_
 	_mapdata[idx.second][idx.first]._towerId = towerId;
 }
 
+void World::Pause()
+{
+	ecs->SendEvent<GamePause>();
+	_isGameRunning ^= true;
+}
+
+
+//-----------------------------------------  uitemplate ------------------------------------------
 EntityId World::MoneyArea()
 {
 	EntityId			uimoneypannel	= EntityManager->CreateEntity<DefaultUIObject>();
@@ -238,15 +224,69 @@ EntityId World::MoneyArea()
 	TextComponent*		textmoneytc		= ComponentManager->AddComponent<TextComponent>(textmoney);
 	textmoneytf->_size = Vector3(80.0f, 80.0f, 0);
 	textmoneytc->_text = L"0";
-	textmoneytc->_fontSize = 50.0f;
+	textmoneytc->_fontSize = 40.0f;
 	textmoneytc->_textAlignment = DWRITE_TEXT_ALIGNMENT_CENTER;
 	textmoneytc->_paragraphAlignemt = DWRITE_PARAGRAPH_ALIGNMENT_CENTER;
 
-	_lifeText = textmoney;
+	_moneyText = textmoney;
 
 	EntityManager->GetEntity(uimoneypannel)->AddChildEntity(textmoney);
 	EntityManager->GetEntity(textmoney)->SetParentEntity(uimoneypannel);
 
 	return uimoneypannel;
 }
+
+EntityId World::ButtonArea()
+{
+	EntityId			uibuttonpannel		= CreateUIObject<DefaultUIObject>();
+	UITransform*		panneltf			= ComponentManager->AddComponent<UITransform>(uibuttonpannel, Vector3(1150.0f, 750.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	Sprite*				pannelsp			= ComponentManager->AddComponent<Sprite>(uibuttonpannel, L"Images\\UIPannel");
+	panneltf->_size = Vector3(400.0f, 400.0f, 0);
+
+	EntityId			uibtnCreateTower	= CreateUIObject<SampleButton>();
+	UITransform*		btntf				= ComponentManager->AddComponent<UITransform>(uibtnCreateTower, Vector3(40.0f, 260.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	Sprite*				spbtn				= ComponentManager->AddComponent<Sprite>(uibtnCreateTower, L"Images\\Button\\ButtonNormal");
+	ButtonComponent*	btnc				= ComponentManager->AddComponent<ButtonComponent>(uibtnCreateTower);
+	btnc->SetOwner(uibtnCreateTower);
+	btntf->_size = Vector3(200.0f, 100.0f, 0);
+	btnc->AddOnclickFunction(std::bind(&World::EnterCreateState, this));
+
+	EntityId			uibtnDeleteTower	= CreateUIObject<SampleButton>();
+	UITransform*		btn2tf				= ComponentManager->AddComponent<UITransform>(uibtnDeleteTower, Vector3(40.0f, 150.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	Sprite*				spbtn2				= ComponentManager->AddComponent<Sprite>(uibtnDeleteTower, L"Images\\Button\\ButtonNormal");
+	ButtonComponent*	btn2c				= ComponentManager->AddComponent<ButtonComponent>(uibtnDeleteTower);
+	btn2c->SetOwner(uibtnDeleteTower);
+	btn2tf->_size = Vector3(200.0f, 100.0f, 0);
+	btn2c->AddOnclickFunction(std::bind(&World::EnterDeleteState, this));
+
+	EntityId			uibtnMergeTower		= CreateUIObject<SampleButton>();
+	UITransform*		btn3tf				= ComponentManager->AddComponent<UITransform>(uibtnMergeTower, Vector3(40.0f, 40.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	Sprite*				spbtn3				= ComponentManager->AddComponent<Sprite>(uibtnMergeTower, L"Images\\Button\\ButtonNormal");
+	ButtonComponent*	btn3c				= ComponentManager->AddComponent<ButtonComponent>(uibtnMergeTower);
+	btn3c->SetOwner(uibtnMergeTower);
+	btn3tf->_size = Vector3(200.0f, 100.0f, 0);
+	btn3c->AddOnclickFunction(std::bind(&World::EnterMergeState, this));
+
+	EntityId			uibtnPause			= CreateUIObject<SampleButton>();
+	UITransform*		btn4tf				= ComponentManager->AddComponent<UITransform>(uibtnPause, Vector3(270.0f, 260.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	Sprite*				spbtn4				= ComponentManager->AddComponent<Sprite>(uibtnPause, L"Images\\Button\\ButtonNormal");
+	ButtonComponent*	btn4c				= ComponentManager->AddComponent<ButtonComponent>(uibtnPause);
+	btn4c->SetOwner(uibtnPause);
+	btn4tf->_size = Vector3(100.0f, 100.0f, 0);
+	btn4c->AddOnclickFunction(std::bind(&World::Pause, this));
+
+	EntityManager->GetEntity(uibuttonpannel)->AddChildEntity(uibtnCreateTower);
+	EntityManager->GetEntity(uibuttonpannel)->AddChildEntity(uibtnDeleteTower);
+	EntityManager->GetEntity(uibuttonpannel)->AddChildEntity(uibtnMergeTower);
+	EntityManager->GetEntity(uibuttonpannel)->AddChildEntity(uibtnPause);
+
+	EntityManager->GetEntity(uibtnCreateTower)->SetParentEntity(uibuttonpannel);
+	EntityManager->GetEntity(uibtnDeleteTower)->SetParentEntity(uibuttonpannel);
+	EntityManager->GetEntity(uibtnMergeTower)->SetParentEntity(uibuttonpannel);
+	EntityManager->GetEntity(uibtnPause)->SetParentEntity(uibuttonpannel);
+
+	return uibuttonpannel;
+}
+
+
 

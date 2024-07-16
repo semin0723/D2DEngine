@@ -23,10 +23,13 @@ public:
 	bool CheckPointLoc(std::pair<float, float>& left, std::pair<float, float>& right);
 
 	void OnGameObjectCreated(const GameObjectCreated* event);
+	void OnGamePause(const GamePause* event);
 
 private:
 	UINT _collisionMatrix[(UINT)Object_Layer::End] = {};
 	std::map<std::pair<ULL, ULL>, bool> _collisionHistory;
 	std::vector<EntityId> _registeredEntity[(UINT)Object_Layer::End] = {};
+
+	bool _isGameRunning = true;
 };
 

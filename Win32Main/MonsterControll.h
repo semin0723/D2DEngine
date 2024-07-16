@@ -25,6 +25,8 @@ public:
 
 	void MonsterCreated(const GameObjectCreated* event);
 	void MonsterDestroyed(const GameObjectDestroyed* event);
+	void OnGamePause(const GamePause* event);
+
 private:
 	using MonsterInfo = std::vector<EntityId>;
 	using WayPoint = std::vector<Vector3>;
@@ -35,5 +37,7 @@ private:
 	MonsterInfo _monsters;
 	MonsterSpawner* _spawner = nullptr;
 	float _spawnInterval = 1.0f;
+
+	bool _isGameRunning = true;
 };
 

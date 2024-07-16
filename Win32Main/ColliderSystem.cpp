@@ -14,6 +14,8 @@ ColliderSystem::~ColliderSystem()
 
 void ColliderSystem::PostUpdate(float dt)
 {
+	if (_isGameRunning == false) return;
+
 	for (UINT l1 = 0; l1 < (UINT)Object_Layer::End; l1++) {
 		for (UINT l2 = l1; l2 < (UINT)Object_Layer::End; l2++) {
 			if (_collisionMatrix[l1] & (1 << l2)) {
@@ -140,14 +142,21 @@ bool ColliderSystem::CheckPointLoc(std::pair<float, float>& left, std::pair<floa
 void ColliderSystem::RegistEvent()
 {
 	RegisterCallback(&ColliderSystem::OnGameObjectCreated);
+	RegisterCallback(&ColliderSystem::OnGamePause);
 }
 
 void ColliderSystem::UnRegistEvent()
 {
 	UnRegisterCallback(&ColliderSystem::OnGameObjectCreated);
+	UnRegisterCallback(&ColliderSystem::OnGamePause);
 }
 
 void ColliderSystem::OnGameObjectCreated(const GameObjectCreated* event)
 {
 	_registeredEntity[(UINT)event->_layer].push_back(event->_entityId);
+}
+
+void ColliderSystem::OnGamePause(const GamePause* event)
+{
+	_isGameRunning ^= true;
 }

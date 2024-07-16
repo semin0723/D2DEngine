@@ -21,6 +21,8 @@ MonsterControll::~MonsterControll()
 
 void MonsterControll::PreUpdate(float dt)
 {
+	if (_isGameRunning == false) return;
+
 	static float elapseTime;
 	elapseTime += dt;
 	if (elapseTime >= _spawnInterval) {
@@ -31,6 +33,8 @@ void MonsterControll::PreUpdate(float dt)
 
 void MonsterControll::Update(float dt)
 {
+	if (_isGameRunning == false) return;
+
 	Transform* tf = nullptr;
 	BoxCollider* bc = nullptr;
 	MonsterStat* ms = nullptr;
@@ -68,6 +72,7 @@ void MonsterControll::RegistEvent()
 	RegisterCallback(&MonsterControll::MonsterDestroyed);
 	RegisterCallback(&MonsterControll::OnHit);
 	RegisterCallback(&MonsterControll::OnAreaHit);
+	RegisterCallback(&MonsterControll::OnGamePause);
 }
 
 void MonsterControll::UnRegistEvent()
@@ -76,6 +81,7 @@ void MonsterControll::UnRegistEvent()
 	UnRegisterCallback(&MonsterControll::MonsterDestroyed);
 	UnRegisterCallback(&MonsterControll::OnHit);
 	UnRegisterCallback(&MonsterControll::OnAreaHit);
+	UnRegisterCallback(&MonsterControll::OnGamePause);
 }
 
 Vector3 MonsterControll::GetNextDir(int curWayPointIdx)
@@ -94,6 +100,7 @@ void MonsterControll::OnHit(const Attack* event)
 			if (ms->_hp <= 0) {
 				ecs->SendEvent<GameObjectDestroyed>(_monsters[i], Object_Layer::Monster);
 				// money increse event
+				ecs->SendEvent<GetMoney>(Money_Type::Credit, 10);
 			}
 			return;
 		}
@@ -125,4 +132,9 @@ void MonsterControll::MonsterDestroyed(const GameObjectDestroyed* event)
 			break;
 		}
 	}
+}
+
+void MonsterControll::OnGamePause(const GamePause* event)
+{
+	_isGameRunning ^= true;
 }

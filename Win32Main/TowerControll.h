@@ -22,6 +22,8 @@ public:
 
 	void OnGameObjectCreated(const GameObjectCreated* event);
 	void OnGameObjectDestroyed(const GameObjectDestroyed* event);
+	void OnGamePause(const GamePause* event);
+
 private:
 	using Enemies = std::vector<EntityId>;
 	using Towers = std::vector<EntityId>;
@@ -30,6 +32,8 @@ private:
 	Towers _towers;
 
 	Vector3 GetCenterPos(EntityId eid);
+
+	bool _isGameRunning = true;
 };
 
 struct compare {

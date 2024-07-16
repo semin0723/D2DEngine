@@ -17,6 +17,11 @@ struct GameOver : public Event<GameOver> {
 	GameOver(int cur) : _curRound(cur) {}
 };
 
+struct GamePause : public Event<GamePause> {
+
+	GamePause() {}
+};
+
 struct Attack : public Event<Attack> {
 	EntityId _target;
 	int _damage;
@@ -36,16 +41,10 @@ struct CreateEffect : public Event<CreateEffect> {
 	CreateEffect(std::wstring key, Vector3 location) : _effectKey(key), _createLocation(location) {}
 };
 
-struct EarnMoney : public Event<EarnMoney> {
+struct GetMoney : public Event<GetMoney> {
 	Money_Type _moneyType;
 	UINT _earn;
-	EarnMoney(Money_Type type, UINT cost) : _moneyType(type), _earn(cost) {}
-};
-
-struct UseMoney : public Event<UseMoney> {
-	Money_Type _moneyType;
-	UINT _earn;
-	UseMoney(Money_Type type, UINT cost) : _moneyType(type), _earn(cost) {}
+	GetMoney(Money_Type type, UINT cost) : _moneyType(type), _earn(cost) {}
 };
 
 struct DecreseLife : public Event<DecreseLife> {
