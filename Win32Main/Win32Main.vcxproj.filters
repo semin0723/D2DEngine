@@ -91,9 +91,6 @@
     <Filter Include="소스 파일\System\World">
       <UniqueIdentifier>{46a2b1c9-4ad0-4b92-95b5-3a1a24fe8ba9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\System\PlayerControll">
-      <UniqueIdentifier>{71856950-c2ef-43f0-9aa4-f1989cc14159}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Resource">
       <UniqueIdentifier>{372143fa-65b1-4851-80cc-6c71e1ee0ff5}</UniqueIdentifier>
     </Filter>
@@ -284,9 +281,6 @@
     </ClInclude>
     <ClInclude Include="RenderSystem.h">
       <Filter>소스 파일\System\Render</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerControllSystem.h">
-      <Filter>소스 파일\System\PlayerControll</Filter>
     </ClInclude>
     <ClInclude Include="Image.h">
       <Filter>소스 파일\Resource\Image</Filter>
@@ -496,9 +490,6 @@
     </ClCompile>
     <ClCompile Include="World.cpp">
       <Filter>소스 파일\System\World</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerControllSystem.cpp">
-      <Filter>소스 파일\System\PlayerControll</Filter>
     </ClCompile>
     <ClCompile Include="ColliderSystem.cpp">
       <Filter>소스 파일\System\Collider</Filter>
