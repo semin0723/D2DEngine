@@ -1,4 +1,5 @@
 ﻿#include "D2DEngine.h"
+#include <string>
 
 void WinApp::Initialize(HINSTANCE _hInstance) {
 
@@ -58,6 +59,8 @@ void WinApp::Run()
             Render();
 
             _d2dRender->GetRenderTarget()->EndDraw();
+
+            SetWindowText(_hWnd, std::to_wstring(_time.GetFrameRate()).c_str());
         }
     }
 }
