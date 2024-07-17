@@ -19,5 +19,6 @@ public:
 	float _curTime = 0;
 	bool _multiAttack = false;
 	Vector3 _attackRect;
+	std::wstring _attackEffect;
 };
 

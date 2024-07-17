@@ -122,6 +122,7 @@ void ResourceSystem::CreateEffectAnimations()
 		}
 		_animations.insert({ animationKey, newAnimation });
 	}
+	file.close();
 }
 
 const std::vector<std::vector<int>>& ResourceSystem::LoadMapData()
@@ -148,6 +149,7 @@ const std::vector<std::vector<int>>& ResourceSystem::LoadMapData()
 		}
 		_mapdata.push_back(mapline);
 	}
+	file.close();
 	return _mapdata;
 }
 
@@ -170,9 +172,9 @@ const std::vector<Vector3>& ResourceSystem::LoadMonsterWayPoint()
 	std::getline(file, line);
 	wss = std::wstringstream(line);
 	std::getline(wss, tmp, L',');
-	offset.x = _wtof(tmp.c_str());
+	offset.x = (FLOAT)_wtof(tmp.c_str());
 	std::getline(wss, tmp, L',');
-	offset.y = _wtof(tmp.c_str());
+	offset.y = (FLOAT)_wtof(tmp.c_str());
 
 	// tilesize
 	std::getline(file, line);
@@ -191,8 +193,64 @@ const std::vector<Vector3>& ResourceSystem::LoadMonsterWayPoint()
 
 		_wayPoint.push_back(pos);
 	}
-
+	file.close();
 	return _wayPoint;
+}
+
+void ResourceSystem::LoadTowerData()
+{
+	std::wstring filename = L"data\\ObjectData\\TowerData.CSV";
+	std::wifstream file(filename);
+
+	std::wstringstream wss;
+	std::wstring line;
+
+	int tierCount, towerCountPerTier;
+	std::getline(file, line);
+	wss = std::wstringstream(line);
+	wss >> tierCount;
+
+	std::getline(file, line);
+	wss = std::wstringstream(line);
+	wss >> towerCountPerTier;
+
+	for (int i = 0; i < tierCount; i++) {
+		std::vector<TowerInfo> info;
+		for (int j = 0; j < towerCountPerTier; j++) {
+			TowerInfo towerinfo;
+			std::vector<std::wstring> splitResult;
+			std::getline(file, line);
+			wss = std::wstringstream(line);
+			std::wstring tmp;
+			while (std::getline(wss, tmp, L',')) {
+				splitResult.push_back(tmp);
+			}
+			towerinfo._towerTier		= (UINT)_wtoi(splitResult[0].c_str());
+			towerinfo._towerId			= (UINT)_wtoi(splitResult[1].c_str());
+			towerinfo._towerDamage		= _wtoi(splitResult[2].c_str());
+			towerinfo._imageDirectory	= splitResult[3];
+			towerinfo._detectRange		= (float)_wtof(splitResult[4].c_str());
+			towerinfo._attackInterval	= (float)_wtof(splitResult[5].c_str());
+			towerinfo._damagePerUpdate	= (UINT)_wtoi(splitResult[6].c_str());
+			towerinfo._isAreaAttack		= (bool)_wtoi(splitResult[7].c_str());
+			if (towerinfo._isAreaAttack == true) {
+				towerinfo._attackArea = Vector3((FLOAT)_wtof(splitResult[8].c_str()), (FLOAT)_wtof(splitResult[9].c_str()), 0);
+				towerinfo._effectDirectory = splitResult[10].c_str();
+			}
+			else {
+				towerinfo._attackArea = Vector3();
+				towerinfo._effectDirectory = splitResult[8].c_str();
+			}
+			info.push_back(towerinfo);
+		}
+		_towerData.push_back(info);
+	}
+	file.close();
+}
+
+const TowerInfo& ResourceSystem::GetTowerInfo(UINT tier, UINT id)
+{
+	return _towerData[tier - 1][id - 1];
 }
 
 void ResourceSystem::GetImageFromFile(const std::wstring& spriteKey, ID2D1Bitmap** image)

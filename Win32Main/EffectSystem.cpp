@@ -58,7 +58,7 @@ void EffectSystem::OnCreateEffect(const CreateEffect* event)
 	AnimationComponent* ac = ComponentManager->AddComponent<AnimationComponent>(newEntity);
 
 	tf->SetRectSize(sp->_spriteSize);
-	tf->_position = event->_createLocation;
+	tf->_position = event->_createLocation - Vector3(14.0f, 14.0f, 0);
 	ac->AddAnimation(event->_effectKey, ResourceSystem::GetInstance()->GetAnimation(event->_effectKey));
 	ac->_curAnimationState = event->_effectKey;
 	ecs->SendEvent<GameObjectCreated>(newEntity, Object_Layer::Effect);

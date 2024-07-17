@@ -9,7 +9,7 @@ public:
 	Transform(Vector3 pos, Vector3 scale, Vector3 rot);
 	~Transform() {}
 
-	void SetRectSize(Vector3& size) { _rectSize = size; }
+	void SetRectSize(const Vector3& size) { _rectSize = size; }
 	D2D1::Matrix3x2F GetTransform();
 	void CalcRotation(Vector3& movedir);
 

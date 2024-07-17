@@ -8,12 +8,12 @@
 
 struct tileInfo {
 	Tile_State _tileState; 
-	Tower_Type _towerType;
+	UINT _towerType;
 	EntityId _towerId;
 	UINT _towerGrade;
 	tileInfo() {
 		_tileState = Tile_State::Default;
-		_towerType = Tower_Type::Default;
+		_towerType = 0;
 		_towerId = EntityId();
 		_towerGrade = 0;
 	}
@@ -54,8 +54,8 @@ private:
 	std::pair<int, int> ConvertClickToIdx(const Vector3& clickLoc);
 	Vector3 ConvertIdxToTile(std::pair<int, int>& idx);
 
-	void SetTileInfo(const std::pair<int, int>& idx, Tile_State state, Tower_Type type, const EntityId& towerId, UINT grade);
-	EntityId CreateTower(const Vector3& loc, UINT towerGrade);
+	void SetTileInfo(const std::pair<int, int>& idx, Tile_State state, UINT towertype, const EntityId& towerId, UINT grade);
+	std::pair<EntityId, int> CreateTower(const Vector3& loc, UINT towerGrade);
 	void DeleteTower(const std::pair<int, int>& idx);
 
 	template<class E>

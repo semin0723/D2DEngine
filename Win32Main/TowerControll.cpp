@@ -84,16 +84,18 @@ void TowerControll::EnemyAttack(float dt)
 		AttackComponent* ac = ComponentManager->Getcomponent<AttackComponent>(_towers[i]);
 		DetectComponent* dc = ComponentManager->Getcomponent<DetectComponent>(_towers[i]);
 		ac->_curTime += dt;
+		if (dc->_targetEntity == EntityId()) continue;
 		if (ac->_curTime >= ac->_attackInterval) {
-			ac->_curTime -= ac->_attackInterval;
+			//ac->_curTime -= ac->_attackInterval;
+			ac->_curTime = 0;
 			if (ac->_multiAttack == false) {
 				ecs->SendEvent<Attack>(dc->_targetEntity, ac->_damage);
 			}
 			else {
 				ecs->SendEvent<AreaAttack>(dc->_targetEntity, ac->_damage, ac->_attackRect);
 			}
+			ecs->SendEvent<CreateEffect>(ac->_attackEffect, ComponentManager->Getcomponent<Transform>(dc->_targetEntity)->_position);
 		}
-
 	}
 }
 

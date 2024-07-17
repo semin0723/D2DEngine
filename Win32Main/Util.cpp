@@ -1,4 +1,5 @@
 #include "Util.h"
+#include <Random>
 
 bool CheckBorder(D2D1_RECT_F obj1, D2D1_RECT_F obj2)
 {
@@ -13,7 +14,7 @@ bool CheckBorder(D2D1_RECT_F obj1, D2D1_RECT_F obj2)
     return true;
 }
 
-D2D1_RECT_F GetBounds(Vector3& pos, Vector3& rect)
+D2D1_RECT_F GetBounds(const Vector3& pos, const Vector3& rect)
 {
     return { pos.x, pos.y, pos.x + rect.x, pos.y + rect.y };
 }
@@ -37,4 +38,13 @@ std::string WstringToString(std::wstring& wstr)
     tmp.assign(wstr.begin(), wstr.end());
     printf(tmp.c_str());
     return tmp;
+}
+
+int GetRandomNum(int start, int end)
+{
+    std::random_device rd;
+    std::mt19937_64 gen(rd());
+    std::uniform_int_distribution<int> dis(start, end);
+
+    return dis(gen);
 }

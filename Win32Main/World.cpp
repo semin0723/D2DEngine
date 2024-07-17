@@ -91,14 +91,17 @@ void World::OnMapClick(const ClickInGame* event)
 		if (_actionState == 1) {
 			if (_mapdata[idx.second][idx.first]._tileState == Tile_State::Empty) {
 				// 자원 부족
-				if (_money < 50) return;
+				if (_money < 10) return;
 
-				EntityId newTower = CreateTower(ConvertIdxToTile(idx), 1);
-				SetTileInfo(idx, Tile_State::Tower, Tower_Type::Tower1_1, newTower, 1);
+				auto [newTower, towerTypeId] = CreateTower(ConvertIdxToTile(idx), 1);
+				SetTileInfo(idx, Tile_State::Tower, towerTypeId, newTower, 1);
+				_money -= 10;
 			}
 		}
 		else if (_actionState == 2) {
 			if (_mapdata[idx.second][idx.first]._tileState == Tile_State::Tower) {
+				if (_mapdata[idx.second][idx.first]._towerGrade == 4) return;
+
 				for (int i = 0; i < _mapdata.size(); i++) {
 					for (int j = 0; j < _mapdata[i].size(); j++) {
 						if (i == idx.second && j == idx.first) continue;
@@ -108,12 +111,14 @@ void World::OnMapClick(const ClickInGame* event)
 							_mapdata[i][j]._towerGrade == _mapdata[idx.second][idx.first]._towerGrade &&
 							_mapdata[i][j]._towerType == _mapdata[idx.second][idx.first]._towerType
 							) {
-							EntityId newTower = CreateTower(ConvertIdxToTile(idx), _mapdata[idx.second][idx.first]._towerGrade);
+							auto [newTower, towerTypeId] = CreateTower(ConvertIdxToTile(idx), _mapdata[idx.second][idx.first]._towerGrade + 1);
 							UINT newGrade = _mapdata[idx.second][idx.first]._towerGrade + 1;
 							DeleteTower(idx);
 							DeleteTower({ j, i });
 
-							SetTileInfo(idx, Tile_State::Tower, Tower_Type::Tower1_2, newTower, newGrade);
+							SetTileInfo(idx, Tile_State::Tower, towerTypeId, newTower, newGrade);
+							_actionState = 0;
+							return;
 						}
 					}
 				}
@@ -122,6 +127,7 @@ void World::OnMapClick(const ClickInGame* event)
 		else if (_actionState == 3) {
 			if (_mapdata[idx.second][idx.first]._tileState == Tile_State::Tower) {
 				DeleteTower(idx);
+				_money += 50;
 			}	
 			// 재화 올라가는 이벤트 호출
 		}
@@ -141,6 +147,9 @@ void World::OnGetMoney(const GetMoney* event)
 
 void World::InitialGame()
 {
+	ResourceSystem::GetInstance()->LoadTowerData();
+	//ResourceSystem::GetInstance()->LoadMonsterData();
+
 	std::vector<std::vector<int>> mapdata = ResourceSystem::GetInstance()->LoadMapData();
 	for (int i = 0; i < mapdata.size(); i++) {
 		std::vector<tileInfo> tmp;
@@ -152,7 +161,7 @@ void World::InitialGame()
 			else {
 				info._tileState = Tile_State::Empty;
 			}
-			info._towerType = Tower_Type::Default;
+			info._towerType = 0;
 			info._towerGrade = 0;
 			info._towerId = EntityId();
 			tmp.push_back(info);
@@ -185,33 +194,41 @@ std::pair<int, int> World::ConvertClickToIdx(const Vector3& loc)
 	return std::pair<int, int>((int)((loc.x - _tileoffset.x) / _sizePerTile), (int)((loc.y - _tileoffset.y) / _sizePerTile));
 }
 
-EntityId World::CreateTower(const Vector3& loc, UINT towerGrade)
+std::pair<EntityId, int> World::CreateTower(const Vector3& loc, UINT towerGrade)
 {
+	int towerTypeID = GetRandomNum(1, 3);
+	TowerInfo newTowerInfo = ResourceSystem::GetInstance()->GetTowerInfo(towerGrade, towerTypeID);
+	
 	EntityId				tower		= CreateGameObject<Square>(Object_Layer::Player);
 	Transform*				tf			= ComponentManager->AddComponent<Transform>(tower, loc, Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
-	Sprite*					sp			= ComponentManager->AddComponent<Sprite>(tower, L"Images\\TowerTest");
-	BoxCollider*			bc			= ComponentManager->AddComponent<BoxCollider>(tower, sp->_spriteSize);
-	DetectComponent*		dc			= ComponentManager->AddComponent<DetectComponent>(tower, 200.0f);
-	AttackComponent*		at			= ComponentManager->AddComponent<AttackComponent>(tower, 50, 0.5f);
-	tf->SetRectSize(sp->_spriteSize);
+	Sprite*					sp			= ComponentManager->AddComponent<Sprite>(tower, newTowerInfo._imageDirectory);
+	BoxCollider*			bc			= ComponentManager->AddComponent<BoxCollider>(tower, Vector3(96.0f, 96.0f, 0));
+	DetectComponent*		dc			= ComponentManager->AddComponent<DetectComponent>(tower, newTowerInfo._detectRange);
+	AttackComponent*		at			= nullptr;
+	if (newTowerInfo._isAreaAttack == false) {
+		at = ComponentManager->AddComponent<AttackComponent>(tower, newTowerInfo._towerDamage, newTowerInfo._attackInterval);
+	}
+	else {
+		at = ComponentManager->AddComponent<AttackComponent>(tower, newTowerInfo._towerDamage, newTowerInfo._isAreaAttack, newTowerInfo._attackInterval, newTowerInfo._attackArea);
+	}
 
-	_money -= 50;
+	sp->_spriteSize = Vector3(96.0f, 96.0f, 0);
+	at->_attackEffect = newTowerInfo._effectDirectory;
+	tf->SetRectSize(Vector3(96.0f, 96.0f, 0));
 
-	return tower;
+	return { tower, towerTypeID };
 }
 
 void World::DeleteTower(const std::pair<int, int>& idx)
 {
 	ecs->SendEvent<GameObjectDestroyed>(_mapdata[idx.second][idx.first]._towerId, Object_Layer::Player);
-	SetTileInfo(idx, Tile_State::Empty, Tower_Type::Default, EntityId(), 0);
-
-	_money += 50;
+	SetTileInfo(idx, Tile_State::Empty, 0, EntityId(), 0);
 }
 
-void World::SetTileInfo(const std::pair<int, int>& idx, Tile_State state, Tower_Type type, const EntityId& towerId, UINT grade)
+void World::SetTileInfo(const std::pair<int, int>& idx, Tile_State state, UINT towertype, const EntityId& towerId, UINT grade)
 {
 	_mapdata[idx.second][idx.first]._tileState = state;
-	_mapdata[idx.second][idx.first]._towerType = type;
+	_mapdata[idx.second][idx.first]._towerType = towertype;
 	_mapdata[idx.second][idx.first]._towerGrade = grade;
 	_mapdata[idx.second][idx.first]._towerId = towerId;
 }
@@ -232,7 +249,9 @@ void World::Resume()
 }
 
 
-//-----------------------------------------  uitemplate ------------------------------------------
+//------------------------------------------------------------------------------------------------
+//----------------------------------------- UI Template ------------------------------------------
+//------------------------------------------------------------------------------------------------
 EntityId World::MoneyArea()
 {
 	EntityId			uimoneypannel	= EntityManager->CreateEntity<DefaultUIObject>();
@@ -246,9 +265,9 @@ EntityId World::MoneyArea()
 	imguitf->_size = Vector3(80.0f, 80.0f, 0);
 
 	EntityId			textmoney		= EntityManager->CreateEntity<DefaultUIObject>();
-	UITransform*		textmoneytf		= ComponentManager->AddComponent<UITransform>(textmoney, Vector3(300.0f, 10.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	UITransform*		textmoneytf		= ComponentManager->AddComponent<UITransform>(textmoney, Vector3(250.0f, 10.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
 	TextComponent*		textmoneytc		= ComponentManager->AddComponent<TextComponent>(textmoney);
-	textmoneytf->_size = Vector3(80.0f, 80.0f, 0);
+	textmoneytf->_size = Vector3(130.0f, 80.0f, 0);
 	textmoneytc->_text = L"0";
 	textmoneytc->_fontSize = 40.0f;
 	textmoneytc->_textAlignment = DWRITE_TEXT_ALIGNMENT_CENTER;

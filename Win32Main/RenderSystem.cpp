@@ -38,7 +38,8 @@ void RenderSystem::Update(float dt)
 				// 몬스터 40px, 포탑 96px, 이펙트 64px
 				AnimationComponent* ac = entity._obj->GetComponent<AnimationComponent>();
 				if (ac == nullptr) {
-					_target->DrawBitmap(sprite->_sprite->_bitmap);
+					D2D1_RECT_F dest = { 0, 0, (FLOAT)transform->_rectSize.x, (FLOAT)transform->_rectSize.y };
+					_target->DrawBitmap(sprite->_sprite->_bitmap, dest);
 				}
 				else {
 					Animation* anim = ac->GetCurAnimation();
