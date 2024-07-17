@@ -20,14 +20,17 @@ D2D1::Matrix3x2F Transform::GetTransform()
 void Transform::CalcRotation(Vector3& movedir)
 {
 	Vector3 normalDir = movedir.Normalized();
-	float cosValue = dot(_normal, normalDir);
-	float angle = float(acosf(cosValue) * (180 / M_PI));
+	float cosValue = std::clamp( dot(_normal, normalDir), -1.0f, 1.0f);
+
+	float angle = float(acosf(cosValue) * (180.0f / M_PI));
 	Vector3 crossVector = Cross(_normal, normalDir);
 	_normal = normalDir;
 	if (crossVector.z < 0) {
 		_rotate -= Vector3(0, 0, angle);
+		if (_rotate.z < -360.0f) _rotate.z += 360;
 	}
 	else {
 		_rotate += Vector3(0, 0, angle);
+		if (_rotate.z > 360.0f) _rotate.z -= 360;
 	}
 }
