@@ -96,7 +96,6 @@ void MonsterControll::OnHit(const Attack* event)
 			MonsterStat* ms = ComponentManager->Getcomponent<MonsterStat>(_monsters[i]);
 			Transform* tf = ComponentManager->Getcomponent<Transform>(_monsters[i]);
 			ms->_hp -= (std::max)((event->_damage - ms->_defence), 0);
-			ecs->SendEvent<CreateEffect>(L"Hit", tf->_position - Vector3(12.0f, 12.0f, 0));
 			if (ms->_hp <= 0) {
 				ecs->SendEvent<GameObjectDestroyed>(_monsters[i], Object_Layer::Monster);
 				// money increse event
@@ -109,6 +108,22 @@ void MonsterControll::OnHit(const Attack* event)
 
 void MonsterControll::OnAreaHit(const AreaAttack* event)
 {
+	for (int i = 0; i < _monsters.size(); i++) {
+		MonsterStat* ms = ComponentManager->Getcomponent<MonsterStat>(_monsters[i]);
+		Transform* tf = ComponentManager->Getcomponent<Transform>(_monsters[i]);
+		D2D1_RECT_F monsterBound = GetBounds(tf->_position, tf->_rectSize);
+		D2D1_RECT_F attackArea = GetBounds(tf->_position - (tf->_rectSize / 2.0f) + (event->_rectSize / 2.0f), event->_rectSize);
+
+		if (CheckBorder(attackArea, monsterBound) == true) {
+			ms->_hp -= (std::max)((event->_damage - ms->_defence), 0);
+			if (ms->_hp <= 0) {
+				ecs->SendEvent<GameObjectDestroyed>(_monsters[i], Object_Layer::Monster);
+				// money increse event
+				ecs->SendEvent<GetMoney>(Money_Type::Credit, 10);
+			}
+			return;
+		}
+	}
 }
 
 void MonsterControll::MonsterCreated(const GameObjectCreated* event)
