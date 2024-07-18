@@ -3,6 +3,7 @@
 enum class Object_Layer {
 	Default,
 	Background,
+	TileEffect,
 	Player,
 	Monster,
 	Effect,

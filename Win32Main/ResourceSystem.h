@@ -7,18 +7,8 @@
 #include <dwrite.h>
 #pragma comment(lib,"dwrite.lib")
 
-struct TowerInfo {
-	UINT _towerTier;
-	UINT _towerId;
-	int _towerDamage;
-	std::wstring _imageDirectory;
-	float _detectRange;
-	float _attackInterval;
-	UINT _damagePerUpdate;
-	bool _isAreaAttack;
-	Vector3 _attackArea;
-	std::wstring _effectDirectory;
-};
+struct TowerInfo;
+struct MonsterInfo;
 
 class ResourceSystem
 {
@@ -55,8 +45,11 @@ public:
 	const std::vector<std::vector<int>>& LoadMapData();
 	const std::vector<Vector3>& LoadMonsterWayPoint();
 	void LoadTowerData();
+	void LoadMonsterData();
+	void LoadGroundEffect();
 
 	const TowerInfo& GetTowerInfo(UINT tier, UINT id);
+	const MonsterInfo& GetMonsterInfo(int round);
 
 private:
 	static ResourceSystem* _instance;
@@ -68,6 +61,7 @@ private:
 	std::vector<std::vector<int>> _mapdata;
 	std::vector<Vector3> _wayPoint;
 
+	std::vector<MonsterInfo> _monsterData;
 	std::vector<std::vector<TowerInfo>> _towerData;
 
 	std::map<std::pair<std::wstring, float>, IDWriteTextFormat*> _textformats;
@@ -75,3 +69,23 @@ private:
 	std::unordered_map<std::wstring, Animation*> _animations;
 };
 
+struct TowerInfo {
+	UINT _towerTier;
+	UINT _towerId;
+	int _towerDamage;
+	std::wstring _imageDirectory;
+	float _detectRange;
+	float _attackInterval;
+	UINT _damagePerUpdate;
+	bool _isAreaAttack;
+	Vector3 _attackArea;
+	std::wstring _effectDirectory;
+};
+
+struct MonsterInfo {
+	int _spawnCountPerRound;
+	int _hp;
+	int _defence;
+	float _moveSpeed;
+	std::wstring _imageDirectory;
+};

@@ -25,14 +25,17 @@ World::World()
 		EntityId uibuttonpannel = ButtonArea();
 		EntityId uimoneypannel = MoneyArea();
 		EntityId uilifepannel = LifeArea();
+		EntityId uitimerpannel = TimerArea();
 
 		EntityManager->GetEntity(uigroup1)->AddChildEntity(uibuttonpannel);
 		EntityManager->GetEntity(uigroup1)->AddChildEntity(uimoneypannel);
 		EntityManager->GetEntity(uigroup1)->AddChildEntity(uilifepannel);
+		EntityManager->GetEntity(uigroup1)->AddChildEntity(uitimerpannel);
 
 		EntityManager->GetEntity(uimoneypannel)->SetParentEntity(uigroup1);
 		EntityManager->GetEntity(uibuttonpannel)->SetParentEntity(uigroup1);
 		EntityManager->GetEntity(uilifepannel)->SetParentEntity(uigroup1);
+		EntityManager->GetEntity(uitimerpannel)->SetParentEntity(uigroup1);
 	}
 
 	{
@@ -61,6 +64,15 @@ World::~World()
 
 void World::PreUpdate(float dt)
 {
+	if (_leftTime == 0) return;
+
+	if (_leftTime < 0) {
+
+		ecs->SendEvent<RoundStart>();
+		_leftTime = 0;
+		return;
+	}
+	_leftTime -= dt;
 }
 
 void World::Update(float dt)
@@ -72,6 +84,9 @@ void World::Update(float dt)
 
 	TextComponent* lifetc = ComponentManager->Getcomponent<TextComponent>(_lifeText);
 	lifetc->_text = std::to_wstring(_life);
+
+	TextComponent* timertc = ComponentManager->Getcomponent<TextComponent>(_timerText);
+	timertc->_text = L"00 : " + std::to_wstring((int)_leftTime);
 }
 
 void World::PostUpdate(float dt)
@@ -138,6 +153,7 @@ void World::OnMapClick(const ClickInGame* event)
 void World::OnLifeDecrese(const DecreseLife* event)
 {
 	_life -= event->_life;
+	if (_life < 0) _life = 0;
 }
 
 void World::OnGetMoney(const GetMoney* event)
@@ -145,10 +161,26 @@ void World::OnGetMoney(const GetMoney* event)
 	_money += event->_earn;
 }
 
+void World::OnRoundEnd(const RoundEnd* event)
+{
+	_leftTime = _waitTime;
+}
+
+void World::OnGameOver(const GameOver* event)
+{
+	Pause();
+}
+
+void World::OnGameWin(const GameWin* event)
+{
+	Pause();
+}
+
 void World::InitialGame()
 {
 	ResourceSystem::GetInstance()->LoadTowerData();
-	//ResourceSystem::GetInstance()->LoadMonsterData();
+	ResourceSystem::GetInstance()->LoadMonsterData();
+	ResourceSystem::GetInstance()->LoadGroundEffect();
 
 	std::vector<std::vector<int>> mapdata = ResourceSystem::GetInstance()->LoadMapData();
 	for (int i = 0; i < mapdata.size(); i++) {
@@ -164,10 +196,12 @@ void World::InitialGame()
 			info._towerType = 0;
 			info._towerGrade = 0;
 			info._towerId = EntityId();
+			info._groundEffect = EntityId();
 			tmp.push_back(info);
 		}
 		_mapdata.push_back(tmp);
 	}
+	_leftTime = _waitTime;
 }
 
 void World::RegistEvent()
@@ -175,6 +209,7 @@ void World::RegistEvent()
 	RegisterCallback(&World::OnMapClick);
 	RegisterCallback(&World::OnLifeDecrese);
 	RegisterCallback(&World::OnGetMoney);
+	RegisterCallback(&World::OnRoundEnd);
 }
 
 void World::UnRegistEvent()
@@ -182,9 +217,10 @@ void World::UnRegistEvent()
 	UnRegisterCallback(&World::OnMapClick);
 	UnRegisterCallback(&World::OnLifeDecrese);
 	UnRegisterCallback(&World::OnGetMoney);
+	UnRegisterCallback(&World::OnRoundEnd);
 }
 
-Vector3 World::ConvertIdxToTile(std::pair<int, int>& idx)
+Vector3 World::ConvertIdxToTile(const std::pair<int, int>& idx)
 {
 	return Vector3((idx.first * _sizePerTile + _tileoffset.x), (idx.second * _sizePerTile + _tileoffset.y), 0);
 }
@@ -227,10 +263,28 @@ void World::DeleteTower(const std::pair<int, int>& idx)
 
 void World::SetTileInfo(const std::pair<int, int>& idx, Tile_State state, UINT towertype, const EntityId& towerId, UINT grade)
 {
+	
 	_mapdata[idx.second][idx.first]._tileState = state;
 	_mapdata[idx.second][idx.first]._towerType = towertype;
 	_mapdata[idx.second][idx.first]._towerGrade = grade;
 	_mapdata[idx.second][idx.first]._towerId = towerId;
+
+	if (grade == 0) {
+		ecs->SendEvent<GameObjectDestroyed>(_mapdata[idx.second][idx.first]._groundEffect, Object_Layer::TileEffect);
+		_mapdata[idx.second][idx.first]._groundEffect = EntityId();
+		return;
+	}
+	// ¹Ù´Ú ÀÌÆåÆ® »ý¼º.
+	EntityId			groundEffect	= CreateGameObject<Square>(Object_Layer::TileEffect);
+	Transform*			tf				= ComponentManager->AddComponent<Transform>(groundEffect, ConvertIdxToTile(idx) - Vector3(20.0f, 20.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	Sprite*				sp				= ComponentManager->AddComponent<Sprite>(groundEffect, L"Images\\T" + std::to_wstring(grade) + L"_GroundEffect");
+	BoxCollider*		bc				= ComponentManager->AddComponent<BoxCollider>(groundEffect, Vector3(96.0f, 96.0f, 0));
+	AnimationComponent* ac				= ComponentManager->AddComponent<AnimationComponent>(groundEffect);
+	tf->SetRectSize(Vector3(136.0f, 136.0f, 0));
+	ac->AddAnimation(L"GroundEffect", ResourceSystem::GetInstance()->GetAnimation(L"GroundEffect"));
+	ac->_curAnimationState = L"GroundEffect";
+
+	_mapdata[idx.second][idx.first]._groundEffect = groundEffect;
 }
 
 void World::Pause()
@@ -246,6 +300,11 @@ void World::Resume()
 	ecs->SendEvent<GamePause>();
 	ecs->SendEvent<UIStateChange>(_pauseUIGroup, false);
 	_isGameRunning ^= true;
+}
+
+void World::Skip()
+{
+	_leftTime = -1;
 }
 
 
@@ -297,13 +356,13 @@ EntityId World::LifeArea()
 	imguitf->_size = Vector3(80.0f, 80.0f, 0);
 
 	EntityId			textlife			= EntityManager->CreateEntity<DefaultUIObject>();
-	UITransform*		textmoneytf = ComponentManager->AddComponent<UITransform>(textlife, Vector3(300.0f, 10.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
-	TextComponent*		textmoneytc = ComponentManager->AddComponent<TextComponent>(textlife);
-	textmoneytf->_size = Vector3(80.0f, 80.0f, 0);
-	textmoneytc->_text = L"0";
-	textmoneytc->_fontSize = 40.0f;
-	textmoneytc->_textAlignment = DWRITE_TEXT_ALIGNMENT_CENTER;
-	textmoneytc->_paragraphAlignemt = DWRITE_PARAGRAPH_ALIGNMENT_CENTER;
+	UITransform*		textlifetf = ComponentManager->AddComponent<UITransform>(textlife, Vector3(260.0f, 10.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	TextComponent*		textlifetc = ComponentManager->AddComponent<TextComponent>(textlife);
+	textlifetf->_size = Vector3(80.0f, 80.0f, 0);
+	textlifetc->_text = L"0";
+	textlifetc->_fontSize = 40.0f;
+	textlifetc->_textAlignment = DWRITE_TEXT_ALIGNMENT_CENTER;
+	textlifetc->_paragraphAlignemt = DWRITE_PARAGRAPH_ALIGNMENT_CENTER;
 
 	_lifeText = textlife;
 
@@ -314,6 +373,39 @@ EntityId World::LifeArea()
 	EntityManager->GetEntity(imagelife)->SetParentEntity(uilifepannel);
 
 	return uilifepannel;
+}
+
+EntityId World::TimerArea()
+{
+	EntityId			uitimerpannel		= EntityManager->CreateEntity<DefaultUIObject>();
+	UITransform*		pannel2tf			= ComponentManager->AddComponent<UITransform>(uitimerpannel, Vector3(1150.0f, 290.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	Sprite*				pannel2sp			= ComponentManager->AddComponent<Sprite>(uitimerpannel, L"Images\\UIPannel");
+	pannel2tf->_size = Vector3(400.0f, 100.0f, 0);
+
+	EntityId			imagetimer			= EntityManager->CreateEntity<DefaultUIObject>();
+	UITransform*		timeruitf			= ComponentManager->AddComponent<UITransform>(imagetimer, Vector3(20.0f, 10.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	Sprite*				timeruisp			= ComponentManager->AddComponent<Sprite>(imagetimer, L"Images\\Timer");
+	timeruitf->_size = Vector3(80.0f, 80.0f, 0);
+
+	EntityId			texttimer			= EntityManager->CreateEntity<DefaultUIObject>();
+	UITransform*		texttimertf			= ComponentManager->AddComponent<UITransform>(texttimer, Vector3(250.0f, 10.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	TextComponent*		texttimertc			= ComponentManager->AddComponent<TextComponent>(texttimer);
+	texttimertf->_size = Vector3(130.0f, 80.0f, 0);
+	texttimertc->_text = L"0";
+	texttimertc->_fontSize = 40.0f;
+	texttimertc->_textAlignment = DWRITE_TEXT_ALIGNMENT_CENTER;
+	texttimertc->_paragraphAlignemt = DWRITE_PARAGRAPH_ALIGNMENT_CENTER;
+
+	_timerText = texttimer;
+
+	EntityManager->GetEntity(uitimerpannel)->AddChildEntity(texttimer);
+	EntityManager->GetEntity(uitimerpannel)->AddChildEntity(imagetimer);
+
+	EntityManager->GetEntity(texttimer)->SetParentEntity(uitimerpannel);
+	EntityManager->GetEntity(imagetimer)->SetParentEntity(uitimerpannel);
+
+	return uitimerpannel;
+	
 }
 
 EntityId World::ButtonArea()
@@ -355,15 +447,25 @@ EntityId World::ButtonArea()
 	btn4tf->_size = Vector3(100.0f, 100.0f, 0);
 	btn4c->AddOnclickFunction(std::bind(&World::Pause, this));
 
+	EntityId			uibtnSkip			= CreateUIObject<SampleButton>();
+	UITransform*		btn5tf				= ComponentManager->AddComponent<UITransform>(uibtnSkip, Vector3(270.0f, 40.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	Sprite*				spbtn5				= ComponentManager->AddComponent<Sprite>(uibtnSkip, L"Images\\Button\\ButtonNormal");
+	ButtonComponent*	btn5c				= ComponentManager->AddComponent<ButtonComponent>(uibtnSkip);
+	btn5c->SetOwner(uibtnSkip);
+	btn5tf->_size = Vector3(100.0f, 100.0f, 0);
+	btn5c->AddOnclickFunction(std::bind(&World::Skip, this));
+
 	EntityManager->GetEntity(uibuttonpannel)->AddChildEntity(uibtnCreateTower);
 	EntityManager->GetEntity(uibuttonpannel)->AddChildEntity(uibtnDeleteTower);
 	EntityManager->GetEntity(uibuttonpannel)->AddChildEntity(uibtnMergeTower);
 	EntityManager->GetEntity(uibuttonpannel)->AddChildEntity(uibtnPause);
+	EntityManager->GetEntity(uibuttonpannel)->AddChildEntity(uibtnSkip);
 
 	EntityManager->GetEntity(uibtnCreateTower)->SetParentEntity(uibuttonpannel);
 	EntityManager->GetEntity(uibtnDeleteTower)->SetParentEntity(uibuttonpannel);
 	EntityManager->GetEntity(uibtnMergeTower)->SetParentEntity(uibuttonpannel);
 	EntityManager->GetEntity(uibtnPause)->SetParentEntity(uibuttonpannel);
+	EntityManager->GetEntity(uibtnSkip)->SetParentEntity(uibuttonpannel);
 
 	return uibuttonpannel;
 }

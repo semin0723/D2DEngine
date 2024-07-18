@@ -57,7 +57,7 @@ void EffectSystem::OnCreateEffect(const CreateEffect* event)
 	BoxCollider* bc = ComponentManager->AddComponent<BoxCollider>(newEntity, Vector3(64.0f, 64.0f, 0));
 	AnimationComponent* ac = ComponentManager->AddComponent<AnimationComponent>(newEntity);
 
-	tf->SetRectSize(sp->_spriteSize);
+	tf->SetRectSize(Vector3(64.0f, 64.0f, 0));
 	tf->_position = event->_createLocation - Vector3(14.0f, 14.0f, 0);
 	ac->AddAnimation(event->_effectKey, ResourceSystem::GetInstance()->GetAnimation(event->_effectKey));
 	ac->_curAnimationState = event->_effectKey;
@@ -66,7 +66,7 @@ void EffectSystem::OnCreateEffect(const CreateEffect* event)
 
 void EffectSystem::OnEffectCreated(const GameObjectCreated* event)
 {
-	if (event->_layer == Object_Layer::Effect) {
+	if (event->_layer == Object_Layer::Effect || event->_layer == Object_Layer::TileEffect) {
 		_effects.push_back(event->_entityId);
 	}
 }

@@ -248,9 +248,93 @@ void ResourceSystem::LoadTowerData()
 	file.close();
 }
 
+void ResourceSystem::LoadMonsterData()
+{
+	std::wstring filename = L"data\\ObjectData\\MonsterData.CSV";
+	std::wifstream file(filename);
+
+	std::wstringstream wss;
+	std::wstring line;
+
+	int roundCount;
+	std::getline(file, line);
+	wss = std::wstringstream(line);
+	wss >> roundCount;
+
+	for (int i = 0; i < roundCount; i++) {
+		MonsterInfo monsterinfo;
+		std::vector<std::wstring> splitResult;
+		std::getline(file, line);
+		wss = std::wstringstream(line);
+		std::wstring tmp;
+		while (std::getline(wss, tmp, L',')) {
+			splitResult.push_back(tmp);
+		}
+		monsterinfo._spawnCountPerRound = _wtoi(splitResult[0].c_str());
+		monsterinfo._hp = _wtoi(splitResult[1].c_str());
+		monsterinfo._defence = _wtoi(splitResult[2].c_str());
+		monsterinfo._moveSpeed = (float)_wtof(splitResult[3].c_str());
+		monsterinfo._imageDirectory = splitResult[4];
+
+		_monsterData.push_back(monsterinfo);
+	}
+	file.close();
+}
+
+void ResourceSystem::LoadGroundEffect()
+{
+	std::wstring filename = L"data\\Animation\\GroundEffectAnimation.csv";
+	std::wifstream file(filename);
+	if (!file.is_open()) return;
+	std::wstringstream wss;
+	float pixelCount = 0;
+	std::wstring line;
+	std::wstring tmp;
+	std::getline(file, line);
+	wss = std::wstringstream(line);
+	wss >> pixelCount;
+
+	int frameCount = 0;
+	int left = 0;
+	int top = 0;
+	float timePerFrame = 0;
+
+	// framecount
+	std::getline(file, line);
+	wss = std::wstringstream(line);
+	wss >> frameCount;
+
+	// frame start idx (left, top)
+	std::getline(file, line);
+	wss = std::wstringstream(line);
+	std::getline(wss, tmp, L',');
+	left = _wtoi(tmp.c_str());
+	std::getline(wss, tmp, L',');
+	top = _wtoi(tmp.c_str());
+
+	// time per frame
+	std::getline(file, line);
+	timePerFrame = (float)_wtof(line.c_str());
+
+	Animation* newAnimation = new Animation;
+	for (int i = 0; i < frameCount; i++) {
+		newAnimation->_frames.push_back(FrameInfo(left + i, top, (int)pixelCount, timePerFrame));
+	}
+	newAnimation->_isLoop = true;
+
+	_animations.insert({ L"GroundEffect", newAnimation});
+
+	file.close();
+}
+
 const TowerInfo& ResourceSystem::GetTowerInfo(UINT tier, UINT id)
 {
 	return _towerData[tier - 1][id - 1];
+}
+
+const MonsterInfo& ResourceSystem::GetMonsterInfo(int round)
+{
+	return _monsterData[round - 1];
 }
 
 void ResourceSystem::GetImageFromFile(const std::wstring& spriteKey, ID2D1Bitmap** image)

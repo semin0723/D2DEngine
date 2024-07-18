@@ -52,6 +52,11 @@ void MonsterControll::Update(float dt)
 		if (distance <= 1.0f) {
 			if (_idxInfo[i] == 10) {
 				ecs->SendEvent<GameObjectDestroyed>(_monsters[i], Object_Layer::Monster);
+				if (_spawner->GetCurRound() == 10) {
+					ecs->SendEvent<DecreseLife>(50);
+					ecs->SendEvent<GameOver>();
+					return;
+				}
 				// life - 1 event
 				ecs->SendEvent<DecreseLife>(1);
 				continue;
@@ -98,6 +103,10 @@ void MonsterControll::OnHit(const Attack* event)
 			ms->_hp -= (std::max)((event->_damage - ms->_defence), 0);
 			if (ms->_hp <= 0) {
 				ecs->SendEvent<GameObjectDestroyed>(_monsters[i], Object_Layer::Monster);
+				if (_spawner->GetCurRound() == 10) {
+					ecs->SendEvent<GameWin>();
+					return;
+				}
 				// money increse event
 				ecs->SendEvent<GetMoney>(Money_Type::Credit, 10);
 			}

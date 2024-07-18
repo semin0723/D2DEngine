@@ -3,18 +3,23 @@
 #include "globalheader.h"
 
 struct RoundEnd : public Event<RoundEnd> {
-	int _curRound;
-	RoundEnd(int cur) : _curRound(cur) {}
+
+	RoundEnd() {}
 };
 
 struct RoundStart : public Event<RoundStart> {
-	int _curRound;
-	RoundStart(int cur) : _curRound(cur) {}
+
+	RoundStart() {}
 };
 
 struct GameOver : public Event<GameOver> {
-	int _curRound;
-	GameOver(int cur) : _curRound(cur) {}
+
+	GameOver() {}
+};
+
+struct GameWin : public Event<GameWin> {
+
+	GameWin() {}
 };
 
 struct GamePause : public Event<GamePause> {

@@ -11,11 +11,13 @@ struct tileInfo {
 	UINT _towerType;
 	EntityId _towerId;
 	UINT _towerGrade;
+	EntityId _groundEffect;
 	tileInfo() {
 		_tileState = Tile_State::Default;
 		_towerType = 0;
 		_towerId = EntityId();
 		_towerGrade = 0;
+		_groundEffect = EntityId();
 	}
 };
 
@@ -35,6 +37,10 @@ public:
 	void OnLifeDecrese(const DecreseLife* event);
 	void OnGetMoney(const GetMoney* event);
 
+	void OnRoundEnd(const RoundEnd* event);
+	void OnGameOver(const GameOver* event);
+	void OnGameWin(const GameWin* event);
+
 private:
 	std::vector<std::vector<tileInfo>> _mapdata;
 	UINT _actionState = 0;
@@ -52,7 +58,7 @@ private:
 	Vector3 _tileoffset	{ 50.0f, 75.0f, 0 };
 	float _sizePerTile = 106.0f;
 	std::pair<int, int> ConvertClickToIdx(const Vector3& clickLoc);
-	Vector3 ConvertIdxToTile(std::pair<int, int>& idx);
+	Vector3 ConvertIdxToTile(const std::pair<int, int>& idx);
 
 	void SetTileInfo(const std::pair<int, int>& idx, Tile_State state, UINT towertype, const EntityId& towerId, UINT grade);
 	std::pair<EntityId, int> CreateTower(const Vector3& loc, UINT towerGrade);
@@ -73,6 +79,7 @@ private:
 
 	EntityId MoneyArea();
 	EntityId LifeArea();
+	EntityId TimerArea();
 	EntityId ButtonArea();
 
 	EntityId PauseArea();
@@ -87,7 +94,13 @@ private:
 
 	bool _isGameRunning = true;
 	EntityId _pauseUIGroup;
+
+	float _waitTime = 60.0f;
+	float _leftTime = 0;
+	EntityId _timerText;
+
 	void Pause();
 	void Resume();
+	void Skip();
 };
 
