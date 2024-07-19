@@ -13,7 +13,7 @@ ButtonPressed::~ButtonPressed()
 void ButtonPressed::StateEnter()
 {
 	Sprite* sp = ComponentManager->Getcomponent<Sprite>(_owner);
-	sp->GetImage(L"Images\\Button\\" + StringToWstring(_stateName));
+	sp->GetImage(L"Images\\Button\\" + ComponentManager->Getcomponent<ButtonComponent>(_owner)->_name + StringToWstring(_stateName));
 }
 
 void ButtonPressed::StateUpdate(float dt)

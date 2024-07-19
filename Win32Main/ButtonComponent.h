@@ -18,7 +18,7 @@ public:
 
 	Button_State _curState = Button_State::Normal;
 	std::map<Button_State, State*> _states;
-
+	std::wstring _name;
 	std::function<void()> _onclick;
 };
 
