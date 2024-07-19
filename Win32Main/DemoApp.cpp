@@ -22,7 +22,7 @@ void DemoApp::Initialize(HINSTANCE _hInstance)
 	render->SetCurWorld(world);
 
 	ColliderSystem* cs = SystemManager->AddSystem<ColliderSystem>();
-	cs->SetCollisionMatrix(Object_Layer::Player, Object_Layer::Monster);
+	//cs->SetCollisionMatrix(Object_Layer::Player, Object_Layer::Monster);
 
 
 }
