@@ -9,6 +9,9 @@ UISystem::UISystem()
 UISystem::~UISystem()
 {
 	UnRegistEvent();
+	//for (auto& i : _uigroups) {
+	//	DestroyUI(i);
+	//}
 }
 
 void UISystem::PreUpdate(float dt)

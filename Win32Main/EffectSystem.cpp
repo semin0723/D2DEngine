@@ -25,6 +25,7 @@ void EffectSystem::Update(float dt)
 		if (ac->_curFrame == ac->GetCurAnimation()->_frames.size()) {
 			if (ac->GetCurAnimation()->_isLoop == false) {
 				ecs->SendEvent<GameObjectDestroyed>(_effects[i], Object_Layer::Effect);
+				EntityManager->DestroyEntity(_effects[i]);
 			}
 			else {
 				ac->_curFrame %= ac->GetCurAnimation()->_frames.size();

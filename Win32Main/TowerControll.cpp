@@ -114,13 +114,17 @@ void TowerControll::OnGameObjectDestroyed(const GameObjectDestroyed* event)
 	if (event->_layer == Object_Layer::Monster) {
 		for (Enemies::iterator it = _enemies.begin(); it != _enemies.end(); it++) {
 			if ((*it) == event->_entityId) {
+				for (auto& i : _towers) {
+					DetectComponent* dc = ComponentManager->Getcomponent<DetectComponent>(i);
+					if (dc->_targetEntity == event->_entityId) dc->_targetEntity = EntityId();
+				}
 				_enemies.erase(it);
 				break;
 			}
 		}
 	}
 	else if (event->_layer == Object_Layer::Player) {
-		for (Enemies::iterator it = _towers.begin(); it != _towers.end(); it++) {
+		for (Towers::iterator it = _towers.begin(); it != _towers.end(); it++) {
 			if (*it == event->_entityId) {
 				_towers.erase(it);
 				break;

@@ -258,6 +258,7 @@ std::pair<EntityId, int> World::CreateTower(const Vector3& loc, UINT towerGrade)
 void World::DeleteTower(const std::pair<int, int>& idx)
 {
 	ecs->SendEvent<GameObjectDestroyed>(_mapdata[idx.second][idx.first]._towerId, Object_Layer::Player);
+	EntityManager->DestroyEntity(_mapdata[idx.second][idx.first]._towerId);
 	SetTileInfo(idx, Tile_State::Empty, 0, EntityId(), 0);
 }
 
@@ -417,41 +418,46 @@ EntityId World::ButtonArea()
 
 	EntityId			uibtnCreateTower	= CreateUIObject<SampleButton>();
 	UITransform*		btntf				= ComponentManager->AddComponent<UITransform>(uibtnCreateTower, Vector3(40.0f, 260.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
-	Sprite*				spbtn				= ComponentManager->AddComponent<Sprite>(uibtnCreateTower, L"Images\\Button\\ButtonNormal");
+	Sprite*				spbtn				= ComponentManager->AddComponent<Sprite>(uibtnCreateTower, L"Images\\Button\\SpawnButtonNormal");
 	ButtonComponent*	btnc				= ComponentManager->AddComponent<ButtonComponent>(uibtnCreateTower);
 	btnc->SetOwner(uibtnCreateTower);
+	btnc->_name = L"Spawn";
 	btntf->_size = Vector3(200.0f, 100.0f, 0);
 	btnc->AddOnclickFunction(std::bind(&World::EnterCreateState, this));
 
 	EntityId			uibtnDeleteTower	= CreateUIObject<SampleButton>();
 	UITransform*		btn2tf				= ComponentManager->AddComponent<UITransform>(uibtnDeleteTower, Vector3(40.0f, 150.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
-	Sprite*				spbtn2				= ComponentManager->AddComponent<Sprite>(uibtnDeleteTower, L"Images\\Button\\ButtonNormal");
+	Sprite*				spbtn2				= ComponentManager->AddComponent<Sprite>(uibtnDeleteTower, L"Images\\Button\\DeleteButtonNormal");
 	ButtonComponent*	btn2c				= ComponentManager->AddComponent<ButtonComponent>(uibtnDeleteTower);
 	btn2c->SetOwner(uibtnDeleteTower);
+	btn2c->_name = L"Delete";
 	btn2tf->_size = Vector3(200.0f, 100.0f, 0);
 	btn2c->AddOnclickFunction(std::bind(&World::EnterDeleteState, this));
 
 	EntityId			uibtnMergeTower		= CreateUIObject<SampleButton>();
 	UITransform*		btn3tf				= ComponentManager->AddComponent<UITransform>(uibtnMergeTower, Vector3(40.0f, 40.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
-	Sprite*				spbtn3				= ComponentManager->AddComponent<Sprite>(uibtnMergeTower, L"Images\\Button\\ButtonNormal");
+	Sprite*				spbtn3				= ComponentManager->AddComponent<Sprite>(uibtnMergeTower, L"Images\\Button\\MergeButtonNormal");
 	ButtonComponent*	btn3c				= ComponentManager->AddComponent<ButtonComponent>(uibtnMergeTower);
 	btn3c->SetOwner(uibtnMergeTower);
+	btn3c->_name = L"Merge";
 	btn3tf->_size = Vector3(200.0f, 100.0f, 0);
 	btn3c->AddOnclickFunction(std::bind(&World::EnterMergeState, this));
 
 	EntityId			uibtnPause			= CreateUIObject<SampleButton>();
 	UITransform*		btn4tf				= ComponentManager->AddComponent<UITransform>(uibtnPause, Vector3(270.0f, 260.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
-	Sprite*				spbtn4				= ComponentManager->AddComponent<Sprite>(uibtnPause, L"Images\\Button\\ButtonNormal");
+	Sprite*				spbtn4				= ComponentManager->AddComponent<Sprite>(uibtnPause, L"Images\\Button\\PauseButtonNormal");
 	ButtonComponent*	btn4c				= ComponentManager->AddComponent<ButtonComponent>(uibtnPause);
 	btn4c->SetOwner(uibtnPause);
+	btn4c->_name = L"Pause";
 	btn4tf->_size = Vector3(100.0f, 100.0f, 0);
 	btn4c->AddOnclickFunction(std::bind(&World::Pause, this));
 
 	EntityId			uibtnSkip			= CreateUIObject<SampleButton>();
 	UITransform*		btn5tf				= ComponentManager->AddComponent<UITransform>(uibtnSkip, Vector3(270.0f, 40.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
-	Sprite*				spbtn5				= ComponentManager->AddComponent<Sprite>(uibtnSkip, L"Images\\Button\\ButtonNormal");
+	Sprite*				spbtn5				= ComponentManager->AddComponent<Sprite>(uibtnSkip, L"Images\\Button\\SkipButtonNormal");
 	ButtonComponent*	btn5c				= ComponentManager->AddComponent<ButtonComponent>(uibtnSkip);
 	btn5c->SetOwner(uibtnSkip);
+	btn5c->_name = L"Skip";
 	btn5tf->_size = Vector3(100.0f, 100.0f, 0);
 	btn5c->AddOnclickFunction(std::bind(&World::Skip, this));
 
@@ -479,9 +485,10 @@ EntityId World::PauseArea()
 	
 	EntityId			uibtnGameResume		= CreateUIObject<SampleButton>();
 	UITransform*		btntf				= ComponentManager->AddComponent<UITransform>(uibtnGameResume, Vector3(40.0f, 150.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
-	Sprite*				spbtn				= ComponentManager->AddComponent<Sprite>(uibtnGameResume, L"Images\\Button\\ButtonNormal");
+	Sprite*				spbtn				= ComponentManager->AddComponent<Sprite>(uibtnGameResume, L"Images\\Button\\ResumeButtonNormal");
 	ButtonComponent*	btnc				= ComponentManager->AddComponent<ButtonComponent>(uibtnGameResume);
 	btnc->SetOwner(uibtnGameResume);
+	btnc->_name = L"Resume";
 	btntf->_size = Vector3(200.0f, 100.0f, 0);
 	btnc->AddOnclickFunction(std::bind(&World::Resume, this));
 

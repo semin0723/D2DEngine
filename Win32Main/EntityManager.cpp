@@ -22,6 +22,7 @@ void EntityManager::RemoveDestroyEntities()
 		EntityId id = _pendingDestroyEntities[i];
 		IEntity* entity = _entityHandleTable[id];
 
+		if (entity == nullptr) continue;
 		const EntityTypeId tid = entity->GetEntityTypeId();
 
 		auto iterator = _entityRegistry.find(tid);

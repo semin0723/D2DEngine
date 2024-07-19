@@ -49,7 +49,7 @@ void MonsterControll::Update(float dt)
 		
 		Vector3 targetPos = _wayPoint[_idxInfo[i] + 1];
 		float distance = (targetPos - tf->_position).Magnitude();
-		if (distance <= 1.0f) {
+		if (distance <= 5.0f) {
 			if (_idxInfo[i] == 10) {
 				ecs->SendEvent<GameObjectDestroyed>(_monsters[i], Object_Layer::Monster);
 				if (_spawner->GetCurRound() == 10) {
@@ -103,6 +103,7 @@ void MonsterControll::OnHit(const Attack* event)
 			ms->_hp -= (std::max)((event->_damage - ms->_defence), 0);
 			if (ms->_hp <= 0) {
 				ecs->SendEvent<GameObjectDestroyed>(_monsters[i], Object_Layer::Monster);
+				
 				if (_spawner->GetCurRound() == 10) {
 					ecs->SendEvent<GameWin>();
 					return;
@@ -149,6 +150,7 @@ void MonsterControll::MonsterCreated(const GameObjectCreated* event)
 void MonsterControll::MonsterDestroyed(const GameObjectDestroyed* event)
 {
 	if (event->_layer != Object_Layer::Monster) return;
+	EntityManager->DestroyEntity(event->_entityId);
 	for (MonsterInfo::iterator it = _monsters.begin(); it != _monsters.end(); it++) {
 		if (*it == event->_entityId) {
 			_idxInfo.erase(_idxInfo.begin() + (it - _monsters.begin()));
