@@ -1,23 +1,23 @@
 #pragma once
-#include <Windows.h>
-#include <cmath>
+#include <chrono>
 
-class TimeSystem
-{
+class TimeSystem {
+    using TimePoint = std::chrono::system_clock::time_point;
+
 public:
-	TimeSystem() {}
-	~TimeSystem() {}
+    TimeSystem() {}
+    ~TimeSystem() {}
 
-	void Initialize();
-	void Update();
-	const float GetFrameRate();
-	const float GetDeltaTime();
+    void Initialize();
+    void Update();
+    float GetDeltaTime();
+
+    float GetFrameRate();
 
 private:
-	LARGE_INTEGER _curTime = { 0 };
-	LARGE_INTEGER _prevTime = { 0 };
-	LARGE_INTEGER _frequency = { 0 };
+    TimePoint _prevTime;
+    TimePoint _curTime;
 
-	float _deltaTime = { 0.0f };
+    float _deltaTime = 0;
 };
 
