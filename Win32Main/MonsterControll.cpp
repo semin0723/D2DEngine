@@ -131,7 +131,6 @@ void MonsterControll::OnAreaHit(const AreaAttack* event)
 				// money increse event
 				ecs->SendEvent<GetMoney>(Money_Type::Credit, 10);
 			}
-			return;
 		}
 	}
 }

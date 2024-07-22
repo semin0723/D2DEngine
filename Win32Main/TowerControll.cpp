@@ -18,14 +18,16 @@ void TowerControll::UnRegistEvent()
 
 void TowerControll::PreUpdate(float dt)
 {
+	if (_isGameRunning == false) return;
+
+	// Å½»ö
+	SearchEnemyInRange();
 }
 
 void TowerControll::Update(float dt)
 {
 	if (_isGameRunning == false) return;
 
-	// Å½»ö
-	SearchEnemyInRange();
 
 	// È¸Àü
 	for (int i = 0; i < _towers.size(); i++) {
