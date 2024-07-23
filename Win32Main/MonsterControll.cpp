@@ -78,6 +78,7 @@ void MonsterControll::RegistEvent()
 	RegisterCallback(&MonsterControll::OnHit);
 	RegisterCallback(&MonsterControll::OnAreaHit);
 	RegisterCallback(&MonsterControll::OnGamePause);
+	RegisterCallback(&MonsterControll::OnGameInitialize);
 }
 
 void MonsterControll::UnRegistEvent()
@@ -87,6 +88,7 @@ void MonsterControll::UnRegistEvent()
 	UnRegisterCallback(&MonsterControll::OnHit);
 	UnRegisterCallback(&MonsterControll::OnAreaHit);
 	UnRegisterCallback(&MonsterControll::OnGamePause);
+	UnRegisterCallback(&MonsterControll::OnGameInitialize);
 }
 
 Vector3 MonsterControll::GetNextDir(int curWayPointIdx)
@@ -133,6 +135,16 @@ void MonsterControll::OnAreaHit(const AreaAttack* event)
 			}
 		}
 	}
+}
+
+void MonsterControll::OnGameInitialize(const GameInitialize* event)
+{
+	_wayPoint = ResourceSystem::GetInstance()->LoadMonsterWayPoint();
+
+	_spawner->SetSpawnPosition(_wayPoint[0]);
+
+	_idxInfo.clear();
+	_monsters.clear();
 }
 
 void MonsterControll::MonsterCreated(const GameObjectCreated* event)

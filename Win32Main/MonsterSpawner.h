@@ -14,6 +14,8 @@ public:
 	void RegistEvent();
 	void UnRegistEvent();
 
+	void OnGameInitialize(const GameInitialize* event);
+
 	void OnRoundEnd(const RoundEnd* event);
 	void OnRoundStart(const RoundStart* event);
 	

@@ -35,6 +35,8 @@ private:
 	void RegistEvent();
 	void UnRegistEvent();
 
+	void OnGameInitialize(const GameInitialize* event);
+
 	void OnObjectCreated(const GameObjectCreated* event);
 	void OnObjectDestroyed(const GameObjectDestroyed* event);
 

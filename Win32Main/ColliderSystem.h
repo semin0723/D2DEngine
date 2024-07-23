@@ -22,6 +22,7 @@ public:
 	std::pair<float, float> GetMinMax(D2D1_POINT_2F axis, std::vector<D2D1_POINT_2F>& points);
 	bool CheckPointLoc(std::pair<float, float>& left, std::pair<float, float>& right);
 
+	void OnGameInitialize(const GameInitialize* event);
 	void OnGameObjectCreated(const GameObjectCreated* event);
 	void OnGamePause(const GamePause* event);
 

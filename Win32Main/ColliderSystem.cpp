@@ -143,12 +143,22 @@ void ColliderSystem::RegistEvent()
 {
 	RegisterCallback(&ColliderSystem::OnGameObjectCreated);
 	RegisterCallback(&ColliderSystem::OnGamePause);
+	RegisterCallback(&ColliderSystem::OnGameInitialize);
 }
 
 void ColliderSystem::UnRegistEvent()
 {
 	UnRegisterCallback(&ColliderSystem::OnGameObjectCreated);
 	UnRegisterCallback(&ColliderSystem::OnGamePause);
+	UnRegisterCallback(&ColliderSystem::OnGameInitialize);
+}
+
+void ColliderSystem::OnGameInitialize(const GameInitialize* event)
+{
+	for (UINT i = 0; i < (UINT)Object_Layer::UI; i++) {
+		_registeredEntity->clear();
+	}
+	_collisionHistory.clear();
 }
 
 void ColliderSystem::OnGameObjectCreated(const GameObjectCreated* event)

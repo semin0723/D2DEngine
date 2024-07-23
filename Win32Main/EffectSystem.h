@@ -17,6 +17,7 @@ public:
 	void RegistEvent();
 	void UnRegistEvent();
 
+	void OnGameInitialize(const GameInitialize* event);
 	void OnCreateEffect(const CreateEffect* event);
 	void OnEffectCreated(const GameObjectCreated* event);
 	void OnEffectDestroyed(const GameObjectDestroyed* event);

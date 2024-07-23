@@ -84,6 +84,8 @@ private:
 
 	EntityId PauseArea();
 
+	EntityId MainScreenArea();
+
 private:
 	// 인게임 로직 관련 부분
 	int _life = 50;
@@ -92,15 +94,20 @@ private:
 	int _money = 100;
 	EntityId _moneyText;
 
-	bool _isGameRunning = true;
+	bool _isGameRunning = false;
 	EntityId _pauseUIGroup;
+	EntityId _mainUIGroup;
+	EntityId _gamePlayUI; 
 
 	float _waitTime = 60.0f;
 	float _leftTime = 0;
 	EntityId _timerText;
 
+	void Start();
 	void Pause();
 	void Resume();
+	void Restart();
+	void GoMain();
 	void Skip();
 };
 

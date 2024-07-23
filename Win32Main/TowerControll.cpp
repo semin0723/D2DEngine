@@ -7,6 +7,7 @@ void TowerControll::RegistEvent()
 	RegisterCallback(&TowerControll::OnGameObjectCreated);
 	RegisterCallback(&TowerControll::OnGameObjectDestroyed);
 	RegisterCallback(&TowerControll::OnGamePause);
+	RegisterCallback(&TowerControll::OnGameInitialize);
 }
 
 void TowerControll::UnRegistEvent()
@@ -14,6 +15,7 @@ void TowerControll::UnRegistEvent()
 	UnRegisterCallback(&TowerControll::OnGameObjectCreated);
 	UnRegisterCallback(&TowerControll::OnGameObjectDestroyed);
 	UnRegisterCallback(&TowerControll::OnGamePause);
+	UnRegisterCallback(&TowerControll::OnGameInitialize);
 }
 
 void TowerControll::PreUpdate(float dt)
@@ -99,6 +101,12 @@ void TowerControll::EnemyAttack(float dt)
 			ecs->SendEvent<CreateEffect>(ac->_attackEffect, ComponentManager->Getcomponent<Transform>(dc->_targetEntity)->_position);
 		}
 	}
+}
+
+void TowerControll::OnGameInitialize(const GameInitialize* event)
+{
+	_enemies.clear();
+	_towers.clear();
 }
 
 void TowerControll::OnGameObjectCreated(const GameObjectCreated* event)

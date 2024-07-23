@@ -20,6 +20,8 @@ public:
 	void SearchEnemyInRange();
 	void EnemyAttack(float dt);
 
+	void OnGameInitialize(const GameInitialize* event);
+
 	void OnGameObjectCreated(const GameObjectCreated* event);
 	void OnGameObjectDestroyed(const GameObjectDestroyed* event);
 	void OnGamePause(const GamePause* event);

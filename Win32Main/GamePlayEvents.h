@@ -62,3 +62,8 @@ struct UIStateChange : public Event< UIStateChange> {
 	bool _state;
 	UIStateChange(EntityId id, bool state) : _eid(id), _state(state) {}
 };
+
+struct GameInitialize : public Event<GameInitialize> {
+
+	GameInitialize() {}
+};

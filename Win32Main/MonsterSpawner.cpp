@@ -12,12 +12,21 @@ void MonsterSpawner::RegistEvent()
 {
 	RegisterCallback(&MonsterSpawner::OnRoundStart);
 	RegisterCallback(&MonsterSpawner::OnRoundEnd);
+	RegisterCallback(&MonsterSpawner::OnGameInitialize);
 }
 
 void MonsterSpawner::UnRegistEvent()
 {
 	UnRegisterCallback(&MonsterSpawner::OnRoundStart);
 	UnRegisterCallback(&MonsterSpawner::OnRoundEnd);
+	UnRegisterCallback(&MonsterSpawner::OnGameInitialize);
+}
+
+void MonsterSpawner::OnGameInitialize(const GameInitialize* event)
+{
+	_spawnCount = -1;
+	_curRound = 0;
+	_nextRound = 1;
 }
 
 void MonsterSpawner::OnRoundEnd(const RoundEnd* event)

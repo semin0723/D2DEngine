@@ -40,6 +40,7 @@ void EffectSystem::RegistEvent()
 	RegisterCallback(&EffectSystem::OnEffectDestroyed);
 	RegisterCallback(&EffectSystem::OnCreateEffect);
 	RegisterCallback(&EffectSystem::OnGamePause);
+	RegisterCallback(&EffectSystem::OnGameInitialize);
 }
 
 void EffectSystem::UnRegistEvent()
@@ -48,6 +49,12 @@ void EffectSystem::UnRegistEvent()
 	UnRegisterCallback(&EffectSystem::OnEffectDestroyed);
 	UnRegisterCallback(&EffectSystem::OnCreateEffect);
 	UnRegisterCallback(&EffectSystem::OnGamePause);
+	UnRegisterCallback(&EffectSystem::OnGameInitialize);
+}
+
+void EffectSystem::OnGameInitialize(const GameInitialize* event)
+{
+	_effects.clear();
 }
 
 void EffectSystem::OnCreateEffect(const CreateEffect* event)

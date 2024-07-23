@@ -8,7 +8,9 @@ World::World()
 	RegistEvent();
 	_mainCamera = new Camera;
 
-	InitialGame();
+	//InitialGame();
+
+	ecs->SendEvent<GamePause>();
 
 	EntityId			bg					= CreateGameObject<Square>(Object_Layer::Background);
 	Transform*			tfbg				= ComponentManager->AddComponent<Transform>(bg, Vector3(25.0f, 50.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
@@ -18,28 +20,47 @@ World::World()
 
 	{
 		// -------- group1 ------------- // main ui
-		EntityId			uigroup1		= CreateGameObject<Square>(Object_Layer::UI);
-		UITransform*		uitf			= ComponentManager->AddComponent<UITransform>(uigroup1);
-		UIGroup*			uig				= ComponentManager->AddComponent<UIGroup>(uigroup1);
+		EntityId			uigroupmain		= CreateGameObject<Square>(Object_Layer::UI);
+		UITransform*		uitf			= ComponentManager->AddComponent<UITransform>(uigroupmain);
+		UIGroup*			uig				= ComponentManager->AddComponent<UIGroup>(uigroupmain);
+
+		EntityId uibuttonpannel = MainScreenArea();
+
+		EntityManager->GetEntity(uigroupmain)->AddChildEntity(uibuttonpannel);
+
+		EntityManager->GetEntity(uibuttonpannel)->SetParentEntity(uigroupmain);
+
+		_mainUIGroup = uigroupmain;
+	}
+
+	{
+		// -------- group2 ------------- // in game ui
+		EntityId			uigroupgame		= CreateGameObject<Square>(Object_Layer::UI);
+		UITransform*		uitf			= ComponentManager->AddComponent<UITransform>(uigroupgame);
+		UIGroup*			uig				= ComponentManager->AddComponent<UIGroup>(uigroupgame);
 
 		EntityId uibuttonpannel = ButtonArea();
 		EntityId uimoneypannel = MoneyArea();
 		EntityId uilifepannel = LifeArea();
 		EntityId uitimerpannel = TimerArea();
 
-		EntityManager->GetEntity(uigroup1)->AddChildEntity(uibuttonpannel);
-		EntityManager->GetEntity(uigroup1)->AddChildEntity(uimoneypannel);
-		EntityManager->GetEntity(uigroup1)->AddChildEntity(uilifepannel);
-		EntityManager->GetEntity(uigroup1)->AddChildEntity(uitimerpannel);
+		EntityManager->GetEntity(uigroupgame)->AddChildEntity(uibuttonpannel);
+		EntityManager->GetEntity(uigroupgame)->AddChildEntity(uimoneypannel);
+		EntityManager->GetEntity(uigroupgame)->AddChildEntity(uilifepannel);
+		EntityManager->GetEntity(uigroupgame)->AddChildEntity(uitimerpannel);
 
-		EntityManager->GetEntity(uimoneypannel)->SetParentEntity(uigroup1);
-		EntityManager->GetEntity(uibuttonpannel)->SetParentEntity(uigroup1);
-		EntityManager->GetEntity(uilifepannel)->SetParentEntity(uigroup1);
-		EntityManager->GetEntity(uitimerpannel)->SetParentEntity(uigroup1);
+		EntityManager->GetEntity(uimoneypannel)->SetParentEntity(uigroupgame);
+		EntityManager->GetEntity(uibuttonpannel)->SetParentEntity(uigroupgame);
+		EntityManager->GetEntity(uilifepannel)->SetParentEntity(uigroupgame);
+		EntityManager->GetEntity(uitimerpannel)->SetParentEntity(uigroupgame);
+
+		_gamePlayUI = uigroupgame;
+
+		ecs->SendEvent<UIStateChange>(uigroupgame, false);
 	}
 
 	{
-		// ------------ group2 ----------------   // pause ui
+		// ------------ group3 ----------------   // pause ui
 		EntityId			uigroup2		= CreateGameObject<Square>(Object_Layer::UI);
 		UITransform*		ui2tf			= ComponentManager->AddComponent<UITransform>(uigroup2);
 		UIGroup*			ui2g			= ComponentManager->AddComponent<UIGroup>(uigroup2);
@@ -182,6 +203,11 @@ void World::InitialGame()
 	ResourceSystem::GetInstance()->LoadMonsterData();
 	ResourceSystem::GetInstance()->LoadGroundEffect();
 
+	_money = 100;
+	_life = 50;
+
+	_mapdata.clear();
+
 	std::vector<std::vector<int>> mapdata = ResourceSystem::GetInstance()->LoadMapData();
 	for (int i = 0; i < mapdata.size(); i++) {
 		std::vector<tileInfo> tmp;
@@ -288,6 +314,15 @@ void World::SetTileInfo(const std::pair<int, int>& idx, Tile_State state, UINT t
 	_mapdata[idx.second][idx.first]._groundEffect = groundEffect;
 }
 
+void World::Start()
+{
+	InitialGame();
+	ecs->SendEvent<GamePause>();
+	ecs->SendEvent<UIStateChange>(_mainUIGroup, false);
+	ecs->SendEvent<UIStateChange>(_gamePlayUI, true);
+	_isGameRunning ^= true;
+}
+
 void World::Pause()
 {
 	ecs->SendEvent<GamePause>();
@@ -301,6 +336,24 @@ void World::Resume()
 	ecs->SendEvent<GamePause>();
 	ecs->SendEvent<UIStateChange>(_pauseUIGroup, false);
 	_isGameRunning ^= true;
+}
+
+void World::Restart()
+{
+	InitialGame();
+	ecs->SendEvent<GameInitialize>();
+	ecs->SendEvent<GamePause>();
+	ecs->SendEvent<UIStateChange>(_pauseUIGroup, false);
+	_isGameRunning ^= true;
+}
+
+void World::GoMain()
+{
+	ecs->SendEvent<UIStateChange>(_mainUIGroup, true);
+	ecs->SendEvent<UIStateChange>(_gamePlayUI, false);
+	ecs->SendEvent<UIStateChange>(_pauseUIGroup, false);
+
+	ecs->SendEvent<GameInitialize>();
 }
 
 void World::Skip()
@@ -484,7 +537,7 @@ EntityId World::PauseArea()
 	panneltf->_size = Vector3(1600.0f, 1200.0f, 0);
 	
 	EntityId			uibtnGameResume		= CreateUIObject<SampleButton>();
-	UITransform*		btntf				= ComponentManager->AddComponent<UITransform>(uibtnGameResume, Vector3(40.0f, 150.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	UITransform*		btntf				= ComponentManager->AddComponent<UITransform>(uibtnGameResume, Vector3(700.0f, 450.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
 	Sprite*				spbtn				= ComponentManager->AddComponent<Sprite>(uibtnGameResume, L"Images\\Button\\ResumeButtonNormal");
 	ButtonComponent*	btnc				= ComponentManager->AddComponent<ButtonComponent>(uibtnGameResume);
 	btnc->SetOwner(uibtnGameResume);
@@ -492,12 +545,88 @@ EntityId World::PauseArea()
 	btntf->_size = Vector3(200.0f, 100.0f, 0);
 	btnc->AddOnclickFunction(std::bind(&World::Resume, this));
 
+	EntityId			uibtnGoMain			= CreateUIObject<SampleButton>();
+	UITransform*		btn2tf				= ComponentManager->AddComponent<UITransform>(uibtnGoMain, Vector3(700.0f, 690.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	Sprite*				sp2btn				= ComponentManager->AddComponent<Sprite>(uibtnGoMain, L"Images\\Button\\MainButtonNormal");
+	ButtonComponent*	btn2c				= ComponentManager->AddComponent<ButtonComponent>(uibtnGoMain);
+	btn2c->SetOwner(uibtnGoMain);
+	btn2c->_name = L"Main";
+	btn2tf->_size = Vector3(200.0f, 100.0f, 0);
+	btn2c->AddOnclickFunction(std::bind(&World::GoMain, this));
+
+	EntityId			uibtnRestart		= CreateUIObject<SampleButton>();
+	UITransform*		btn3tf				= ComponentManager->AddComponent<UITransform>(uibtnRestart, Vector3(700.0f, 570.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	Sprite*				sp3btn				= ComponentManager->AddComponent<Sprite>(uibtnRestart, L"Images\\Button\\RestartButtonNormal");
+	ButtonComponent*	btn3c				= ComponentManager->AddComponent<ButtonComponent>(uibtnRestart);
+	btn3c->SetOwner(uibtnRestart);
+	btn3c->_name = L"Restart";
+	btn3tf->_size = Vector3(200.0f, 100.0f, 0);
+	btn3c->AddOnclickFunction(std::bind(&World::Restart, this));
+
+	EntityId			text				= EntityManager->CreateEntity<DefaultUIObject>();
+	UITransform*		texttf				= ComponentManager->AddComponent<UITransform>(text, Vector3(600.0f, 110.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	TextComponent*		texttc				= ComponentManager->AddComponent<TextComponent>(text);
+	texttf->_size = Vector3(400.0f, 200.0f, 0);
+	texttc->_text = L"PAUSE";
+	texttc->_fontSize = 80.0f;
+	texttc->_textAlignment = DWRITE_TEXT_ALIGNMENT_CENTER;
+	texttc->_paragraphAlignemt = DWRITE_PARAGRAPH_ALIGNMENT_CENTER;
+
 	EntityManager->GetEntity(uipausepannel)->AddChildEntity(uibtnGameResume);
+	EntityManager->GetEntity(uipausepannel)->AddChildEntity(text);
+	EntityManager->GetEntity(uipausepannel)->AddChildEntity(uibtnGoMain);
+	EntityManager->GetEntity(uipausepannel)->AddChildEntity(uibtnRestart);
 
 	EntityManager->GetEntity(uibtnGameResume)->SetParentEntity(uipausepannel);
+	EntityManager->GetEntity(text)->SetParentEntity(uipausepannel);
+	EntityManager->GetEntity(uibtnGoMain)->SetParentEntity(uipausepannel);
+	EntityManager->GetEntity(uibtnRestart)->SetParentEntity(uipausepannel);
 
 	return uipausepannel;
 }
 
+EntityId World::MainScreenArea()
+{
+	EntityId			uimainpannel		= CreateUIObject<DefaultUIObject>();
+	UITransform*		panneltf			= ComponentManager->AddComponent<UITransform>(uimainpannel, Vector3(0, 0, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	Sprite*				pannelsp			= ComponentManager->AddComponent<Sprite>(uimainpannel, L"Images\\UIPannel");
+	panneltf->_size = Vector3(1600.0f, 1200.0f, 0);
+
+	EntityId			uibtnGameStart		= CreateUIObject<SampleButton>();
+	UITransform*		btntf				= ComponentManager->AddComponent<UITransform>(uibtnGameStart, Vector3(700.0f, 650.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	Sprite*				spbtn				= ComponentManager->AddComponent<Sprite>(uibtnGameStart, L"Images\\Button\\StartButtonNormal");
+	ButtonComponent*	btnc				= ComponentManager->AddComponent<ButtonComponent>(uibtnGameStart);
+	btnc->SetOwner(uibtnGameStart);
+	btnc->_name = L"Start";
+	btntf->_size = Vector3(200.0f, 100.0f, 0);
+	btnc->AddOnclickFunction(std::bind(&World::Start, this));
+
+	EntityId			text = EntityManager->CreateEntity<DefaultUIObject>();
+	UITransform* texttf = ComponentManager->AddComponent<UITransform>(text, Vector3(600.0f, 310.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	TextComponent* texttc = ComponentManager->AddComponent<TextComponent>(text);
+	texttf->_size = Vector3(400.0f, 200.0f, 0);
+	texttc->_text = L"·£´ý Å¸¿ö µðÆæ½º";
+	texttc->_fontSize = 80.0f;
+	texttc->_textAlignment = DWRITE_TEXT_ALIGNMENT_CENTER;
+	texttc->_paragraphAlignemt = DWRITE_PARAGRAPH_ALIGNMENT_CENTER;
 
 
+	EntityId			text2 = EntityManager->CreateEntity<DefaultUIObject>();
+	UITransform* text2tf = ComponentManager->AddComponent<UITransform>(text2, Vector3(930.0f, 470.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	TextComponent* text2tc = ComponentManager->AddComponent<TextComponent>(text2);
+	text2tf->_size = Vector3(50.0f, 50.0f, 0);
+	text2tc->_text = L"mini";
+	text2tc->_fontSize = 20.0f;
+	text2tc->_textAlignment = DWRITE_TEXT_ALIGNMENT_CENTER;
+	text2tc->_paragraphAlignemt = DWRITE_PARAGRAPH_ALIGNMENT_CENTER;
+
+	EntityManager->GetEntity(uimainpannel)->AddChildEntity(uibtnGameStart);
+	EntityManager->GetEntity(uimainpannel)->AddChildEntity(text);
+	EntityManager->GetEntity(uimainpannel)->AddChildEntity(text2);
+
+	EntityManager->GetEntity(uibtnGameStart)->SetParentEntity(uimainpannel);
+	EntityManager->GetEntity(text)->SetParentEntity(uimainpannel);
+	EntityManager->GetEntity(text2)->SetParentEntity(uimainpannel);
+
+	return uimainpannel;
+}

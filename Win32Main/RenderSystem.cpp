@@ -118,12 +118,24 @@ void RenderSystem::RegistEvent()
 {
 	RegisterCallback(&RenderSystem::OnObjectCreated);
 	RegisterCallback(&RenderSystem::OnObjectDestroyed);
+	RegisterCallback(&RenderSystem::OnGameInitialize);
 }
 
 void RenderSystem::UnRegistEvent()
 {
 	UnRegisterCallback(&RenderSystem::OnObjectCreated);
 	UnRegisterCallback(&RenderSystem::OnObjectDestroyed);
+	UnRegisterCallback(&RenderSystem::OnGameInitialize);
+}
+
+void RenderSystem::OnGameInitialize(const GameInitialize* event)
+{
+	for (UINT i = 2; i < (UINT)Object_Layer::UI; i++) {
+		for (int j = 0; j < _renderObject[i].size(); j++) {
+			EntityManager->DestroyEntity(_renderObject[i][j]._eid);
+		}
+		_renderObject[i].clear();
+	}
 }
 
 void RenderSystem::OnObjectCreated(const GameObjectCreated* event)
