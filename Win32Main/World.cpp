@@ -410,8 +410,8 @@ EntityId World::LifeArea()
 	imguitf->_size = Vector3(80.0f, 80.0f, 0);
 
 	EntityId			textlife			= EntityManager->CreateEntity<DefaultUIObject>();
-	UITransform*		textlifetf = ComponentManager->AddComponent<UITransform>(textlife, Vector3(260.0f, 10.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
-	TextComponent*		textlifetc = ComponentManager->AddComponent<TextComponent>(textlife);
+	UITransform*		textlifetf			= ComponentManager->AddComponent<UITransform>(textlife, Vector3(260.0f, 10.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	TextComponent*		textlifetc			= ComponentManager->AddComponent<TextComponent>(textlife);
 	textlifetf->_size = Vector3(80.0f, 80.0f, 0);
 	textlifetc->_text = L"0";
 	textlifetc->_fontSize = 40.0f;
