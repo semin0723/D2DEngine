@@ -601,9 +601,9 @@ EntityId World::MainScreenArea()
 	btntf->_size = Vector3(200.0f, 100.0f, 0);
 	btnc->AddOnclickFunction(std::bind(&World::Start, this));
 
-	EntityId			text = EntityManager->CreateEntity<DefaultUIObject>();
-	UITransform* texttf = ComponentManager->AddComponent<UITransform>(text, Vector3(600.0f, 310.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
-	TextComponent* texttc = ComponentManager->AddComponent<TextComponent>(text);
+	EntityId			text				= EntityManager->CreateEntity<DefaultUIObject>();
+	UITransform*		texttf				= ComponentManager->AddComponent<UITransform>(text, Vector3(600.0f, 310.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	TextComponent*		texttc				= ComponentManager->AddComponent<TextComponent>(text);
 	texttf->_size = Vector3(400.0f, 200.0f, 0);
 	texttc->_text = L"·£´ý Å¸¿ö µðÆæ½º";
 	texttc->_fontSize = 80.0f;
@@ -611,9 +611,9 @@ EntityId World::MainScreenArea()
 	texttc->_paragraphAlignemt = DWRITE_PARAGRAPH_ALIGNMENT_CENTER;
 
 
-	EntityId			text2 = EntityManager->CreateEntity<DefaultUIObject>();
-	UITransform* text2tf = ComponentManager->AddComponent<UITransform>(text2, Vector3(930.0f, 470.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
-	TextComponent* text2tc = ComponentManager->AddComponent<TextComponent>(text2);
+	EntityId			text2				= EntityManager->CreateEntity<DefaultUIObject>();
+	UITransform*		text2tf				= ComponentManager->AddComponent<UITransform>(text2, Vector3(930.0f, 470.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	TextComponent*		text2tc				= ComponentManager->AddComponent<TextComponent>(text2);
 	text2tf->_size = Vector3(50.0f, 50.0f, 0);
 	text2tc->_text = L"mini";
 	text2tc->_fontSize = 20.0f;
