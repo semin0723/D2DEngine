@@ -127,11 +127,11 @@ void World::OnMapClick(const ClickInGame* event)
 		if (_actionState == 1) {
 			if (_mapdata[idx.second][idx.first]._tileState == Tile_State::Empty) {
 				// 자원 부족
-				if (_money < 10) return;
+				if (_money < 50) return;
 
 				auto [newTower, towerTypeId] = CreateTower(ConvertIdxToTile(idx), 1);
 				SetTileInfo(idx, Tile_State::Tower, towerTypeId, newTower, 1);
-				_money -= 10;
+				_money -= 50;
 			}
 		}
 		else if (_actionState == 2) {
@@ -203,7 +203,7 @@ void World::InitialGame()
 	ResourceSystem::GetInstance()->LoadMonsterData();
 	ResourceSystem::GetInstance()->LoadGroundEffect();
 
-	_money = 100;
+	_money = 300;
 	_life = 50;
 
 	_mapdata.clear();
@@ -589,7 +589,7 @@ EntityId World::MainScreenArea()
 {
 	EntityId			uimainpannel		= CreateUIObject<DefaultUIObject>();
 	UITransform*		panneltf			= ComponentManager->AddComponent<UITransform>(uimainpannel, Vector3(0, 0, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
-	Sprite*				pannelsp			= ComponentManager->AddComponent<Sprite>(uimainpannel, L"Images\\UIPannel");
+	Sprite*				pannelsp			= ComponentManager->AddComponent<Sprite>(uimainpannel, L"Images\\UIPannelMain");
 	panneltf->_size = Vector3(1600.0f, 1200.0f, 0);
 
 	EntityId			uibtnGameStart		= CreateUIObject<SampleButton>();
@@ -602,7 +602,7 @@ EntityId World::MainScreenArea()
 	btnc->AddOnclickFunction(std::bind(&World::Start, this));
 
 	EntityId			text				= EntityManager->CreateEntity<DefaultUIObject>();
-	UITransform*		texttf				= ComponentManager->AddComponent<UITransform>(text, Vector3(600.0f, 310.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	UITransform*		texttf				= ComponentManager->AddComponent<UITransform>(text, Vector3(600.0f, 210.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
 	TextComponent*		texttc				= ComponentManager->AddComponent<TextComponent>(text);
 	texttf->_size = Vector3(400.0f, 200.0f, 0);
 	texttc->_text = L"랜덤 타워 디펜스";
@@ -612,7 +612,7 @@ EntityId World::MainScreenArea()
 
 
 	EntityId			text2				= EntityManager->CreateEntity<DefaultUIObject>();
-	UITransform*		text2tf				= ComponentManager->AddComponent<UITransform>(text2, Vector3(930.0f, 470.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	UITransform*		text2tf				= ComponentManager->AddComponent<UITransform>(text2, Vector3(930.0f, 370.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
 	TextComponent*		text2tc				= ComponentManager->AddComponent<TextComponent>(text2);
 	text2tf->_size = Vector3(50.0f, 50.0f, 0);
 	text2tc->_text = L"mini";
@@ -620,13 +620,21 @@ EntityId World::MainScreenArea()
 	text2tc->_textAlignment = DWRITE_TEXT_ALIGNMENT_CENTER;
 	text2tc->_paragraphAlignemt = DWRITE_PARAGRAPH_ALIGNMENT_CENTER;
 
+	EntityId			bg					= EntityManager->CreateEntity<DefaultUIObject>();
+	UITransform*		tfbg				= ComponentManager->AddComponent<UITransform>(bg, Vector3(550.0f, 420.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	Sprite*				spbg				= ComponentManager->AddComponent<Sprite>(bg, L"Images\\TestBg");
+	tfbg->_size = Vector3(500.0f, 500.0f, 0);
+	
+	EntityManager->GetEntity(uimainpannel)->AddChildEntity(bg);
 	EntityManager->GetEntity(uimainpannel)->AddChildEntity(uibtnGameStart);
 	EntityManager->GetEntity(uimainpannel)->AddChildEntity(text);
 	EntityManager->GetEntity(uimainpannel)->AddChildEntity(text2);
 
+	EntityManager->GetEntity(bg)->SetParentEntity(uimainpannel);
 	EntityManager->GetEntity(uibtnGameStart)->SetParentEntity(uimainpannel);
 	EntityManager->GetEntity(text)->SetParentEntity(uimainpannel);
 	EntityManager->GetEntity(text2)->SetParentEntity(uimainpannel);
+
 
 	return uimainpannel;
 }
