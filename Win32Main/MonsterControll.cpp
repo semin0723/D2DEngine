@@ -106,7 +106,7 @@ void MonsterControll::OnHit(const Attack* event)
 				ecs->SendEvent<GameObjectDestroyed>(_monsters[i], Object_Layer::Monster);
 				
 				if (_spawner->GetCurRound() == 10) {
-					ecs->SendEvent<GameWin>();
+					ecs->SendEvent<GamePlayWin>();
 					return;
 				}
 				// money increse event
