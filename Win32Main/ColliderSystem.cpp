@@ -119,7 +119,7 @@ bool ColliderSystem::ChackOverLap(std::vector<D2D1_POINT_2F>& left, std::vector<
 std::pair<float, float> ColliderSystem::GetMinMax(D2D1_POINT_2F axis, std::vector<D2D1_POINT_2F>& points)
 {
 	float minValue = FLT_MAX, maxValue = FLT_MIN;
-	Vector3 normal(axis.x, axis.y, 0);
+	Vector3 normal(-axis.y, axis.x, 0);
 	normal.Normalized();
 	for (int i = 0; i < points.size(); i++) {
 		Vector3 point(points[i].x, points[i].y, 0);
