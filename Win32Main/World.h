@@ -38,8 +38,7 @@ public:
 	void OnGetMoney(const GetMoney* event);
 
 	void OnRoundEnd(const RoundEnd* event);
-	void OnGameOver(const GameOver* event);
-	void OnGameWin(const GameWin* event);
+	void OnGameWin(const GamePlayWin* event);
 
 private:
 	std::vector<std::vector<tileInfo>> _mapdata;
@@ -85,6 +84,8 @@ private:
 	EntityId PauseArea();
 
 	EntityId MainScreenArea();
+	EntityId GameResult();
+	EntityId GameClear();
 
 private:
 	// 인게임 로직 관련 부분
@@ -98,6 +99,8 @@ private:
 	EntityId _pauseUIGroup;
 	EntityId _mainUIGroup;
 	EntityId _gamePlayUI; 
+	EntityId _gameResultUI;
+	EntityId _gameWinUI;
 
 	float _waitTime = 60.0f;
 	float _leftTime = 0;
@@ -109,5 +112,7 @@ private:
 	void Restart();
 	void GoMain();
 	void Skip();
+	void GameOver();
+	void GameWin();
 };
 

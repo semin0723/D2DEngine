@@ -17,9 +17,9 @@ struct GameOver : public Event<GameOver> {
 	GameOver() {}
 };
 
-struct GameWin : public Event<GameWin> {
+struct GamePlayWin : public Event<GamePlayWin> {
 
-	GameWin() {}
+	GamePlayWin() {}
 };
 
 struct GamePause : public Event<GamePause> {

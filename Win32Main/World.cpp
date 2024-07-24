@@ -74,6 +74,38 @@ World::World()
 
 		ecs->SendEvent<UIStateChange>(uigroup2, false);
 	}
+
+	{
+		// ------------ group4 ----------------   // game over result ui
+		EntityId			uigroup			= CreateGameObject<Square>(Object_Layer::UI);
+		UITransform*		ui2tf			= ComponentManager->AddComponent<UITransform>(uigroup);
+		UIGroup*			ui2g			= ComponentManager->AddComponent<UIGroup>(uigroup);
+		_gameResultUI = uigroup;
+
+		EntityId uiresultpannel = GameResult();
+
+		EntityManager->GetEntity(uigroup)->AddChildEntity(uiresultpannel);
+
+		EntityManager->GetEntity(uiresultpannel)->SetParentEntity(uigroup);
+
+		ecs->SendEvent<UIStateChange>(uigroup, false);
+	}
+
+	{
+		// ------------ group5 ----------------   // game clear result ui
+		EntityId			uigroup = CreateGameObject<Square>(Object_Layer::UI);
+		UITransform*		ui2tf = ComponentManager->AddComponent<UITransform>(uigroup);
+		UIGroup*			ui2g = ComponentManager->AddComponent<UIGroup>(uigroup);
+		_gameWinUI = uigroup;
+
+		EntityId uiresultpannel = GameClear();
+
+		EntityManager->GetEntity(uigroup)->AddChildEntity(uiresultpannel);
+
+		EntityManager->GetEntity(uiresultpannel)->SetParentEntity(uigroup);
+
+		ecs->SendEvent<UIStateChange>(uigroup, false);
+	}
 }
 
 World::~World()
@@ -99,6 +131,10 @@ void World::PreUpdate(float dt)
 void World::Update(float dt)
 {
 	if (_isGameRunning == false) return;
+
+	if (_life == 0) {
+		GameOver();
+	}
 
 	TextComponent* moneytc = ComponentManager->Getcomponent<TextComponent>(_moneyText);
 	moneytc->_text = std::to_wstring(_money);
@@ -187,14 +223,9 @@ void World::OnRoundEnd(const RoundEnd* event)
 	_leftTime = _waitTime;
 }
 
-void World::OnGameOver(const GameOver* event)
+void World::OnGameWin(const GamePlayWin* event)
 {
-	Pause();
-}
-
-void World::OnGameWin(const GameWin* event)
-{
-	Pause();
+	GameWin();
 }
 
 void World::InitialGame()
@@ -236,6 +267,7 @@ void World::RegistEvent()
 	RegisterCallback(&World::OnLifeDecrese);
 	RegisterCallback(&World::OnGetMoney);
 	RegisterCallback(&World::OnRoundEnd);
+	RegisterCallback(&World::OnGameWin);
 }
 
 void World::UnRegistEvent()
@@ -244,6 +276,7 @@ void World::UnRegistEvent()
 	UnRegisterCallback(&World::OnLifeDecrese);
 	UnRegisterCallback(&World::OnGetMoney);
 	UnRegisterCallback(&World::OnRoundEnd);
+	UnRegisterCallback(&World::OnGameWin);
 }
 
 Vector3 World::ConvertIdxToTile(const std::pair<int, int>& idx)
@@ -352,6 +385,8 @@ void World::GoMain()
 	ecs->SendEvent<UIStateChange>(_mainUIGroup, true);
 	ecs->SendEvent<UIStateChange>(_gamePlayUI, false);
 	ecs->SendEvent<UIStateChange>(_pauseUIGroup, false);
+	ecs->SendEvent<UIStateChange>(_gameResultUI, false);
+	ecs->SendEvent<UIStateChange>(_gameWinUI, false);
 
 	ecs->SendEvent<GameInitialize>();
 }
@@ -359,6 +394,20 @@ void World::GoMain()
 void World::Skip()
 {
 	_leftTime = -1;
+}
+
+void World::GameOver()
+{
+	ecs->SendEvent<UIStateChange>(_gameResultUI, true);
+	ecs->SendEvent<GamePause>();
+	_isGameRunning ^= true;
+}
+
+void World::GameWin()
+{
+	ecs->SendEvent<UIStateChange>(_gameWinUI, true);
+	ecs->SendEvent<GamePause>();
+	_isGameRunning ^= true;
 }
 
 
@@ -637,4 +686,94 @@ EntityId World::MainScreenArea()
 
 
 	return uimainpannel;
+}
+
+EntityId World::GameResult()
+{
+	EntityId			uiresultpannel		= CreateUIObject<DefaultUIObject>();
+	UITransform*		panneltf			= ComponentManager->AddComponent<UITransform>(uiresultpannel, Vector3(550.0f, 300.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	Sprite*				pannelsp			= ComponentManager->AddComponent<Sprite>(uiresultpannel, L"Images\\UIPannelMain");
+	panneltf->_size = Vector3(500.0f, 600.0f, 0);
+
+	EntityId			uibtnRestart		= CreateUIObject<SampleButton>();
+	UITransform*		btn3tf				= ComponentManager->AddComponent<UITransform>(uibtnRestart, Vector3(150.0f, 300.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	Sprite*				sp3btn				= ComponentManager->AddComponent<Sprite>(uibtnRestart, L"Images\\Button\\RestartButtonNormal");
+	ButtonComponent*	btn3c				= ComponentManager->AddComponent<ButtonComponent>(uibtnRestart);
+	btn3c->SetOwner(uibtnRestart);
+	btn3c->_name = L"Restart";
+	btn3tf->_size = Vector3(200.0f, 100.0f, 0);
+	btn3c->AddOnclickFunction(std::bind(&World::Restart, this));
+
+	EntityId			uibtnGoMain			= CreateUIObject<SampleButton>();
+	UITransform*		btn2tf				= ComponentManager->AddComponent<UITransform>(uibtnGoMain, Vector3(150.0f, 430.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	Sprite*				sp2btn				= ComponentManager->AddComponent<Sprite>(uibtnGoMain, L"Images\\Button\\MainButtonNormal");
+	ButtonComponent*	btn2c				= ComponentManager->AddComponent<ButtonComponent>(uibtnGoMain);
+	btn2c->SetOwner(uibtnGoMain);
+	btn2c->_name = L"Main";
+	btn2tf->_size = Vector3(200.0f, 100.0f, 0);
+	btn2c->AddOnclickFunction(std::bind(&World::GoMain, this));
+
+	EntityId			text				= EntityManager->CreateEntity<DefaultUIObject>();
+	UITransform*		texttf				= ComponentManager->AddComponent<UITransform>(text, Vector3(50.0f, 50.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	TextComponent*		texttc				= ComponentManager->AddComponent<TextComponent>(text);
+	texttf->_size = Vector3(400.0f, 200.0f, 0);
+	texttc->_text = L"Game Over";
+	texttc->_fontSize = 80.0f;
+	texttc->_textAlignment = DWRITE_TEXT_ALIGNMENT_CENTER;
+	texttc->_paragraphAlignemt = DWRITE_PARAGRAPH_ALIGNMENT_CENTER;
+
+	EntityManager->GetEntity(uiresultpannel)->AddChildEntity(uibtnRestart);
+	EntityManager->GetEntity(uiresultpannel)->AddChildEntity(uibtnGoMain);
+	EntityManager->GetEntity(uiresultpannel)->AddChildEntity(text);
+
+	EntityManager->GetEntity(uibtnRestart)->SetParentEntity(uiresultpannel);
+	EntityManager->GetEntity(uibtnGoMain)->SetParentEntity(uiresultpannel);
+	EntityManager->GetEntity(text)->SetParentEntity(uiresultpannel);
+
+	return uiresultpannel;
+}
+
+EntityId World::GameClear()
+{
+	EntityId			uiresultpannel		= CreateUIObject<DefaultUIObject>();
+	UITransform*		panneltf			= ComponentManager->AddComponent<UITransform>(uiresultpannel, Vector3(550.0f, 300.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	Sprite*				pannelsp			= ComponentManager->AddComponent<Sprite>(uiresultpannel, L"Images\\UIPannelMain");
+	panneltf->_size = Vector3(500.0f, 600.0f, 0);
+
+	EntityId			uibtnRestart		= CreateUIObject<SampleButton>();
+	UITransform*		btn3tf				= ComponentManager->AddComponent<UITransform>(uibtnRestart, Vector3(150.0f, 300.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	Sprite*				sp3btn				= ComponentManager->AddComponent<Sprite>(uibtnRestart, L"Images\\Button\\RestartButtonNormal");
+	ButtonComponent*	btn3c				= ComponentManager->AddComponent<ButtonComponent>(uibtnRestart);
+	btn3c->SetOwner(uibtnRestart);
+	btn3c->_name = L"Restart";
+	btn3tf->_size = Vector3(200.0f, 100.0f, 0);
+	btn3c->AddOnclickFunction(std::bind(&World::Restart, this));
+
+	EntityId			uibtnGoMain			= CreateUIObject<SampleButton>();
+	UITransform*		btn2tf				= ComponentManager->AddComponent<UITransform>(uibtnGoMain, Vector3(150.0f, 430.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	Sprite*				sp2btn				= ComponentManager->AddComponent<Sprite>(uibtnGoMain, L"Images\\Button\\MainButtonNormal");
+	ButtonComponent*	btn2c				= ComponentManager->AddComponent<ButtonComponent>(uibtnGoMain);
+	btn2c->SetOwner(uibtnGoMain);
+	btn2c->_name = L"Main";
+	btn2tf->_size = Vector3(200.0f, 100.0f, 0);
+	btn2c->AddOnclickFunction(std::bind(&World::GoMain, this));
+
+	EntityId			text				= EntityManager->CreateEntity<DefaultUIObject>();
+	UITransform*		texttf				= ComponentManager->AddComponent<UITransform>(text, Vector3(50.0f, 50.0f, 0), Vector3(1.0f, 1.0f, 1.0f), Vector3(0, 0, 0));
+	TextComponent*		texttc				= ComponentManager->AddComponent<TextComponent>(text);
+	texttf->_size = Vector3(400.0f, 200.0f, 0);
+	texttc->_text = L"Game Clear";
+	texttc->_fontSize = 80.0f;
+	texttc->_textAlignment = DWRITE_TEXT_ALIGNMENT_CENTER;
+	texttc->_paragraphAlignemt = DWRITE_PARAGRAPH_ALIGNMENT_CENTER;
+
+	EntityManager->GetEntity(uiresultpannel)->AddChildEntity(uibtnRestart);
+	EntityManager->GetEntity(uiresultpannel)->AddChildEntity(uibtnGoMain);
+	EntityManager->GetEntity(uiresultpannel)->AddChildEntity(text);
+
+	EntityManager->GetEntity(uibtnRestart)->SetParentEntity(uiresultpannel);
+	EntityManager->GetEntity(uibtnGoMain)->SetParentEntity(uiresultpannel);
+	EntityManager->GetEntity(text)->SetParentEntity(uiresultpannel);
+
+	return uiresultpannel;
 }

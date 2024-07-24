@@ -54,7 +54,6 @@ void MonsterControll::Update(float dt)
 				ecs->SendEvent<GameObjectDestroyed>(_monsters[i], Object_Layer::Monster);
 				if (_spawner->GetCurRound() == 10) {
 					ecs->SendEvent<DecreseLife>(50);
-					ecs->SendEvent<GameOver>();
 					return;
 				}
 				// life - 1 event
